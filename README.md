@@ -39,8 +39,9 @@ Bu repo, 5 haftalık Veri Platformları dersini desteklemek için hazırlanmış
 ### Yazılım Gereksinimleri
 - [Docker Desktop](https://www.docker.com/products/docker-desktop) 4.0+ veya Docker Engine 20.10+
 - [Docker Compose](https://docs.docker.com/compose/install/) v2.0+
+- Docker Yerine  [orbstack] (https://orbstack.dev/) (Mac kullanıcıları için, Docker'a hafif alternatif, ben orbstack kullanıyorum)
 - [Git](https://git-scm.com/downloads) 2.30+
-- Bir kod editörü (VS Code önerilir)
+- Bir kod editörü (Ben Pycharm kullanıyorum)
 
 ### Opsiyonel Araçlar
 - [DBeaver](https://dbeaver.io/) - Veritabanı yönetim aracı
