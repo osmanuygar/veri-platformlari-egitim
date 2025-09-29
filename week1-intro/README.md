@@ -582,6 +582,7 @@ print(df.isnull().sum())
 #### JSON ile Çalışma (Yarı-Yapısal Veri)
 ```python
 import json
+import pandas as pd
 
 # JSON dosyasını oku
 with open('api_response.json', 'r', encoding='utf-8') as f:
@@ -604,6 +605,97 @@ flat_df = pd.json_normalize(
     meta=['ad', 'soyad', ['iletisim', 'email']],
     meta_prefix='musteri_'
 )
+```
+
+#### XML ile Çalışma
+```python
+import xml.etree.ElementTree as ET
+
+# XML parse etme
+tree = ET.parse('config.xml')
+root = tree.getroot()
+
+# Element'lere erişim
+for item in root.findall('.//product'):
+    name = item.find('name').text
+    price = item.find('price').text
+    print(f"{name}: {price}")
+
+# XML'den DataFrame'e
+import pandas as pd
+import xml.etree.ElementTree as ET
+
+tree = ET.parse('products.xml')
+root = tree.getroot()
+
+data = []
+for product in root.findall('.//product'):
+    data.append({
+        'id': product.find('id').text,
+        'name': product.find('name').text,
+        'price': float(product.find('price').text)
+    })
+
+df = pd.DataFrame(data)
+print(df)
+```
+
+#### Yapısal Olmayan Veri ile Çalışma
+```python
+from PIL import Image
+import PyPDF2
+from pathlib import Path
+
+# Görüntü işleme
+img = Image.open('product.jpg')
+print(f"Boyut: {img.size}, Format: {img.format}")
+
+# Görüntü bilgileri
+print(f"Mod: {img.mode}")  # RGB, RGBA, vb.
+print(f"Dosya boyutu: {Path('product.jpg').stat().st_size / 1024:.2f} KB")
+
+# PDF okuma
+with open('document.pdf', 'rb') as f:
+    pdf = PyPDF2.PdfReader(f)
+    num_pages = len(pdf.pages)
+    print(f"Sayfa sayısı: {num_pages}")
+    
+    # İlk sayfayı oku
+    text = pdf.pages[0].extract_text()
+    print(text[:500])  # İlk 500 karakter
+
+# Metin analizi
+from collections import Counter
+
+words = text.lower().split()
+word_count = len(words)
+unique_words = len(set(words))
+most_common = Counter(words).most_common(10)
+
+print(f"\nToplam kelime: {word_count}")
+print(f"Benzersiz kelime: {unique_words}")
+print("\nEn sık kullanılan 10 kelime:")
+for word, count in most_common:
+    print(f"  {word}: {count}")
+
+# Word belgeleri (.docx)
+try:
+    from docx import Document
+    
+    doc = Document('document.docx')
+    
+    # Paragrafları oku
+    for para in doc.paragraphs[:5]:  # İlk 5 paragraf
+        print(para.text)
+    
+    # Tablo varsa oku
+    for table in doc.tables:
+        for row in table.rows:
+            for cell in row.cells:
+                print(cell.text, end='\t')
+            print()
+except ImportError:
+    print("python-docx kütüphanesi gerekli: pip install python-docx")
 ```
 
 ### 5.2 Veri Kalitesi Kontrolü
@@ -674,3 +766,190 @@ def veri_kalitesi_raporu(df):
 df = pd.read_csv('sample_data.csv')
 veri_kalitesi_raporu(df)
 ```
+
+### 5.3 Farklı Veri Kaynaklarından Veri Çekme
+
+#### API'den Veri Çekme
+```python
+import requests
+import pandas as pd
+
+def get_weather_data(city):
+    """OpenWeather API'den hava durumu verisi çek"""
+    api_key = "YOUR_API_KEY"
+    url = f"http://api.openweathermap.org/data/2.5/weather?q={city}&appid={api_key}&units=metric"
+    
+    response = requests.get(url)
+    if response.status_code == 200:
+        data = response.json()
+        return {
+            'city': data['name'],
+            'temperature': data['main']['temp'],
+            'humidity': data['main']['humidity'],
+            'description': data['weather'][0]['description']
+        }
+    return None
+
+# Birden fazla şehir için veri topla
+cities = ['Istanbul', 'Ankara', 'Izmir']
+weather_data = [get_weather_data(city) for city in cities]
+df_weather = pd.DataFrame(weather_data)
+print(df_weather)
+```
+
+#### Veritabanından Veri Çekme
+```python
+import psycopg2
+import pandas as pd
+
+# PostgreSQL bağlantısı
+conn = psycopg2.connect(
+    host="localhost",
+    database="veri_db",
+    user="veri_user",
+    password="veri_pass"
+)
+
+# SQL sorgusu ile veri çek
+query = """
+SELECT 
+    DATE(order_date) as date,
+    COUNT(*) as order_count,
+    SUM(total_amount) as revenue
+FROM orders
+WHERE order_date >= CURRENT_DATE - INTERVAL '30 days'
+GROUP BY DATE(order_date)
+ORDER BY date;
+"""
+
+df = pd.read_sql(query, conn)
+conn.close()
+
+print(df)
+```
+
+---
+
+## 6. Alıştırmalar
+
+### Alıştırma 1: Veri Türlerini Tanımlama
+Aşağıdaki veri örneklerini yapısal, yarı-yapısal veya yapısal olmayan olarak sınıflandırın:
+
+1. Bir e-ticaret sitesinin sipariş tablosu
+2. Twitter'dan çekilen JSON formatında tweetler
+3. Müşteri şikayet e-postaları
+4. CSV formatında satış verileri
+5. Güvenlik kamerası video kayıtları
+6. XML formatında RSS feed
+7. Kullanıcı profil fotoğrafları
+8. PostgreSQL veritabanındaki müşteri kayıtları
+
+**[Çözümler için tıklayın](./exercises/solutions/exercise1-solution.md)**
+
+### Alıştırma 2: Veri Kaynakları Analizi
+Bir e-ticaret şirketi için:
+1. En az 5 iç veri kaynağı listeleyin
+2. En az 5 dış veri kaynağı listeleyin
+3. Her kaynaktan hangi tür verilerin gelebileceğini açıklayın
+4. Bu verilerin nasıl entegre edilebileceğini öneride bulunun
+
+### Alıştırma 3: Veri Kalitesi Testi
+Verilen `sample_data.csv` dosyası için:
+1. Eksik değerleri tespit edin
+2. Tekrar eden kayıtları bulun
+3. Veri tiplerini kontrol edin
+4. Outlier'ları tespit edin
+5. Bir veri kalitesi raporu hazırlayın
+
+```bash
+cd week1-intro/exercises/
+python data_quality_exercise.py
+```
+
+### Alıştırma 4: Veri Dönüşümü
+JSON formatındaki API yanıtını düzenli bir DataFrame'e dönüştürün:
+
+```python
+# exercises/data_transformation.py dosyasını düzenleyin
+import pandas as pd
+import json
+
+# JSON dosyasını okuyun
+with open('api_response.json') as f:
+    data = json.load(f)
+
+# TODO: DataFrame'e dönüştürün
+# TODO: Nested yapıları düzleştirin
+# TODO: Veri tiplerini düzeltin
+# TODO: CSV olarak kaydedin
+```
+
+### Alıştırma 5: Tarihsel Araştırma
+1. İlişkisel model öncesi veri yönetiminin zorluklarını araştırın
+2. Edgar F. Codd'un ilişkisel modelin 12 kuralını öğrenin
+3. NoSQL'in ortaya çıkış nedenlerini kendi cümlelerinizle açıklayın
+4. Geleceğin veri platformları hakkında tahminde bulunun
+
+---
+
+## 7. Kaynaklar
+
+### Temel Okumalar
+1. **"The Data Warehouse Toolkit"** - Ralph Kimball
+2. **"Designing Data-Intensive Applications"** - Martin Kleppmann
+3. **"Big Data: Principles and Best Practices"** - Nathan Marz
+
+### Online Kaynaklar
+- [Kaggle Learn - Intro to SQL](https://www.kaggle.com/learn/intro-to-sql)
+- [Data Science Central](https://www.datasciencecentral.com/)
+- [Towards Data Science (Medium)](https://towardsdatascience.com/)
+
+### Videolar
+- [What is Data?](https://www.youtube.com/watch?v=...)
+- [History of Databases](https://www.youtube.com/watch?v=...)
+- [Structured vs Unstructured Data](https://www.youtube.com/watch?v=...)
+
+### Makaleler
+1. **Edgar F. Codd (1970)** - "A Relational Model of Data for Large Shared Data Banks"
+2. **Google (2003)** - "The Google File System"
+3. **Google (2004)** - "MapReduce: Simplified Data Processing on Large Clusters"
+
+### Veri Setleri Pratik İçin
+- [Kaggle Datasets](https://www.kaggle.com/datasets)
+- [UCI Machine Learning Repository](https://archive.ics.uci.edu/ml/)
+- [Data.gov](https://data.gov/)
+- [Google Dataset Search](https://datasetsearch.research.google.com/)
+
+### Araçlar
+- **Jupyter Notebook** - İnteraktif Python
+- **DBeaver** - Universal database tool
+- **Tableau Public** - Ücretsiz görselleştirme
+- **Google Colab** - Bulut tabanlı notebook
+
+---
+
+## 📝 Hafta Özeti
+
+Bu haftada öğrendiklerimiz:
+
+✅ **Veri Kavramı:** Veri, bilgi ve bilgi arasındaki farklar  
+✅ **Veri Türleri:** Yapısal, yarı-yapısal, yapısal olmayan veri  
+✅ **Veri Kaynakları:** İç ve dış kaynaklardan veri toplama  
+✅ **Tarihsel Evrim:** 1960'lardan günümüze veri platformlarının gelişimi  
+✅ **Pratik Beceriler:** Python ile veri okuma, analiz ve kalite kontrolü
+
+
+
+## 💡 Önemli Notlar
+
+> **Veri Kalitesi:** "Garbage in, garbage out" - Kalitesiz veri, kalitesiz sonuçlar üretir.
+
+> **Veri Güvenliği:** GDPR, KVKK gibi düzenlemelere uyum kritik öneme sahiptir.
+
+> **Ölçeklenebilirlik:** Bugünkü veri hacmi yarının veri hacmi değildir. İleriye dönük planlayın.
+
+---
+
+
+[← Ana Sayfaya Dön](../README.md) 
+
