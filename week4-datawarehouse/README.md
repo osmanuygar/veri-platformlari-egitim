@@ -1740,4 +1740,4 @@ Veri kalitesi kontrol scripti yazın ve rapor oluşturun.
 
 **Özet:** Bu haftada OLTP/OLAP ayrımını, veri ambarı mimarisini, boyutsal modellemeyi, ETL süreçlerini, data lake kavramını ve modern veri mimarilerini öğrendik.
 
-**[← Hafta 3'e Dön](./hafta3-nosql-newsql.md) | [Ana Sayfaya Dön](../README.md) | [Hafta 5'e Git →](./hafta5-ileri-sql.md)**
+**[← Hafta 3'e Dön](../week3-nosql/README.md) | [Ana Sayfaya Dön](../README.md) | [Hafta 5'e Git →](../week5-advanced-sql/README.md)**
