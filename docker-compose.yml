@@ -1,0 +1,386 @@
+version: '3.8'
+
+# Veri Platformları Eğitim Projesi - Docker Compose
+# 5 haftalık eğitim için tüm servisleri içerir
+
+services:
+  # ============================================
+  # WEEK 2: RDBMS - İlişkisel Veritabanları
+  # ============================================
+
+  postgres:
+    image: postgres:15-alpine
+    container_name: veri_postgres
+    environment:
+      POSTGRES_USER: veri_user
+      POSTGRES_PASSWORD: veri_pass
+      POSTGRES_DB: veri_db
+      POSTGRES_INITDB_ARGS: "--encoding=UTF-8 --lc-collate=tr_TR.UTF-8 --lc-ctype=tr_TR.UTF-8"
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./week2-rdbms/postgres/init-scripts:/docker-entrypoint-initdb.d
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - veri_network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U veri_user -d veri_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+  mysql:
+    image: mysql:8.0
+    container_name: veri_mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root_pass
+      MYSQL_DATABASE: veri_db
+      MYSQL_USER: veri_user
+      MYSQL_PASSWORD: veri_pass
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./week2-rdbms/mysql/init-scripts:/docker-entrypoint-initdb.d
+      - mysql_data:/var/lib/mysql
+    networks:
+      - veri_network
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+      - --default-authentication-plugin=mysql_native_password
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "veri_user", "-pveri_pass"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+  # pgAdmin - PostgreSQL GUI
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: veri_pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+      PGADMIN_CONFIG_SERVER_MODE: 'False'
+    ports:
+      - "5050:80"
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+    networks:
+      - veri_network
+    depends_on:
+      - postgres
+    restart: unless-stopped
+
+  # Adminer - Universal DB GUI
+  adminer:
+    image: adminer:latest
+    container_name: veri_adminer
+    ports:
+      - "8080:8080"
+    networks:
+      - veri_network
+    environment:
+      ADMINER_DEFAULT_SERVER: postgres
+      ADMINER_DESIGN: pepa-linha
+    restart: unless-stopped
+
+  # ============================================
+  # WEEK 3: NoSQL Veritabanları
+  # ============================================
+
+  mongodb:
+    image: mongo:7.0
+    container_name: veri_mongodb
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: admin_pass
+      MONGO_INITDB_DATABASE: veri_db
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./week3-nosql/mongodb/init-scripts:/docker-entrypoint-initdb.d
+      - mongodb_data:/data/db
+      - mongodb_config:/data/configdb
+    networks:
+      - veri_network
+    healthcheck:
+      test: echo 'db.runCommand("ping").ok' | mongosh localhost:27017/test --quiet
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+  # Mongo Express - MongoDB GUI
+  mongo-express:
+    image: mongo-express:latest
+    container_name: veri_mongo_express
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: admin
+      ME_CONFIG_MONGODB_ADMINPASSWORD: admin_pass
+      ME_CONFIG_MONGODB_URL: mongodb://admin:admin_pass@mongodb:27017/
+      ME_CONFIG_BASICAUTH_USERNAME: admin
+      ME_CONFIG_BASICAUTH_PASSWORD: pass
+    ports:
+      - "8081:8081"
+    networks:
+      - veri_network
+    depends_on:
+      - mongodb
+    restart: unless-stopped
+
+  redis:
+    image: redis:7-alpine
+    container_name: veri_redis
+    command: redis-server --requirepass redis_pass --appendonly yes
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+      - ./week3-nosql/redis/redis.conf:/usr/local/etc/redis/redis.conf
+    networks:
+      - veri_network
+    healthcheck:
+      test: ["CMD", "redis-cli", "--raw", "incr", "ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+    restart: unless-stopped
+
+  # Redis Commander - Redis GUI
+  redis-commander:
+    image: rediscommander/redis-commander:latest
+    container_name: veri_redis_commander
+    environment:
+      REDIS_HOSTS: local:redis:6379:0:redis_pass
+    ports:
+      - "8082:8081"
+    networks:
+      - veri_network
+    depends_on:
+      - redis
+    restart: unless-stopped
+
+  cassandra:
+    image: cassandra:4.1
+    container_name: veri_cassandra
+    environment:
+      CASSANDRA_CLUSTER_NAME: VeriCluster
+      CASSANDRA_DC: DC1
+      CASSANDRA_RACK: RACK1
+      CASSANDRA_ENDPOINT_SNITCH: GossipingPropertyFileSnitch
+      CASSANDRA_NUM_TOKENS: 128
+    ports:
+      - "9042:9042"  # CQL
+      - "9160:9160"  # Thrift
+    volumes:
+      - cassandra_data:/var/lib/cassandra
+      - ./week3-nosql/cassandra/init-scripts:/docker-entrypoint-initdb.d
+    networks:
+      - veri_network
+    healthcheck:
+      test: ["CMD-SHELL", "[ $(nodetool statusgossip) = running ]"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    restart: unless-stopped
+
+  neo4j:
+    image: neo4j:5.15
+    container_name: veri_neo4j
+    environment:
+      NEO4J_AUTH: neo4j/password123
+      NEO4J_PLUGINS: '["apoc", "graph-data-science"]'
+      NEO4J_dbms_memory_heap_max__size: 1G
+      NEO4J_dbms_memory_pagecache_size: 512M
+    ports:
+      - "7474:7474"  # HTTP
+      - "7687:7687"  # Bolt
+    volumes:
+      - neo4j_data:/data
+      - neo4j_logs:/logs
+      - neo4j_plugins:/plugins
+      - ./week3-nosql/neo4j/init-scripts:/import
+    networks:
+      - veri_network
+    healthcheck:
+      test: ["CMD-SHELL", "wget --no-verbose --tries=1 --spider localhost:7474 || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+  # ============================================
+  # WEEK 4: Data Lake & Warehouse
+  # ============================================
+
+  # MinIO - S3 Compatible Object Storage (Data Lake)
+  minio:
+    image: minio/minio:latest
+    container_name: veri_minio
+    command: server /data --console-address ":9001"
+    environment:
+      MINIO_ROOT_USER: minioadmin
+      MINIO_ROOT_PASSWORD: minioadmin
+    ports:
+      - "9000:9000"  # API
+      - "9001:9001"  # Console
+    volumes:
+      - minio_data:/data
+    networks:
+      - veri_network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
+      interval: 30s
+      timeout: 20s
+      retries: 3
+    restart: unless-stopped
+
+  # Create MinIO buckets on startup
+  minio-client:
+    image: minio/mc:latest
+    container_name: veri_minio_client
+    depends_on:
+      - minio
+    networks:
+      - veri_network
+    entrypoint: >
+      /bin/sh -c "
+      sleep 10;
+      /usr/bin/mc alias set myminio http://minio:9000 minioadmin minioadmin;
+      /usr/bin/mc mb myminio/bronze --ignore-existing;
+      /usr/bin/mc mb myminio/silver --ignore-existing;
+      /usr/bin/mc mb myminio/gold --ignore-existing;
+      /usr/bin/mc mb myminio/raw-data --ignore-existing;
+      echo 'MinIO buckets created successfully';
+      exit 0;
+      "
+
+  # Apache Spark - Big Data Processing
+  spark-master:
+    image: bitnami/spark:3.5
+    container_name: veri_spark_master
+    environment:
+      SPARK_MODE: master
+      SPARK_RPC_AUTHENTICATION_ENABLED: no
+      SPARK_RPC_ENCRYPTION_ENABLED: no
+      SPARK_LOCAL_STORAGE_ENCRYPTION_ENABLED: no
+      SPARK_SSL_ENABLED: no
+    ports:
+      - "8083:8080"  # Spark Master Web UI
+      - "7077:7077"  # Spark Master
+    volumes:
+      - ./week4-datawarehouse/spark/jobs:/opt/spark-jobs
+      - ./week4-datawarehouse/spark/data:/opt/spark-data
+    networks:
+      - veri_network
+    restart: unless-stopped
+
+  spark-worker:
+    image: bitnami/spark:3.5
+    container_name: veri_spark_worker
+    environment:
+      SPARK_MODE: worker
+      SPARK_MASTER_URL: spark://spark-master:7077
+      SPARK_WORKER_MEMORY: 2G
+      SPARK_WORKER_CORES: 2
+      SPARK_RPC_AUTHENTICATION_ENABLED: no
+      SPARK_RPC_ENCRYPTION_ENABLED: no
+      SPARK_LOCAL_STORAGE_ENCRYPTION_ENABLED: no
+      SPARK_SSL_ENABLED: no
+    depends_on:
+      - spark-master
+    volumes:
+      - ./week4-datawarehouse/spark/jobs:/opt/spark-jobs
+      - ./week4-datawarehouse/spark/data:/opt/spark-data
+    networks:
+      - veri_network
+    restart: unless-stopped
+
+  # ============================================
+  # JUPYTER & ANALYTICS
+  # ============================================
+
+  jupyter:
+    image: jupyter/datascience-notebook:latest
+    container_name: veri_jupyter
+    ports:
+      - "8888:8888"
+    volumes:
+      - ./notebooks:/home/jovyan/work
+      - ./week1-intro:/home/jovyan/work/week1-intro
+      - ./week2-rdbms:/home/jovyan/work/week2-rdbms
+      - ./week3-nosql:/home/jovyan/work/week3-nosql
+      - ./week4-datawarehouse:/home/jovyan/work/week4-datawarehouse
+      - ./week5-advanced-sql:/home/jovyan/work/week5-advanced-sql
+    environment:
+      JUPYTER_ENABLE_LAB: "yes"
+      GRANT_SUDO: "yes"
+    networks:
+      - veri_network
+    user: root
+    restart: unless-stopped
+
+  # ============================================
+  # MONITORING & UTILITIES
+  # ============================================
+
+  # Portainer - Docker Management UI
+  portainer:
+    image: portainer/portainer-ce:latest
+    container_name: veri_portainer
+    ports:
+      - "9443:9443"
+      - "8000:8000"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - portainer_data:/data
+    networks:
+      - veri_network
+    restart: unless-stopped
+
+# ============================================
+# NETWORKS
+# ============================================
+networks:
+  veri_network:
+    driver: bridge
+    name: veri_network
+
+# ============================================
+# VOLUMES
+# ============================================
+volumes:
+  # Week 2 - RDBMS
+  postgres_data:
+    name: veri_postgres_data
+  mysql_data:
+    name: veri_mysql_data
+  pgadmin_data:
+    name: veri_pgadmin_data
+
+  # Week 3 - NoSQL
+  mongodb_data:
+    name: veri_mongodb_data
+  mongodb_config:
+    name: veri_mongodb_config
+  redis_data:
+    name: veri_redis_data
+  cassandra_data:
+    name: veri_cassandra_data
+  neo4j_data:
+    name: veri_neo4j_data
+  neo4j_logs:
+    name: veri_neo4j_logs
+  neo4j_plugins:
+    name: veri_neo4j_plugins
+
+  # Week 4 - Data Lake & Warehouse
+  minio_data:
+    name: veri_minio_data
+
+  # Utilities
+  portainer_data:
+    name: veri_portainer_data

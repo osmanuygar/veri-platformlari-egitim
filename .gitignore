@@ -1,0 +1,238 @@
+# ============================================
+# VERİ PLATFORMLARI EĞİTİM PROJESİ
+# .gitignore
+# ============================================
+
+# ============================================
+# ENVIRONMENT & SECRETS
+# ============================================
+.env
+.env.local
+.env.*.local
+*.key
+*.pem
+secrets/
+credentials/
+
+# ============================================
+# DOCKER
+# ============================================
+docker-compose.override.yml
+.docker/
+
+# ============================================
+# DATABASES - Local Data
+# ============================================
+*.db
+*.sqlite
+*.sqlite3
+*.sql.gz
+*.dump
+**/pgdata/
+**/mysql-data/
+**/mongo-data/
+**/redis-data/
+
+# ============================================
+# PYTHON
+# ============================================
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+*.manifest
+*.spec
+pip-log.txt
+pip-delete-this-directory.txt
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.log
+.git
+.mypy_cache/
+.dmypy.json
+dmypy.json
+.pyre/
+.pytype/
+cython_debug/
+
+# ============================================
+# JUPYTER NOTEBOOK
+# ============================================
+.ipynb_checkpoints
+*/.ipynb_checkpoints/*
+notebooks/.ipynb_checkpoints/
+*.ipynb_checkpoints
+
+# ============================================
+# VIRTUAL ENVIRONMENTS
+# ============================================
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+.venv
+
+# ============================================
+# IDE & EDITORS
+# ============================================
+# VSCode
+.vscode/
+*.code-workspace
+
+# PyCharm
+.idea/
+*.iml
+*.iws
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# Vi/Vim
+*.swp
+*.swo
+*~
+
+# Emacs
+*~
+\#*\#
+.\#*
+
+# ============================================
+# OS SPECIFIC
+# ============================================
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+._*
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+*.stackdump
+[Dd]esktop.ini
+$RECYCLE.BIN/
+*.cab
+*.msi
+*.msix
+*.msm
+*.msp
+*.lnk
+
+# Linux
+.directory
+.Trash-*
+.nfs*
+
+# ============================================
+# DATA FILES
+# ============================================
+# Large data files
+*.csv
+*.tsv
+*.json
+*.xml
+*.parquet
+*.avro
+*.orc
+!**/sample*.csv
+!**/test*.csv
+!**/example*.json
+
+# Compressed files
+*.zip
+*.tar.gz
+*.rar
+*.7z
+
+# ============================================
+# LOGS
+# ============================================
+*.log
+logs/
+*.log.*
+log/
+*.out
+
+# ============================================
+# TEMPORARY FILES
+# ============================================
+*.tmp
+*.temp
+*.bak
+*.backup
+*.old
+tmp/
+temp/
+
+# ============================================
+# DOCUMENTATION
+# ============================================
+docs/_build/
+site/
+
+# ============================================
+# TEST OUTPUTS
+# ============================================
+test-results/
+test-output/
+.pytest_cache/
+.coverage
+
+# ============================================
+# NODE (if using any JS tools)
+# ============================================
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# ============================================
+# CUSTOM PROJECT SPECIFIC
+# ============================================
+# Add your custom ignores here
+scratch/
+sandbox/
+personal-notes/
