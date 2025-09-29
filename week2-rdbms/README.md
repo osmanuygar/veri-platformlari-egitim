@@ -1120,4 +1120,4 @@ Verilen e-ticaret veritabanında:
 
 ---
 
-**[← Hafta 1'e Dön](./hafta1-veri-dunyasina-giris.md) | [Ana Sayfaya Dön](../README.md) | [Hafta 3'e Git →](../week3-nosql/README.md)**
+**[← Hafta 1'e Dön](../hafta1-intro/README.md) | [Ana Sayfaya Dön](../README.md) | [Hafta 3'e Git →](../week3-nosql/README.md)**
