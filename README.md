@@ -106,7 +106,7 @@ Hepsi başarılı dönerse, ortam hazır! 🎉
 
 ## 📖 Haftalık Müfredat
 
-### [Hafta 1: Veri Dünyasına Giriş](./docs/hafta1-veri-dunyasina-giris.md)
+### [Hafta 1: Veri Dünyasına Giriş](./week1-intro/)
 **Konular:**
 - Veri nedir? Veri vs Bilgi vs Bilgi
 - Veri türleri: Yapısal, yarı-yapısal, yapısal olmayan
@@ -124,7 +124,7 @@ Hepsi başarılı dönerse, ortam hazır! 🎉
 
 ---
 
-### [Hafta 2: Temel Veri Tabanı Kavramları](./docs/hafta2-temel-veritabani.md)
+### [Hafta 2: Temel Veri Tabanı Kavramları](./week2-rdbms/)
 **Konular:**
 - RDBMS nedir? İlişkisel model temelleri
 - ACID prensipleri (Atomicity, Consistency, Isolation, Durability)
@@ -156,7 +156,7 @@ docker exec -i veri_postgres psql -U veri_user -d veri_db < week2-rdbms/postgres
 
 ---
 
-### [Hafta 3: NoSQL ve NewSQL Yaklaşımı](./docs/hafta3-nosql-newsql.md)
+### [Hafta 3: NoSQL ve NewSQL Yaklaşımı](./week3-nosql/)
 **Konular:**
 - CAP Teoremi (Consistency, Availability, Partition Tolerance)
 - NoSQL kavramı ve BASE prensipleri
@@ -195,7 +195,7 @@ docker exec -it veri_redis redis-cli GET mykey
 
 ---
 
-### [Hafta 4: Veri Ambarları, Veri Gölleri ve Mimariler](./docs/hafta4-datawarehouse-datalake.md)
+### [Hafta 4: Veri Ambarları, Veri Gölleri ve Mimariler](./week4-datawarehouse/)
 **Konular:**
 - OLTP vs OLAP karşılaştırması
 - Veri Ambarı (Data Warehouse) mimarisi
@@ -236,7 +236,7 @@ python week4-datawarehouse/scripts/upload_to_lake.py
 
 ---
 
-### [Hafta 5: SQL ve İleri SQL ile Veri İşleme](./docs/hafta5-ileri-sql.md)
+### [Hafta 5: SQL ve İleri SQL ile Veri İşleme](./week5-advanced-sql)
 **Konular:**
 - Window Functions (ROW_NUMBER, RANK, DENSE_RANK, LEAD, LAG)
 - Common Table Expressions (CTE)
