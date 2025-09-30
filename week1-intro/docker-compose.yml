@@ -1,0 +1,27 @@
+
+version: '3.8'
+
+services:
+  jupyter:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: week1_jupyter
+    ports:
+      - "8888:8888"
+    volumes:
+      - ./data-samples:/app/data-samples
+      - ./scripts:/app/scripts
+      - ./notebooks:/app/notebooks
+      - ./output:/app/output
+    environment:
+      - JUPYTER_ENABLE_LAB=yes
+      - PYTHONUNBUFFERED=1
+    restart: unless-stopped
+    networks:
+      - week1_network
+
+networks:
+  week1_network:
+    name: week1_network
+    driver: bridge

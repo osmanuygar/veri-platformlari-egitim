@@ -832,63 +832,87 @@ print(df)
 
 ## 6. Alıştırmalar
 
-### Alıştırma 1: Veri Türlerini Tanımlama
-Aşağıdaki veri örneklerini yapısal, yarı-yapısal veya yapısal olmayan olarak sınıflandırın:
+```markdown
+# Hafta 1: Veri Dünyasına Giriş - Pratik Uygulama
 
-1. Bir e-ticaret sitesinin sipariş tablosu
-2. Twitter'dan çekilen JSON formatında tweetler
-3. Müşteri şikayet e-postaları
-4. CSV formatında satış verileri
-5. Güvenlik kamerası video kayıtları
-6. XML formatında RSS feed
-7. Kullanıcı profil fotoğrafları
-8. PostgreSQL veritabanındaki müşteri kayıtları
+## 🚀 Hızlı Başlangıç
 
-**[Çözümler için tıklayın](./exercises/solutions/exercise1-solution.md)**
-
-### Alıştırma 2: Veri Kaynakları Analizi
-Bir e-ticaret şirketi için:
-1. En az 5 iç veri kaynağı listeleyin
-2. En az 5 dış veri kaynağı listeleyin
-3. Her kaynaktan hangi tür verilerin gelebileceğini açıklayın
-4. Bu verilerin nasıl entegre edilebileceğini öneride bulunun
-
-### Alıştırma 3: Veri Kalitesi Testi
-Verilen `sample_data.csv` dosyası için:
-1. Eksik değerleri tespit edin
-2. Tekrar eden kayıtları bulun
-3. Veri tiplerini kontrol edin
-4. Outlier'ları tespit edin
-5. Bir veri kalitesi raporu hazırlayın
+### Adım 1: Projeyi Klonlayın veya İndirin
 
 ```bash
-cd week1-intro/exercises/
-python data_quality_exercise.py
+cd veri-platformlari-egitim/week1-intro
 ```
 
-### Alıştırma 4: Veri Dönüşümü
-JSON formatındaki API yanıtını düzenli bir DataFrame'e dönüştürün:
+### Adım 2: Docker Container'ı Başlatın
 
-```python
-# exercises/data_transformation.py dosyasını düzenleyin
-import pandas as pd
-import json
+```bash
+# Container'ı build et ve başlat
+docker-compose up --build -d
 
-# JSON dosyasını okuyun
-with open('api_response.json') as f:
-    data = json.load(f)
-
-# TODO: DataFrame'e dönüştürün
-# TODO: Nested yapıları düzleştirin
-# TODO: Veri tiplerini düzeltin
-# TODO: CSV olarak kaydedin
+# Logları izle
+docker-compose logs -f
 ```
 
-### Alıştırma 5: Tarihsel Araştırma
-1. İlişkisel model öncesi veri yönetiminin zorluklarını araştırın
-2. Edgar F. Codd'un ilişkisel modelin 12 kuralını öğrenin
-3. NoSQL'in ortaya çıkış nedenlerini kendi cümlelerinizle açıklayın
-4. Geleceğin veri platformları hakkında tahminde bulunun
+### Adım 3: Jupyter Lab'e Erişin
+
+Tarayıcınızda açın: **http://localhost:8888**
+
+### Adım 4: Örnek Veri Oluşturun
+
+Jupyter terminal'de:
+
+```bash
+python /app/scripts/generate_sample_data.py
+```
+
+### Adım 5: Veri Kalitesi Kontrolü
+
+```bash
+python /app/scripts/data_quality_checker.py
+```
+
+## 📚 Jupyter Notebook'ları
+
+1. **01-data-types-exploration.ipynb** - Veri türlerini keşfedin
+2. **02-data-quality-check.ipynb** - Veri kalitesi analizi
+3. **03-data-sources-demo.ipynb** - Farklı kaynaklardan veri çekme
+
+## 🛠️ Yararlı Komutlar
+
+```bash
+# Container'a shell ile bağlan
+docker exec -it week1_jupyter bash
+
+# Container'ı durdur
+docker-compose down
+
+# Container'ı sil (volumes dahil)
+docker-compose down -v
+
+# Logları görüntüle
+docker-compose logs jupyter
+
+# Container'ı yeniden başlat
+docker-compose restart
+```
+
+## 📊 Oluşturulan Veri Dosyaları
+
+- `data-samples/structured/customers.csv` - 1,000 müşteri
+- `data-samples/structured/sales.csv` - 5,000 satış kaydı
+- `data-samples/structured/products.csv` - 200 ürün
+- `data-samples/semi-structured/api-response.json` - API yanıtı
+- `data-samples/semi-structured/config.xml` - XML config
+- `data-samples/unstructured/sample.txt` - Metin dosyası
+
+## 🎯 Öğrenme Hedefleri
+
+✅ Farklı veri türlerini tanıma ve işleme  
+✅ Veri kalitesi kontrolü yapma  
+✅ Python ile veri analizi  
+✅ Pandas, NumPy, Matplotlib kullanımı  
+✅ Docker environment'ında çalışma  
+
 
 ---
 
@@ -951,5 +975,5 @@ Bu haftada öğrendiklerimiz:
 ---
 
 
-[← Ana Sayfaya Dön](../README.md) 
+[← Ana Sayfaya Dön](../README.md) | [Hafta 2'e Git →](../week2-rdms/README.md)**
 

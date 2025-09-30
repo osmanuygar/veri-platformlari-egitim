@@ -1,0 +1,35 @@
+# Jupyter
+jupyter==1.0.0
+jupyterlab==4.0.9
+ipywidgets==8.1.1
+
+# Data Analysis
+pandas==2.1.4
+numpy==1.26.2
+matplotlib==3.8.2
+seaborn==0.13.0
+plotly==5.18.0
+
+# File Processing
+openpyxl==3.1.2        # Excel files
+xlrd==2.0.1            # Old Excel files
+PyPDF2==3.0.1          # PDF files
+python-docx==1.1.0     # Word files
+lxml==4.9.3            # XML processing
+beautifulsoup4==4.12.2 # HTML/XML parsing
+
+# Data Quality
+great-expectations==0.18.8
+
+# API & Web
+requests==2.31.0
+urllib3==2.1.0
+
+# Database connectivity (opsiyonel, ileri haftalar için)
+psycopg2-binary==2.9.9
+pymongo==4.6.1
+redis==5.0.1
+
+# Utilities
+python-dotenv==1.0.0
+Faker==22.0.0          # Fake data generation
