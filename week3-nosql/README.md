@@ -456,4 +456,4 @@ Farklı senaryolar için veritabanı seçimi
 
 ---
 
-**[← Hafta 2](../week2-rdms/README.md) | [Ana Sayfa](../README.md) | [Hafta 4 →](../week4-datawarehouse/README.md)**
+**[← Hafta 2](../week2-rdbms/README.md) | [Ana Sayfa](../README.md) | [Hafta 4 →](../week4-datawarehouse/README.md)**
