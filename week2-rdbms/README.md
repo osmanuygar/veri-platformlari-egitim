@@ -1090,25 +1090,57 @@ conn.close()
 
 ## 8. Alıştırmalar
 
-### Alıştırma 1: E-Ticaret Veritabanı Tasarımı
-Aşağıdaki tablolar için tam şema oluşturun:
-- musteriler
-- urunler
-- kategoriler
-- siparisler
-- siparis_detaylari
+### Adım 1: Projeyi Klonlayın veya İndirin
 
-**[Çözüm için tıklayın](./exercises/solutions/exercise1-solution.sql)**
+```bash
+cd veri-platformlari-egitim/week2-rdms
+```
 
-### Alıştırma 2: ACID Transaction
-Para transferi senaryosu oluşturun ve test edin.
+### Adım 2: Docker Container'ı Başlatın
 
-### Alıştırma 3: Kompleks Sorgular
-Verilen e-ticaret veritabanında:
-1. En çok satan 10 ürünü bulun
-2. Müşteri bazında toplam harcamaları hesaplayın
-3. Kategori bazında ortalama fiyatları bulun
+```bash
+# Container'ı build et ve başlat
+docker-compose up --build -d
 
+# Logları izle
+docker-compose logs -f
+```
+
+### Adım 3: pgadmin4
+
+Tarayıcınızda açın: **http://localhost:5050/**
+Buradan Docker içindeki PostgreSQL'e bağlanabilirsiniz. Ayrıca pgadmin4'ü kullanarak veritabanınızı yönetebilirsiniz.
+
+
+
+### Adım 4: adminer
+
+Tarayıcınızda açın: **http://localhost:8080/**
+Buradan Docker içindeki PostgreSQL'e bağlanabilirsiniz. Ayrıca adminer'i kullanarak veritabanınızı yönetebilirsiniz.
+
+### Adım 4: Backup Alın
+
+```bash
+bash scripts/backup-all.sh
+```
+
+```markdown
+OUTPUT:
+💾 Yedekleme başlatılıyor...
+Error response from daemon: No such container: postgres
+✅ PostgreSQL yedeklendi
+🎉 Tüm yedeklemeler tamamlandı: backups/20250930_181101
+```
+### Adım 4: Python ile Bağlanın
+
+```bash
+pip install -r requirements.txt
+python connect_postgres.py 
+
+vy
+
+Jupyter notebook ile çalışmak isterseniz: Week1-rdms deki Notebook'u açabilirsiniz.
+```
 ---
 
 ## 9. Kaynaklar
