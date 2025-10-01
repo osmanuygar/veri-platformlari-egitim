@@ -1,0 +1,171 @@
+version: '3.8'
+
+services:
+  # ============================================
+  # MongoDB - Document Store
+  # ============================================
+  mongodb:
+    image: mongo:7.0
+    container_name: veri_mongodb
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: admin_pass
+      MONGO_INITDB_DATABASE: ecommerce
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+      - ./week3-nosql/mongodb:/docker-entrypoint-initdb.d:ro
+    networks:
+      - nosql_network
+    healthcheck:
+      test: echo 'db.runCommand("ping").ok' | mongosh localhost:27017/test --quiet
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ============================================
+  # Mongo Express - MongoDB Web GUI
+  # ============================================
+  mongo-express:
+    image: mongo-express:1.0.2
+    container_name: mongo_express
+    restart: unless-stopped
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: admin
+      ME_CONFIG_MONGODB_ADMINPASSWORD: admin_pass
+      ME_CONFIG_MONGODB_URL: mongodb://admin:admin_pass@mongodb:27017/
+      ME_CONFIG_BASICAUTH_USERNAME: admin
+      ME_CONFIG_BASICAUTH_PASSWORD: admin_pass
+    ports:
+      - "8081:8081"
+    depends_on:
+      mongodb:
+        condition: service_healthy
+    networks:
+      - nosql_network
+
+  # ============================================
+  # Redis - Key-Value Store
+  # ============================================
+  redis:
+    image: redis:7.2-alpine
+    container_name: veri_redis
+    restart: unless-stopped
+    command: redis-server --appendonly yes --requirepass redis_pass
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - nosql_network
+    healthcheck:
+      test: ["CMD", "redis-cli", "--raw", "incr", "ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+
+  # ============================================
+  # Redis Commander - Redis Web GUI (Optional)
+  # ============================================
+  redis-commander:
+    image: rediscommander/redis-commander:latest
+    container_name: redis_commander
+    restart: unless-stopped
+    environment:
+      REDIS_HOSTS: local:redis:6379:0:redis_pass
+    ports:
+      - "8082:8081"
+    depends_on:
+      redis:
+        condition: service_healthy
+    networks:
+      - nosql_network
+    profiles:
+      - gui
+
+  # ============================================
+  # Cassandra - Column-Family Store
+  # ============================================
+  cassandra:
+    image: cassandra:4.1
+    container_name: veri_cassandra
+    restart: unless-stopped
+    environment:
+      CASSANDRA_CLUSTER_NAME: "VeriCluster"
+      CASSANDRA_DC: "DC1"
+      CASSANDRA_ENDPOINT_SNITCH: "GossipingPropertyFileSnitch"
+      MAX_HEAP_SIZE: "512M"
+      HEAP_NEWSIZE: "128M"
+    ports:
+      - "9042:9042"  # CQL Native Transport
+      - "7000:7000"  # Inter-node cluster communication
+      - "7199:7199"  # JMX
+    volumes:
+      - cassandra_data:/var/lib/cassandra
+      - ./week3-nosql/cassandra:/docker-entrypoint-initdb.d:ro
+    networks:
+      - nosql_network
+    healthcheck:
+      test: ["CMD", "cqlsh", "-e", "describe keyspaces"]
+      interval: 30s
+      timeout: 10s
+      retries: 10
+      start_period: 60s
+
+  # ============================================
+  # Neo4j - Graph Database
+  # ============================================
+  neo4j:
+    image: neo4j:5.13-community
+    container_name: veri_neo4j
+    restart: unless-stopped
+    environment:
+      NEO4J_AUTH: neo4j/password123
+      NEO4J_PLUGINS: '["apoc", "graph-data-science"]'
+      NEO4J_dbms_security_procedures_unrestricted: "apoc.*,gds.*"
+      NEO4J_dbms_memory_heap_initial__size: "512m"
+      NEO4J_dbms_memory_heap_max__size: "1G"
+      NEO4J_dbms_memory_pagecache_size: "512m"
+    ports:
+      - "7474:7474"  # HTTP
+      - "7687:7687"  # Bolt
+    volumes:
+      - neo4j_data:/data
+      - neo4j_logs:/logs
+      - neo4j_plugins:/plugins
+      - ./week3-nosql/neo4j:/import:ro
+    networks:
+      - nosql_network
+    healthcheck:
+      test: ["CMD-SHELL", "wget --no-verbose --tries=1 --spider localhost:7474 || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+# ============================================
+# Networks
+# ============================================
+networks:
+  nosql_network:
+    name: nosql_network
+    driver: bridge
+
+# ============================================
+# Volumes
+# ============================================
+volumes:
+  mongodb_data:
+    name: mongodb_data
+  redis_data:
+    name: redis_data
+  cassandra_data:
+    name: cassandra_data
+  neo4j_data:
+    name: neo4j_data
+  neo4j_logs:
+    name: neo4j_logs
+  neo4j_plugins:
+    name: neo4j_plugins

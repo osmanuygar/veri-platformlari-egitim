@@ -90,183 +90,225 @@ Node 2: x = 10  ❌ Inconsistent!
 
 ### 3.1 Document Store (Belge Tabanlı)
 
-#### MongoDB Örneği
+## 📗 MongoDB - Document Store
 
-**Veri Modeli:**
-```javascript
-{
-  "_id": ObjectId("507f1f77bcf86cd799439011"),
-  "ad": "Ahmet",
-  "soyad": "Yılmaz",
-  "email": "ahmet@example.com",
-  "adres": {
-    "sehir": "Istanbul",
-    "ilce": "Kadikoy"
-  },
-  "siparisler": [
-    {
-      "siparis_no": "ORD-001",
-      "tutar": 450.50
-    }
-  ]
-}
-```
+### Temel Kavramlar
 
-**CRUD İşlemleri:**
-```javascript
-// CREATE
-db.musteriler.insertOne({
-  ad: "Mehmet",
-  soyad: "Kaya",
-  email: "mehmet@example.com"
-});
+- **Database:** Veritabanı
+- **Collection:** Tablo benzeri (ama schema-less)
+- **Document:** JSON benzeri doküman (BSON)
+- **Field:** Alan
 
-// READ
-db.musteriler.find({ "adres.sehir": "Istanbul" });
-
-// UPDATE
-db.musteriler.updateOne(
-  { email: "ahmet@example.com" },
-  { $set: { aktif: false } }
-);
-
-// DELETE
-db.musteriler.deleteOne({ email: "test@example.com" });
-```
-
-### 3.2 Key-Value Store
-
-#### Redis Örneği
+### Kurulum ve Bağlantı
 
 ```bash
-# String operations
-SET user:1000:name "Ahmet Yilmaz"
-GET user:1000:name
+# Docker ile
+docker-compose up -d mongodb mongo-express
 
-# Lists
-LPUSH queue:emails "email1@example.com"
-RPOP queue:emails
+# MongoDB'ye bağlan
+docker exec -it veri_mongodb mongosh
 
-# Sets
-SADD tags:post:1 "python" "redis" "nosql"
-SMEMBERS tags:post:1
-
-# Sorted Sets (Leaderboard)
-ZADD leaderboard 1500 "player:1"
-ZREVRANGE leaderboard 0 9 WITHSCORES
-
-# Hash
-HSET user:1000 name "Ahmet" email "ahmet@example.com"
-HGETALL user:1000
+# Veya Mongo Express GUI
+# http://localhost:8081
 ```
 
-### 3.3 Column-Family Store
+### Temel Komutlar
 
-#### Cassandra Örneği
+```javascript
+// Database seç
+use ecommerce
+
+// Collection oluştur
+db.createCollection("products")
+
+// Doküman ekle
+db.products.insertOne({
+  name: "Laptop",
+  price: 15000,
+  category: "Electronics",
+  specs: {
+    ram: "16GB",
+    cpu: "Intel i7"
+  },
+  tags: ["computer", "portable"]
+})
+
+// Sorgula
+db.products.find({ category: "Electronics" })
+
+// Güncelle
+db.products.updateOne(
+  { name: "Laptop" },
+  { $set: { price: 14000 } }
+)
+
+// Sil
+db.products.deleteOne({ name: "Laptop" })
+```
+
+**Ne zaman kullanılır?**
+- Esnek schema gerektiğinde
+- Hiyerarşik veri yapıları
+- Hızlı geliştirme
+- Content management sistemleri
+
+## 🔴 Redis - Key-Value Store
+
+### Temel Kavramlar
+
+- **Key:** Benzersiz anahtar
+- **Value:** String, List, Set, Hash, Sorted Set
+- **In-memory:** Veriler RAM'de
+- **Persistence:** Opsiyonel disk yazma
+
+### Kurulum ve Bağlantı
+
+```bash
+# Redis'e bağlan
+docker exec -it veri_redis redis-cli
+
+# Test
+PING  # Yanıt: PONG
+```
+
+### Temel Komutlar
+
+```redis
+# String
+SET user:1000 "John Doe"
+GET user:1000
+EXPIRE user:1000 3600  # 1 saat sonra sil
+
+# Hash (nesne benzeri)
+HSET product:1 name "Laptop" price 15000
+HGET product:1 name
+HGETALL product:1
+
+# List (kuyruk/stack)
+LPUSH queue:jobs "job1"
+RPUSH queue:jobs "job2"
+LPOP queue:jobs
+
+# Set (benzersiz değerler)
+SADD tags:product:1 "electronic" "portable"
+SMEMBERS tags:product:1
+
+# Sorted Set (sıralı)
+ZADD leaderboard 100 "player1" 200 "player2"
+ZRANGE leaderboard 0 -1 WITHSCORES
+```
+
+**Ne zaman kullanılır?**
+- Cache (önbellekleme)
+- Session yönetimi
+- Real-time analytics
+- Message queue
+- Rate limiting
+
+## 📊 Cassandra - Column-Family Store
+
+### Temel Kavramlar
+
+- **Keyspace:** Database benzeri
+- **Table:** Tablo
+- **Row:** Satır
+- **Column:** Sütun (dinamik)
+- **Partition Key:** Verinin dağıtım anahtarı
+
+### Kurulum ve Bağlantı
+
+```bash
+# Cassandra'ya bağlan
+docker exec -it veri_cassandra cqlsh
+
+# Test
+DESCRIBE KEYSPACES;
+```
+
+### Temel Komutlar
 
 ```cql
--- Keyspace oluşturma
-CREATE KEYSPACE iot_data
-WITH replication = {
+-- Keyspace oluştur
+CREATE KEYSPACE iot WITH replication = {
   'class': 'SimpleStrategy',
-  'replication_factor': 3
+  'replication_factor': 1
 };
 
--- Tablo oluşturma
-CREATE TABLE sensor_readings (
+USE iot;
+
+-- Tablo oluştur
+CREATE TABLE sensor_data (
   sensor_id UUID,
-  reading_time TIMESTAMP,
+  timestamp TIMESTAMP,
   temperature DOUBLE,
   humidity DOUBLE,
-  PRIMARY KEY (sensor_id, reading_time)
-) WITH CLUSTERING ORDER BY (reading_time DESC);
+  PRIMARY KEY (sensor_id, timestamp)
+) WITH CLUSTERING ORDER BY (timestamp DESC);
 
--- INSERT
-INSERT INTO sensor_readings (sensor_id, reading_time, temperature, humidity)
-VALUES (uuid(), toTimestamp(now()), 22.5, 65.3);
+-- Veri ekle
+INSERT INTO sensor_data (sensor_id, timestamp, temperature, humidity)
+VALUES (uuid(), toTimestamp(now()), 22.5, 65.0);
 
--- SELECT
-SELECT * FROM sensor_readings
-WHERE sensor_id = 123e4567-e89b-12d3-a456-426614174000
-AND reading_time > '2025-01-01';
+-- Sorgula
+SELECT * FROM sensor_data 
+WHERE sensor_id = <uuid>
+AND timestamp > '2025-01-01';
 ```
 
-### 3.4 Graph Database (Grafik Veritabanı)
+**Ne zaman kullanılır?**
+- Time-series veriler
+- IoT sensör verileri
+- Log ve event tracking
+- Yüksek yazma performansı gerektiğinde
 
-#### Özellikler
-- Node'lar ve relationship'ler
-- Hızlı graph traversal
-- İlişki-odaklı sorgular
-- Pattern matching
+## 🕸️ Neo4j - Graph Database
 
-#### Neo4j Örneği
+### Temel Kavramlar
 
-**Docker ile Başlatma:**
+- **Node:** Varlık (entity)
+- **Relationship:** İlişki
+- **Property:** Özellik
+- **Label:** Etiket/tip
+
+### Kurulum ve Bağlantı
+
 ```bash
-docker-compose up -d neo4j
-# Browser: http://localhost:7474
+# Neo4j Browser
+# http://localhost:7474
+# bolt://localhost:7687
+# Kullanıcı: neo4j
+# Şifre: password123
 ```
 
-**Veri Modeli:**
+### Temel Komutlar (Cypher)
+
 ```cypher
--- Node oluşturma
-CREATE (a:Person {name: 'Ahmet', age: 30, city: 'Istanbul'})
-CREATE (m:Person {name: 'Mehmet', age: 28, city: 'Ankara'})
-CREATE (f:Person {name: 'Fatma', age: 32, city: 'Izmir'})
+// Node oluştur
+CREATE (u:User {name: 'Alice', age: 30})
+CREATE (u:User {name: 'Bob', age: 25})
 
--- Relationship oluşturma
-MATCH (a:Person {name: 'Ahmet'}), (m:Person {name: 'Mehmet'})
-CREATE (a)-[:FRIEND_OF {since: 2020}]->(m)
+// İlişki oluştur
+MATCH (a:User {name: 'Alice'})
+MATCH (b:User {name: 'Bob'})
+CREATE (a)-[:FOLLOWS]->(b)
 
--- Film ve rating
-CREATE (movie:Movie {title: 'Inception', year: 2010})
-MATCH (a:Person {name: 'Ahmet'}), (m:Movie {title: 'Inception'})
-CREATE (a)-[:RATED {score: 9.5, date: date()}]->(m)
+// Sorgula
+MATCH (u:User)-[:FOLLOWS]->(friend)
+WHERE u.name = 'Alice'
+RETURN friend.name
+
+// Öneri algoritması
+MATCH (u:User {name: 'Alice'})-[:FOLLOWS]->()-[:FOLLOWS]->(recommendation)
+WHERE NOT (u)-[:FOLLOWS]->(recommendation)
+RETURN DISTINCT recommendation.name
 ```
 
-**Graph Sorguları:**
-```cypher
--- Ahmet'in arkadaşlarını bul
-MATCH (a:Person {name: 'Ahmet'})-[:FRIEND_OF]->(friend)
-RETURN friend.name, friend.age
-
--- Arkadaşların arkadaşları (2 derece)
-MATCH (a:Person {name: 'Ahmet'})-[:FRIEND_OF*2]->(fof)
-RETURN DISTINCT fof.name
-
--- En kısa yol
-MATCH path = shortestPath(
-  (a:Person {name: 'Ahmet'})-[:FRIEND_OF*]-(m:Person {name: 'Mehmet'})
-)
-RETURN path
-
--- Ortak arkadaş bulma
-MATCH (a:Person {name: 'Ahmet'})-[:FRIEND_OF]-(mutual)-[:FRIEND_OF]-(b:Person {name: 'Mehmet'})
-RETURN mutual.name
-
--- Film önerisi
-MATCH (me:Person {name: 'Ahmet'})-[:FRIEND_OF]->(friend)-[:RATED]->(movie:Movie)
-WHERE friend.score >= 8
-RETURN movie.title, AVG(friend.score) as avg_rating
-ORDER BY avg_rating DESC
-LIMIT 5
-```
-
-**Avantajlar:**
-- ✅ İlişki sorguları çok hızlı
-- ✅ Pattern matching
-- ✅ Graph algoritmaları
-
-**Dezavantajlar:**
-- ❌ Yatay ölçeklendirme zor
-- ❌ Memory intensive
-
-**Kullanım Alanları:**
+**Ne zaman kullanılır?**
 - Sosyal ağlar
 - Öneri sistemleri
 - Fraud detection
+- Network analizi
 - Knowledge graphs
-
 ---
 
 ## 4. Dağıtık Sistemler ve Ölçeklenebilirlik
