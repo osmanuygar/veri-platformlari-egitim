@@ -24,7 +24,22 @@
 C + A + P → Sadece 2 Tanesini Seçebilirsin!
 ```
 
-### 1.2 Üç Özellik
+### 1.2 CAP Trade-offs
+```
+       C (Consistency)
+            /\
+           /  \
+          /    \
+         /  CA  \
+        /________\
+       /\        /\
+      /  \  CP  /  \
+     / AP \    / PA \
+    /______\  /______\
+   A                  P
+```
+
+### 1.3 Üç Özellik
 
 #### C - Consistency (Tutarlılık)
 **Tanım:** Tüm node'lar aynı anda aynı veriyi görür. Her okuma en son yazılan veriyi döner.
