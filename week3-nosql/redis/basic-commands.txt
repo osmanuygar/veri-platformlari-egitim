@@ -1,0 +1,40 @@
+# Redis Temel Komutlar Cheat Sheet
+
+# ========== STRING ==========
+SET key value
+GET key
+INCR counter
+DECR counter
+EXPIRE key seconds
+TTL key
+
+# ========== HASH ==========
+HSET user:1000 name "John" age 30
+HGET user:1000 name
+HGETALL user:1000
+HDEL user:1000 age
+
+# ========== LIST ==========
+LPUSH mylist "first"
+RPUSH mylist "last"
+LRANGE mylist 0 -1
+LPOP mylist
+RPOP mylist
+
+# ========== SET ==========
+SADD myset "a" "b" "c"
+SMEMBERS myset
+SISMEMBER myset "a"
+SREM myset "b"
+
+# ========== SORTED SET ==========
+ZADD leaderboard 100 "player1"
+ZRANGE leaderboard 0 -1 WITHSCORES
+ZRANK leaderboard "player1"
+
+# ========== UTILITY ==========
+KEYS *
+DEL key
+EXISTS key
+TYPE key
+FLUSHALL  # Dikkat: Tüm verileri siler!
