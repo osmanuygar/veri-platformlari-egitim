@@ -1139,7 +1139,7 @@ python connect_postgres.py
 
 vy
 
-Jupyter notebook ile çalışmak isterseniz: Week1-rdms deki Notebook'u açabilirsiniz.
+Jupyter notebook ile çalışmak isterseniz: Week1-rdms deki Notebooku açabilirsiniz.
 ```
 ---
 
@@ -1152,4 +1152,4 @@ Jupyter notebook ile çalışmak isterseniz: Week1-rdms deki Notebook'u açabili
 
 ---
 
-**[← Hafta 1'e Dön](../hafta1-intro/README.md) | [Ana Sayfaya Dön](../README.md) | [Hafta 3'e Git →](../week3-nosql/README.md)**
+**[← Hafta 1'e Dön](../hafta1-intro) | [Ana Sayfaya Dön](../README.md) | [Hafta 3'e Git →](../week3-nosql/README.md)**

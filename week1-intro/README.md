@@ -871,11 +871,6 @@ python /app/scripts/generate_sample_data.py
 python /app/scripts/data_quality_checker.py
 ```
 
-## 📚 Jupyter Notebook'ları
-
-1. **01-data-types-exploration.ipynb** - Veri türlerini keşfedin
-2. **02-data-quality-check.ipynb** - Veri kalitesi analizi
-3. **03-data-sources-demo.ipynb** - Farklı kaynaklardan veri çekme
 
 ## 🛠️ Yararlı Komutlar
 
@@ -975,5 +970,5 @@ Bu haftada öğrendiklerimiz:
 ---
 
 
-[← Ana Sayfaya Dön](../README.md) | [Hafta 2'e Git →](../week2-rdms/README.md)**
+[← Ana Sayfaya Dön](../README.md) | [Hafta 2'e Git →](../week2-rdbms/README.md)**
 
