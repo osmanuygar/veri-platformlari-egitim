@@ -1,0 +1,82 @@
+[
+  {
+    "product_id": 1,
+    "product_name": "Laptop",
+    "category": "Electronics",
+    "price": 15000.00,
+    "stock": 50,
+    "brand": "TechBrand"
+  },
+  {
+    "product_id": 2,
+    "product_name": "Mouse",
+    "category": "Electronics",
+    "price": 150.00,
+    "stock": 200,
+    "brand": "TechBrand"
+  },
+  {
+    "product_id": 3,
+    "product_name": "Keyboard",
+    "category": "Electronics",
+    "price": 450.00,
+    "stock": 150,
+    "brand": "TechBrand"
+  },
+  {
+    "product_id": 4,
+    "product_name": "Monitor",
+    "category": "Electronics",
+    "price": 3500.00,
+    "stock": 75,
+    "brand": "ViewMax"
+  },
+  {
+    "product_id": 5,
+    "product_name": "Desk Chair",
+    "category": "Furniture",
+    "price": 1200.00,
+    "stock": 30,
+    "brand": "ComfortSeating"
+  },
+  {
+    "product_id": 6,
+    "product_name": "Desk Lamp",
+    "category": "Furniture",
+    "price": 250.00,
+    "stock": 100,
+    "brand": "BrightLight"
+  },
+  {
+    "product_id": 7,
+    "product_name": "Notebook",
+    "category": "Stationery",
+    "price": 25.00,
+    "stock": 500,
+    "brand": "PaperPro"
+  },
+  {
+    "product_id": 8,
+    "product_name": "Pen Set",
+    "category": "Stationery",
+    "price": 75.00,
+    "stock": 300,
+    "brand": "WriteWell"
+  },
+  {
+    "product_id": 9,
+    "product_name": "USB Cable",
+    "category": "Electronics",
+    "price": 50.00,
+    "stock": 400,
+    "brand": "TechBrand"
+  },
+  {
+    "product_id": 10,
+    "product_name": "Webcam",
+    "category": "Electronics",
+    "price": 800.00,
+    "stock": 60,
+    "brand": "ViewMax"
+  }
+]

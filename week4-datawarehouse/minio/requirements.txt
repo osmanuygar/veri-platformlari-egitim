@@ -1,0 +1,15 @@
+# MinIO Client
+minio==7.2.0
+boto3==1.34.14
+
+# Data Processing
+pandas==2.1.4
+numpy==1.26.2
+pyarrow==14.0.1
+
+# Iceberg Support
+pyiceberg==0.5.1
+
+# Utils
+python-dotenv==1.0.0
+colorlog==6.8.0

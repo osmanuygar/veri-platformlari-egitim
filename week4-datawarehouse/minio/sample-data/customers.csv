@@ -1,0 +1,11 @@
+customer_id,first_name,last_name,email,phone,city,country,registration_date
+1,Ahmet,Yılmaz,ahmet.yilmaz@example.com,+905551234567,Istanbul,Turkey,2023-01-15
+2,Ayşe,Demir,ayse.demir@example.com,+905552345678,Ankara,Turkey,2023-02-20
+3,Mehmet,Kaya,mehmet.kaya@example.com,+905553456789,Izmir,Turkey,2023-03-10
+4,Fatma,Çelik,fatma.celik@example.com,+905554567890,Bursa,Turkey,2023-04-05
+5,Ali,Şahin,ali.sahin@example.com,+905555678901,Antalya,Turkey,2023-05-12
+6,Zeynep,Arslan,zeynep.arslan@example.com,+905556789012,Adana,Turkey,2023-06-18
+7,Can,Öztürk,can.ozturk@example.com,+905557890123,Gaziantep,Turkey,2023-07-22
+8,Elif,Aydın,elif.aydin@example.com,+905558901234,Konya,Turkey,2023-08-30
+9,Burak,Yıldız,burak.yildiz@example.com,+905559012345,Mersin,Turkey,2023-09-14
+10,Selin,Taş,selin.tas@example.com,+905550123456,Kayseri,Turkey,2023-10-08
