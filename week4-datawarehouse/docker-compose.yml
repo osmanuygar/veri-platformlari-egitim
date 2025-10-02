@@ -1,0 +1,431 @@
+version: '3.8'
+
+services:
+  # ============================================
+  # PostgreSQL OLTP (Transactional Database)
+  # ============================================
+  postgres-oltp:
+    image: postgres:16-alpine
+    container_name: postgres_oltp
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: oltp_user
+      POSTGRES_PASSWORD: oltp_pass
+      POSTGRES_DB: ecommerce_oltp
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_oltp_data:/var/lib/postgresql/data
+      - ./oltp/init:/docker-entrypoint-initdb.d:ro
+    networks:
+      - datawarehouse_network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U oltp_user -d ecommerce_oltp"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ============================================
+  # PostgreSQL OLAP (Analytical Database)
+  # ============================================
+  postgres-olap:
+    image: postgres:16-alpine
+    container_name: postgres_olap
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: olap_user
+      POSTGRES_PASSWORD: olap_pass
+      POSTGRES_DB: ecommerce_olap
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_olap_data:/var/lib/postgresql/data
+      - ./olap/init:/docker-entrypoint-initdb.d:ro
+    networks:
+      - datawarehouse_network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U olap_user -d ecommerce_olap"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ============================================
+  # pgAdmin - PostgreSQL Web GUI
+  # ============================================
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: pgadmin
+    restart: unless-stopped
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@datawarehouse.com
+      PGADMIN_DEFAULT_PASSWORD: admin123
+      PGADMIN_CONFIG_SERVER_MODE: 'False'
+    ports:
+      - "5050:80"
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+    networks:
+      - datawarehouse_network
+    depends_on:
+      postgres-oltp:
+        condition: service_healthy
+      postgres-olap:
+        condition: service_healthy
+
+  # ============================================
+  # MinIO - Data Lake (S3 Compatible Storage)
+  # ============================================
+  minio:
+    image: minio/minio:latest
+    container_name: minio
+    restart: unless-stopped
+    command: server /data --console-address ":9001"
+    environment:
+      MINIO_ROOT_USER: minio_admin
+      MINIO_ROOT_PASSWORD: minio_password123
+    ports:
+      - "9000:9000"  # API
+      - "9001:9001"  # Console
+    volumes:
+      - minio_data:/data
+      - ./minio/sample-data:/sample-data:ro
+    networks:
+      - datawarehouse_network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
+      interval: 30s
+      timeout: 20s
+      retries: 3
+
+  # MinIO için bucket oluşturma
+  minio-init:
+    image: minio/mc:latest
+    container_name: minio_init
+    depends_on:
+      minio:
+        condition: service_healthy
+    networks:
+      - datawarehouse_network
+    entrypoint: >
+      /bin/sh -c "
+      mc alias set myminio http://minio:9000 minio_admin minio_password123;
+      mc mb myminio/raw-data;
+      mc mb myminio/processed-data;
+      mc mb myminio/backups;
+      mc policy set download myminio/raw-data;
+      echo 'Buckets created successfully';
+      "
+
+  # ============================================
+  # Apache Spark Master
+  # ============================================
+  spark-master:
+    image: bitnami/spark:3.5
+    container_name: spark_master
+    restart: unless-stopped
+    environment:
+      SPARK_MODE: master
+      SPARK_RPC_AUTHENTICATION_ENABLED: "no"
+      SPARK_RPC_ENCRYPTION_ENABLED: "no"
+      SPARK_LOCAL_STORAGE_ENCRYPTION_ENABLED: "no"
+      SPARK_SSL_ENABLED: "no"
+    ports:
+      - "8080:8080"  # Web UI
+      - "7077:7077"  # Master port
+    volumes:
+      - ./spark/jobs:/opt/spark-jobs:ro
+      - spark_data:/opt/spark-data
+    networks:
+      - datawarehouse_network
+
+  # ============================================
+  # Apache Spark Worker
+  # ============================================
+  spark-worker:
+    image: bitnami/spark:3.5
+    container_name: spark_worker
+    restart: unless-stopped
+    environment:
+      SPARK_MODE: worker
+      SPARK_MASTER_URL: spark://spark-master:7077
+      SPARK_WORKER_MEMORY: 2G
+      SPARK_WORKER_CORES: 2
+      SPARK_RPC_AUTHENTICATION_ENABLED: "no"
+      SPARK_RPC_ENCRYPTION_ENABLED: "no"
+      SPARK_LOCAL_STORAGE_ENCRYPTION_ENABLED: "no"
+      SPARK_SSL_ENABLED: "no"
+    ports:
+      - "8081:8081"  # Worker Web UI
+    volumes:
+      - ./spark/jobs:/opt/spark-jobs:ro
+      - spark_data:/opt/spark-data
+    depends_on:
+      - spark-master
+    networks:
+      - datawarehouse_network
+
+  # ============================================
+  # Jupyter Notebook - Interactive Development
+  # ============================================
+  jupyter:
+    image: jupyter/pyspark-notebook:latest
+    container_name: jupyter
+    restart: unless-stopped
+    environment:
+      JUPYTER_ENABLE_LAB: "yes"
+      GRANT_SUDO: "yes"
+    ports:
+      - "8888:8888"
+    volumes:
+      - ./notebooks:/home/jovyan/work
+      - jupyter_data:/home/jovyan
+    networks:
+      - datawarehouse_network
+    command: start-notebook.sh --NotebookApp.token='datawarehouse123'
+
+  # ============================================
+  # ETL Service - Python ETL Scripts
+  # ============================================
+  etl-service:
+    build:
+      context: ./etl
+      dockerfile: Dockerfile
+    container_name: etl_service
+    restart: "no"
+    environment:
+      OLTP_HOST: postgres-oltp
+      OLTP_PORT: 5432
+      OLTP_USER: oltp_user
+      OLTP_PASSWORD: oltp_pass
+      OLTP_DATABASE: ecommerce_oltp
+      OLAP_HOST: postgres-olap
+      OLAP_PORT: 5432
+      OLAP_USER: olap_user
+      OLAP_PASSWORD: olap_pass
+      OLAP_DATABASE: ecommerce_olap
+      MINIO_ENDPOINT: minio:9000
+      MINIO_ACCESS_KEY: minio_admin
+      MINIO_SECRET_KEY: minio_password123
+    volumes:
+      - ./etl/python:/app
+    depends_on:
+      postgres-oltp:
+        condition: service_healthy
+      postgres-olap:
+        condition: service_healthy
+      minio:
+        condition: service_healthy
+    networks:
+      - datawarehouse_network
+    profiles:
+      - etl
+
+  # ============================================
+  # Apache Superset - BI Dashboard Tool
+  # ============================================
+  superset:
+    image: apache/superset:latest
+    container_name: superset
+    restart: unless-stopped
+    environment:
+      SUPERSET_SECRET_KEY: 'your-secret-key-here-change-in-production'
+      SUPERSET_LOAD_EXAMPLES: 'yes'
+    ports:
+      - "8088:8088"
+    volumes:
+      - superset_data:/app/superset_home
+      - ./superset:/app/docker
+    networks:
+      - datawarehouse_network
+    depends_on:
+      postgres-olap:
+        condition: service_healthy
+    command: >
+      /bin/sh -c "
+      superset db upgrade &&
+      superset fab create-admin --username admin --firstname Admin --lastname User --email admin@superset.com --password admin123 &&
+      superset init &&
+      superset run -h 0.0.0.0 -p 8088 --with-threads --reload --debugger
+      "
+
+  # ============================================
+  # Apache Airflow - Workflow Orchestration
+  # ============================================
+  airflow-init:
+    image: apache/airflow:2.7.3-python3.11
+    container_name: airflow_init
+    environment:
+      AIRFLOW__CORE__EXECUTOR: LocalExecutor
+      AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@postgres-airflow/airflow
+      AIRFLOW__CORE__FERNET_KEY: ''
+      AIRFLOW__CORE__DAGS_ARE_PAUSED_AT_CREATION: 'true'
+      AIRFLOW__CORE__LOAD_EXAMPLES: 'false'
+      _AIRFLOW_DB_UPGRADE: 'true'
+      _AIRFLOW_WWW_USER_CREATE: 'true'
+      _AIRFLOW_WWW_USER_USERNAME: airflow
+      _AIRFLOW_WWW_USER_PASSWORD: airflow123
+    volumes:
+      - ./airflow/dags:/opt/airflow/dags
+      - ./airflow/logs:/opt/airflow/logs
+      - ./airflow/plugins:/opt/airflow/plugins
+    networks:
+      - datawarehouse_network
+    depends_on:
+      postgres-airflow:
+        condition: service_healthy
+    profiles:
+      - airflow
+
+  airflow-webserver:
+    image: apache/airflow:2.7.3-python3.11
+    container_name: airflow_webserver
+    restart: unless-stopped
+    environment:
+      AIRFLOW__CORE__EXECUTOR: LocalExecutor
+      AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@postgres-airflow/airflow
+      AIRFLOW__CORE__FERNET_KEY: ''
+      AIRFLOW__CORE__DAGS_ARE_PAUSED_AT_CREATION: 'true'
+      AIRFLOW__CORE__LOAD_EXAMPLES: 'false'
+    ports:
+      - "8089:8080"
+    volumes:
+      - ./airflow/dags:/opt/airflow/dags
+      - ./airflow/logs:/opt/airflow/logs
+      - ./airflow/plugins:/opt/airflow/plugins
+    command: webserver
+    depends_on:
+      airflow-init:
+        condition: service_completed_successfully
+    networks:
+      - datawarehouse_network
+    profiles:
+      - airflow
+    healthcheck:
+      test: ["CMD", "curl", "--fail", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  airflow-scheduler:
+    image: apache/airflow:2.7.3-python3.11
+    container_name: airflow_scheduler
+    restart: unless-stopped
+    environment:
+      AIRFLOW__CORE__EXECUTOR: LocalExecutor
+      AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@postgres-airflow/airflow
+      AIRFLOW__CORE__FERNET_KEY: ''
+      AIRFLOW__CORE__DAGS_ARE_PAUSED_AT_CREATION: 'true'
+      AIRFLOW__CORE__LOAD_EXAMPLES: 'false'
+    volumes:
+      - ./airflow/dags:/opt/airflow/dags
+      - ./airflow/logs:/opt/airflow/logs
+      - ./airflow/plugins:/opt/airflow/plugins
+    command: scheduler
+    depends_on:
+      airflow-init:
+        condition: service_completed_successfully
+    networks:
+      - datawarehouse_network
+    profiles:
+      - airflow
+
+  # PostgreSQL for Airflow metadata
+  postgres-airflow:
+    image: postgres:16-alpine
+    container_name: postgres_airflow
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: airflow
+      POSTGRES_PASSWORD: airflow
+      POSTGRES_DB: airflow
+    volumes:
+      - postgres_airflow_data:/var/lib/postgresql/data
+    networks:
+      - datawarehouse_network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U airflow"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    profiles:
+      - airflow
+
+  # ============================================
+  # Metabase - Alternative BI Tool
+  # ============================================
+  metabase:
+    image: metabase/metabase:latest
+    container_name: metabase
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      MB_DB_TYPE: postgres
+      MB_DB_DBNAME: metabase
+      MB_DB_PORT: 5432
+      MB_DB_USER: metabase
+      MB_DB_PASS: metabase123
+      MB_DB_HOST: postgres-metabase
+    volumes:
+      - metabase_data:/metabase-data
+    depends_on:
+      postgres-metabase:
+        condition: service_healthy
+    networks:
+      - datawarehouse_network
+    profiles:
+      - metabase
+
+  # PostgreSQL for Metabase metadata
+  postgres-metabase:
+    image: postgres:16-alpine
+    container_name: postgres_metabase
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: metabase
+      POSTGRES_PASSWORD: metabase123
+      POSTGRES_DB: metabase
+    volumes:
+      - postgres_metabase_data:/var/lib/postgresql/data
+    networks:
+      - datawarehouse_network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U metabase"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    profiles:
+      - metabase
+
+# ============================================
+# Networks
+# ============================================
+networks:
+  datawarehouse_network:
+    name: datawarehouse_network
+    driver: bridge
+
+# ============================================
+# Volumes
+# ============================================
+volumes:
+  postgres_oltp_data:
+    name: postgres_oltp_data
+  postgres_olap_data:
+    name: postgres_olap_data
+  postgres_airflow_data:
+    name: postgres_airflow_data
+  postgres_metabase_data:
+    name: postgres_metabase_data
+  pgadmin_data:
+    name: pgadmin_data
+  minio_data:
+    name: minio_data
+  spark_data:
+    name: spark_data
+  jupyter_data:
+    name: jupyter_data
+  superset_data:
+    name: superset_data
+  metabase_data:
+    name: metabase_data

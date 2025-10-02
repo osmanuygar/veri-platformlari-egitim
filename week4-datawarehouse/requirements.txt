@@ -1,0 +1,43 @@
+# ETL Pipeline Dependencies
+# Week 4 - Data Warehouse
+
+# Database connectors
+psycopg2-binary==2.9.9
+pymysql==1.1.0
+SQLAlchemy==2.0.23
+
+# Data processing
+pandas==2.1.4
+numpy==1.26.2
+
+# MinIO/S3 client
+minio==7.2.0
+boto3==1.34.10
+
+# ETL framework (optional but recommended)
+petl==1.7.15
+
+# Data validation
+great-expectations==0.18.8
+
+# Logging and monitoring
+python-dotenv==1.0.0
+loguru==0.7.2
+
+# Date/time handling
+python-dateutil==2.8.2
+pytz==2023.3
+
+# Configuration
+pyyaml==6.0.1
+
+# Testing
+pytest==7.4.3
+pytest-cov==4.1.0
+
+# Spark (if needed)
+pyspark==3.5.0
+
+# dbt
+dbt-core==1.7.4
+dbt-postgres==1.7.4
