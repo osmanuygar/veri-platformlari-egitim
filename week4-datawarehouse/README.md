@@ -104,19 +104,19 @@ ORDER BY revenue DESC;
 
 ### 1.3 Detaylı Karşılaştırma
 
-| Özellik | OLTP | OLAP |
-|---------|------|------|
-| **Amaç** | Operasyonel | Analitik |
-| **İşlem Türü** | INSERT, UPDATE, DELETE | SELECT (kompleks) |
-| **Veri Hacmi** | GB - TB | TB - PB |
-| **Sorgu Karmaşıklığı** | Basit | Kompleks |
-| **Response Time** | Milisaniyeler | Saniyeler-Dakikalar |
-| **Kullanıcı Sayısı** | Binlerce | Onlarca |
-| **Veri Güncelliği** | Gerçek zamanlı | Periyodik (günlük, saatlik) |
-| **Normalizasyon** | Yüksek (3NF) | Düşük (Denormalize) |
-| **Yedekleme** | Sık (her gün) | Nadiren |
-| **Veri Yaşı** | Güncel (son 3-12 ay) | Tarihsel (yıllar) |
-| **Örnek** | MySQL, PostgreSQL | Snowflake, Redshift, BigQuery |
+| Özellik | OLTP | OLAP                           |
+|---------|------|--------------------------------|
+| **Amaç** | Operasyonel | Analitik                       |
+| **İşlem Türü** | INSERT, UPDATE, DELETE | SELECT (kompleks)              |
+| **Veri Hacmi** | GB - TB | TB - PB                        |
+| **Sorgu Karmaşıklığı** | Basit | Kompleks                       |
+| **Response Time** | Milisaniyeler | Saniyeler-Dakikalar            |
+| **Kullanıcı Sayısı** | Binlerce | Onlarca                        |
+| **Veri Güncelliği** | Gerçek zamanlı | Periyodik (günlük, saatlik)    |
+| **Normalizasyon** | Yüksek (3NF) | Düşük (Denormalize)            |
+| **Yedekleme** | Sık (her gün) | Nadiren                        |
+| **Veri Yaşı** | Güncel (son 3-12 ay) | Tarihsel (yıllar)              |
+| **Örnek** | MySQL, PostgreSQL | Clcikhouse, Redshift, BigQuery |
 
 ### 1.4 OLTP'den OLAP'a Veri Akışı
 
@@ -823,6 +823,39 @@ SELECT * FROM daily_orders;
 ```
 Data Warehouse: Schema-on-write
 Data Lake: Schema-on-read
+```
+```
+Data Lake Mimarisi
+┌─────────────────────────────────────────┐
+│          Data Sources                    │
+├─────────────────────────────────────────┤
+│  IoT  │  Logs  │  Social  │  Database  │
+└────┬────┴────┬───┴────┬────┴─────┬──────┘
+     │         │        │          │
+     ▼         ▼        ▼          ▼
+┌─────────────────────────────────────────┐
+│      Ingestion Layer (Kafka, Nifi)      │
+└─────────────┬───────────────────────────┘
+              │
+              ▼
+┌─────────────────────────────────────────┐
+│         Raw Zone (Bronze)                │
+│    MinIO / S3 - Ham veriler              │
+└─────────────┬───────────────────────────┘
+              │
+              ▼
+┌─────────────────────────────────────────┐
+│      Processing Layer (Spark)            │
+│    Temizleme, Filtreleme, Dönüştürme    │
+└─────────────┬───────────────────────────┘
+              │
+         ┌────┴────┐
+         ▼         ▼
+┌──────────────┐ ┌─────────────────┐
+│ Processed    │ │  Curated Zone   │
+│ Zone (Silver)│ │  (Gold)         │
+│ Temiz veriler│ │  Analytics-ready│
+└──────────────┘ └─────────────────┘
 ```
 
 ### 5.2 Data Warehouse vs Data Lake
@@ -1582,21 +1615,123 @@ fig.show()
 
 ## 9. Pratik Uygulamalar
 
-### Docker ile ETL Pipeline Başlatma
+## 🚀 Hızlı Başlangıç
+
+### 1. Temel Servisleri Başlat
 
 ```bash
-# OLTP database (kaynak)
-docker-compose up -d postgres
+# Dizine git
+cd week4-datawarehouse
 
-# OLAP database (hedef)
-docker-compose -f docker-compose.week4.yml up -d
+# Environment değişkenlerini kopyala
+cp .env.example .env
 
-# MinIO (Data Lake)
-docker-compose up -d minio minio-client
-
-# Jupyter for analysis
-docker-compose up -d jupyter
+# OLTP ve OLAP başlat
+docker-compose up -d postgres-oltp postgres-olap pgadmin
 ```
+
+### 2. OLTP Verisini Yükle
+
+```bash
+# Schema ve örnek verileri yükle
+docker exec -i postgres_oltp psql -U oltp_user -d ecommerce_oltp < oltp/init/01-schema.sql
+docker exec -i postgres_oltp psql -U oltp_user -d ecommerce_oltp < oltp/init/02-sample-data.sql
+```
+
+### 3. OLAP Yapısını Oluştur
+
+```bash
+# Dimension ve Fact tablolarını oluştur
+docker exec -i postgres_olap psql -U olap_user -d ecommerce_olap < olap/init/01-dimensions.sql
+docker exec -i postgres_olap psql -U olap_user -d ecommerce_olap < olap/init/02-facts.sql
+docker exec -i postgres_olap psql -U olap_user -d ecommerce_olap < olap/init/03-star-schema.sql
+```
+
+### 4. ETL Pipeline Çalıştır
+
+```bash
+# ETL servisini başlat
+docker-compose --profile etl up -d etl-service
+
+# ETL'i manuel çalıştır
+docker exec etl_service python full_pipeline.py
+```
+
+### 5. Data Lake Oluştur
+
+```bash
+# MinIO başlat
+docker-compose up -d minio minio-init
+
+# MinIO Console aç
+open http://localhost:9001
+# Giriş: minio_admin / minio_password123
+```
+
+### 6. Spark ile Veri İşle
+
+```bash
+# Spark başlat
+docker-compose up -d spark-master spark-worker
+
+# Spark UI aç
+open http://localhost:8080
+
+# Spark job çalıştır
+docker exec spark_master spark-submit /opt/spark-jobs/batch_processing.py
+```
+
+### 7. BI Dashboard Oluştur
+
+```bash
+# Superset başlat
+docker-compose up -d superset
+
+# Superset aç (2-3 dakika bekleyin)
+open http://localhost:8088
+# Giriş: admin / admin123
+```
+
+## 📊 Servisler ve Erişim
+
+### Web Arayüzleri
+
+| Servis | URL | Kullanıcı | Şifre |
+|--------|-----|-----------|-------|
+| pgAdmin | http://localhost:5050 | admin@datawarehouse.com | admin123 |
+| MinIO Console | http://localhost:9001 | minio_admin | minio_password123 |
+| Spark Master UI | http://localhost:8080 | - | - |
+| Jupyter Lab | http://localhost:8888 | - | token: datawarehouse123 |
+| Superset | http://localhost:8088 | admin | admin123 |
+| Airflow | http://localhost:8089 | airflow | airflow123 |
+| Metabase | http://localhost:3000 | - | İlk kurulum |
+
+### Veritabanı Bağlantıları
+
+**OLTP PostgreSQL:**
+```bash
+Host: localhost
+Port: 5432
+Database: ecommerce_oltp
+User: oltp_user
+Password: oltp_pass
+
+# Bağlan:
+docker exec -it postgres_oltp psql -U oltp_user -d ecommerce_oltp
+```
+
+**OLAP PostgreSQL:**
+```bash
+Host: localhost
+Port: 5433
+Database: ecommerce_olap
+User: olap_user
+Password: olap_pass
+
+# Bağlan:
+docker exec -it postgres_olap psql -U olap_user -d ecommerce_olap
+```
+
 
 ### Komple ETL Pipeline Örneği
 
