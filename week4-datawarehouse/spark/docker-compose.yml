@@ -1,0 +1,108 @@
+version: '3.9'
+
+# ============================================
+# Apache Spark Standalone Cluster
+# Master + Worker + Custom Jobs
+# ============================================
+
+services:
+  # ============================================
+  # Spark Master
+  # ============================================
+  spark-master:
+    image: bitnami/spark:3.5
+    container_name: spark_master
+    hostname: spark-master
+    restart: unless-stopped
+    environment:
+      - SPARK_MODE=master
+      - SPARK_RPC_AUTHENTICATION_ENABLED=no
+      - SPARK_RPC_ENCRYPTION_ENABLED=no
+      - SPARK_LOCAL_STORAGE_ENCRYPTION_ENABLED=no
+      - SPARK_SSL_ENABLED=no
+      - SPARK_MASTER_WEBUI_PORT=8080
+    ports:
+      - "8080:8080"  # Master Web UI
+      - "7077:7077"  # Master port
+    volumes:
+      - spark_data:/opt/spark-data
+      - ./jobs:/opt/spark-jobs
+    networks:
+      - datawarehouse_network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # ============================================
+  # Spark Worker
+  # ============================================
+  spark-worker:
+    image: bitnami/spark:3.5
+    container_name: spark_worker
+    hostname: spark-worker
+    restart: unless-stopped
+    environment:
+      - SPARK_MODE=worker
+      - SPARK_MASTER_URL=spark://spark-master:7077
+      - SPARK_WORKER_MEMORY=2G
+      - SPARK_WORKER_CORES=2
+      - SPARK_RPC_AUTHENTICATION_ENABLED=no
+      - SPARK_RPC_ENCRYPTION_ENABLED=no
+      - SPARK_LOCAL_STORAGE_ENCRYPTION_ENABLED=no
+      - SPARK_SSL_ENABLED=no
+      - SPARK_WORKER_WEBUI_PORT=8081
+    ports:
+      - "8081:8081"  # Worker Web UI
+    volumes:
+      - spark_data:/opt/spark-data
+      - ./jobs:/opt/spark-jobs
+    depends_on:
+      - spark-master
+    networks:
+      - datawarehouse_network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8081"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # ============================================
+  # Spark Jobs Container (Optional)
+  # Custom image with additional dependencies
+  # ============================================
+  spark-jobs:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: spark_jobs
+    environment:
+      - SPARK_MASTER_URL=spark://spark-master:7077
+    volumes:
+      - ./jobs:/opt/spark-jobs
+      - spark_data:/opt/spark-data
+    depends_on:
+      - spark-master
+      - spark-worker
+    networks:
+      - datawarehouse_network
+    command: sleep infinity  # Keep container running
+    profiles:
+      - jobs  # Optional profile
+
+# ============================================
+# Networks
+# ============================================
+networks:
+  datawarehouse_network:
+    name: datawarehouse_network
+    driver: bridge
+    external: true  # Week 4'ün ana docker-compose'unda oluşturulmuş
+
+# ============================================
+# Volumes
+# ============================================
+volumes:
+  spark_data:
+    name: spark_data

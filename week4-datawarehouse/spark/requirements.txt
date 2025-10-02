@@ -1,0 +1,11 @@
+# PySpark (zaten container'da var ama referans için)
+pyspark==3.5.0
+
+# Database
+psycopg2-binary==2.9.9
+
+# Data processing
+pandas==2.1.4
+
+# AWS/S3 (MinIO için)
+boto3==1.34.14
