@@ -1,0 +1,7 @@
+
+<database>
+  <host>localhost</host>
+  <port>5432</port>
+  <username>admin</username>
+  <password>secret</password>
+</database>
