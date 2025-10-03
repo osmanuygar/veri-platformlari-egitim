@@ -1,0 +1,128 @@
+version: '3.9'
+
+# ============================================
+# Apache Superset - BI & Visualization
+# ============================================
+
+services:
+  # ============================================
+  # PostgreSQL for Superset Metadata
+  # ============================================
+  postgres-superset:
+    image: postgres:16-alpine
+    container_name: postgres_superset
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: superset
+      POSTGRES_USER: superset
+      POSTGRES_PASSWORD: superset123
+    volumes:
+      - postgres_superset_data:/var/lib/postgresql/data
+    networks:
+      - datawarehouse_network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U superset"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ============================================
+  # Superset Init (One-time setup)
+  # ============================================
+  superset-init:
+    image: apache/superset:latest
+    container_name: superset_init
+    command: >
+      bash -c "
+      superset db upgrade &&
+      superset fab create-admin \
+        --username admin \
+        --firstname Admin \
+        --lastname User \
+        --email admin@superset.com \
+        --password admin123 &&
+      superset init &&
+      echo 'Superset initialization completed!'
+      "
+    environment:
+      SUPERSET_SECRET_KEY: 'thisISaSECRET_1234changeMeInProduction'
+      DATABASE_DIALECT: postgresql
+      DATABASE_USER: superset
+      DATABASE_PASSWORD: superset123
+      DATABASE_HOST: postgres-superset
+      DATABASE_PORT: 5432
+      DATABASE_DB: superset
+      SQLALCHEMY_DATABASE_URI: postgresql://superset:superset123@postgres-superset:5432/superset
+    depends_on:
+      postgres-superset:
+        condition: service_healthy
+    networks:
+      - datawarehouse_network
+    volumes:
+      - superset_data:/app/superset_home
+      - ./superset_config.py:/app/pythonpath/superset_config.py
+
+  # ============================================
+  # Superset Web Server
+  # ============================================
+  superset:
+    image: apache/superset:latest
+    container_name: superset
+    restart: unless-stopped
+    command: >
+      bash -c "
+      gunicorn \
+        --bind 0.0.0.0:8088 \
+        --workers 4 \
+        --timeout 120 \
+        --limit-request-line 0 \
+        --limit-request-field_size 0 \
+        'superset.app:create_app()'
+      "
+    ports:
+      - "8088:8088"
+    environment:
+      SUPERSET_SECRET_KEY: 'thisISaSECRET_1234changeMeInProduction'
+      DATABASE_DIALECT: postgresql
+      DATABASE_USER: superset
+      DATABASE_PASSWORD: superset123
+      DATABASE_HOST: postgres-superset
+      DATABASE_PORT: 5432
+      DATABASE_DB: superset
+      SQLALCHEMY_DATABASE_URI: postgresql://superset:superset123@postgres-superset:5432/superset
+      SUPERSET_WEBSERVER_PORT: 8088
+      SUPERSET_LOAD_EXAMPLES: 'no'
+    depends_on:
+      postgres-superset:
+        condition: service_healthy
+      superset-init:
+        condition: service_completed_successfully
+    networks:
+      - datawarehouse_network
+    volumes:
+      - superset_data:/app/superset_home
+      - ./superset_config.py:/app/pythonpath/superset_config.py
+      - ./scripts:/app/scripts
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8088/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+# ============================================
+# Networks
+# ============================================
+networks:
+  datawarehouse_network:
+    name: datawarehouse_network
+    driver: bridge
+    external: true  # Week 4'ün ana docker-compose'unda oluşturulmuş
+
+# ============================================
+# Volumes
+# ============================================
+volumes:
+  postgres_superset_data:
+    name: postgres_superset_data
+  superset_data:
+    name: superset_data

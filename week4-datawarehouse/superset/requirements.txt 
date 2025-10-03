@@ -1,0 +1,6 @@
+# Superset API için (opsiyonel - sadece script için)
+requests==2.31.0
+
+# Database drivers (Superset image'de zaten var)
+# psycopg2-binary==2.9.9
+# pymysql==1.1.0
