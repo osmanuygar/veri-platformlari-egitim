@@ -399,27 +399,6 @@ SELECT
 FROM date_series;
 ```
 
-#### Fibonacci Sequence
-```sql
-WITH RECURSIVE fibonacci AS (
-    -- Base cases
-    SELECT 0 as n, 0 as fib
-    UNION ALL
-    SELECT 1, 1
-    
-    UNION ALL
-    
-    -- Recursive case
-    SELECT 
-        n + 1,
-        (SELECT fib FROM fibonacci WHERE n = f.n) +
-        (SELECT fib FROM fibonacci WHERE n = f.n - 1)
-    FROM fibonacci f
-    WHERE n < 20
-)
-SELECT * FROM fibonacci ORDER BY n;
-```
-
 #### Bill of Materials (BOM)
 ```sql
 -- Ürün ağacı (parça-alt parça ilişkisi)
