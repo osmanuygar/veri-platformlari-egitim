@@ -1,0 +1,18 @@
+# Airflow providers (Docker image'de zaten var ama referans için)
+# apache-airflow==2.7.3
+# apache-airflow-providers-postgres==5.7.1
+# apache-airflow-providers-amazon==8.13.0
+
+# Database
+psycopg2-binary==2.9.9
+
+# Data processing
+pandas==2.1.4
+pyarrow==14.0.1
+
+# S3/MinIO
+boto3==1.34.14
+minio==7.2.0
+
+# Utils
+python-dotenv==1.0.0
