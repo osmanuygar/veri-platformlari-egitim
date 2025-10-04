@@ -56,55 +56,6 @@ git clone https://github.com/osmanuygar/veri-platformlari-egitim.git
 cd veri-platformlari-egitim
 ```
 
-### 2. Environment Dosyasını Oluşturun
-```bash
-cp .env.example .env
-```
-
-`.env` dosyasını düzenleyerek şifreleri değiştirin (güvenlik için önemli!)
-
-### 3. Tüm Servisleri Başlatın
-```bash
-# Tüm servisleri arka planda başlat
-docker-compose up -d
-
-# İlk kurulum 5-10 dakika sürebilir
-# Logları izlemek için:
-docker-compose logs -f
-```
-
-### 4. Servislerin Hazır Olduğunu Kontrol Edin
-```bash
-docker-compose ps
-```
-
-Tüm servisler "healthy" veya "running" durumunda olmalı.
-
-### 5. Web Arayüzlerine Erişin
-
-| Servis | URL | Kullanıcı Adı | Şifre |
-|--------|-----|---------------|-------|
-| Adminer (DB GUI) | http://localhost:8080 | - | - |
-| Jupyter Lab | http://localhost:8888 | - | Token'ı loglardan alın |
-| Neo4j Browser | http://localhost:7474 | neo4j | password123 |
-| MinIO Console | http://localhost:9001 | minioadmin | minioadmin |
-| pgAdmin | http://localhost:5050 | admin@admin.com | admin |
-| Mongo Express | http://localhost:8081 | admin | pass |
-
-### 6. İlk Test
-```bash
-# PostgreSQL'e bağlanma testi
-docker exec -it veri_postgres psql -U veri_user -d veri_db -c "SELECT version();"
-
-# MongoDB'ye bağlanma testi
-docker exec -it veri_mongodb mongosh --eval "db.version()"
-
-# Redis'e bağlanma testi
-docker exec -it veri_redis redis-cli PING
-```
-
-Hepsi başarılı dönerse, ortam hazır! 🎉
-
 ## 📖 Haftalık Müfredat
 
 ### [Hafta 1: Veri Dünyasına Giriş](./week1-intro/)
