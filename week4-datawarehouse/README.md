@@ -1877,7 +1877,6 @@ Veri kalitesi kontrol scripti yazın ve rapor oluşturun.
 
 Uçtan uca etl pipeline yazdık ve veri kalitesi kontrolleri gerçekleştirdik.
 
-
 👉 [Uçtan-uca pipeline örneğini görmek için buraya tıklayın](example_pipeline.html)
 
 
