@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sahibinden.com - End-to-End Data Warehouse Pipeline</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.6.1/mermaid.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #FFE800 0%, #FFC800 100%);
+            padding: 30px;
+            text-align: center;
+            border-bottom: 4px solid #FF6B00;
+        }
+
+        .header h1 {
+            color: #333;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .header p {
+            color: #555;
+            font-size: 1.2em;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .section {
+            margin-bottom: 50px;
+        }
+
+        .section-title {
+            font-size: 1.8em;
+            color: #667eea;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #FFE800;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .icon {
+            font-size: 1.2em;
+        }
+
+        .diagram-container {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            border: 2px solid #e9ecef;
+        }
+
+        .info-box {
+            background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%);
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .info-box h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .tech-stack {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .tech-card {
+            background: white;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            padding: 20px;
+            transition: all 0.3s;
+        }
+
+        .tech-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            border-color: #FFE800;
+        }
+
+        .tech-card h4 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+
+        .tech-card ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .tech-card li {
+            padding: 5px 0;
+            color: #555;
+        }
+
+        .tech-card li:before {
+            content: "✓ ";
+            color: #FFE800;
+            font-weight: bold;
+        }
+
+        .metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .metric-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .metric-value {
+            font-size: 2.5em;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+
+        .metric-label {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+        }
+
+        .highlight {
+            background: #FFE800;
+            padding: 2px 6px;
+            border-radius: 3px;
+            color: #333;
+            font-weight: bold;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8em;
+            }
+
+            .tech-stack,
+            .metrics {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🏠 Sahibinden.com</h1>
+            <p>End-to-End Data Warehouse & ETL Pipeline Architecture</p>
+        </div>
+
+        <div class="content">
+            <!-- Business Metrics -->
+            <div class="section">
+                <h2 class="section-title">
+                    <span class="icon">📊</span>
+                    Business Metrics & KPIs
+                </h2>
+                <div class="metrics">
+                    <div class="metric-card">
+                        <div class="metric-label">Günlük İlan</div>
+                        <div class="metric-value">50K+</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">Aktif Kullanıcı</div>
+                        <div class="metric-value">5M+</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">Günlük Ziyaret</div>
+                        <div class="metric-value">10M+</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">Veri Hacmi</div>
+                        <div class="metric-value">50TB+</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Architecture Overview -->
+            <div class="section">
+                <h2 class="section-title">
+                    <span class="icon">🏗️</span>
+                    Complete Data Pipeline Architecture (Lambda Architecture)
+                </h2>
+                <div class="diagram-container">
+                    <div class="mermaid">
+graph TB
+    subgraph "DATA SOURCES"
+        WEB[🌐 Web Application<br/>React + Node.js]
+        MOBILE[📱 Mobile Apps<br/>iOS + Android]
+        API[🔌 API Gateway<br/>REST + GraphQL]
+    end
+
+    subgraph "OLTP - Operational Database"
+        POSTGRES[(🗄️ PostgreSQL<br/>OLTP Database)]
+        REDIS[(⚡ Redis<br/>Cache + Sessions)]
+        MONGO[(📄 MongoDB<br/>Logs + Events)]
+    end
+
+    subgraph "MESSAGE QUEUE - Stream Processing"
+        KAFKA[📨 Apache Kafka<br/>Event Streaming]
+        SPARK_STREAM[⚡ Spark Streaming<br/>Real-time Processing]
+    end
+
+    subgraph "BATCH LAYER"
+        AIRFLOW_BATCH[⏰ Airflow<br/>Batch Orchestration]
+        SPARK_BATCH[⚡ Spark<br/>Batch Processing]
+        DBT[🔧 dbt<br/>Transformations]
+    end
+
+    subgraph "SPEED LAYER"
+        AIRFLOW_STREAM[⏰ Airflow<br/>Stream Orchestration]
+        FLINK[🌊 Flink<br/>Real-time ETL]
+    end
+
+    subgraph "DATA LAKE - Storage"
+        MINIO_RAW[☁️ MinIO/S3<br/>Raw Data<br/>Bronze Layer]
+        MINIO_CLEAN[☁️ MinIO/S3<br/>Cleaned Data<br/>Silver Layer]
+        MINIO_CURATED[☁️ MinIO/S3<br/>Curated Data<br/>Gold Layer]
+    end
+
+    subgraph "DATA WAREHOUSE - OLAP Engine"
+        CLICKHOUSE[(⚡ ClickHouse<br/>OLAP Analytics)]
+        SNOWFLAKE[(❄️ Snowflake<br/>Cloud DWH)]
+        REDSHIFT[(📊 Redshift<br/>AWS DWH)]
+    end
+
+    subgraph "BI & ANALYTICS"
+        SUPERSET[📊 Superset<br/>Dashboards]
+        JUPYTER[📓 Jupyter<br/>Ad-hoc Analysis]
+        METABASE[📈 Metabase<br/>Self-Service BI]
+    end
+
+    subgraph "ML & ADVANCED"
+        MLFLOW[🤖 MLflow<br/>ML Models]
+        FEATURE[🎯 Feature Store]
+    end
+
+    WEB --> API
+    MOBILE --> API
+    API --> POSTGRES
+    API --> REDIS
+    API --> MONGO
+
+    %% Streaming Path (Speed Layer)
+    API --> KAFKA
+    POSTGRES --> KAFKA
+    MONGO --> KAFKA
+
+    KAFKA --> AIRFLOW_STREAM
+    AIRFLOW_STREAM --> FLINK
+    KAFKA --> SPARK_STREAM
+    FLINK --> MINIO_RAW
+    SPARK_STREAM --> MINIO_RAW
+    FLINK --> CLICKHOUSE
+
+    %% Batch Path (Batch Layer)
+    POSTGRES -.Batch.-> AIRFLOW_BATCH
+    MONGO -.Batch.-> AIRFLOW_BATCH
+
+    AIRFLOW_BATCH --> SPARK_BATCH
+    SPARK_BATCH --> MINIO_RAW
+    SPARK_BATCH --> MINIO_CLEAN
+
+    MINIO_CLEAN --> DBT
+    DBT --> MINIO_CURATED
+
+    %% Direct loads to DWH
+    AIRFLOW_BATCH -.Direct Load.-> SNOWFLAKE
+    AIRFLOW_BATCH -.Direct Load.-> CLICKHOUSE
+    DBT --> SNOWFLAKE
+    DBT --> REDSHIFT
+
+    MINIO_CURATED --> CLICKHOUSE
+    MINIO_CURATED --> SNOWFLAKE
+
+    %% Analytics
+    CLICKHOUSE --> SUPERSET
+    SNOWFLAKE --> SUPERSET
+    REDSHIFT --> JUPYTER
+    SNOWFLAKE --> METABASE
+
+    MINIO_CURATED --> MLFLOW
+    SNOWFLAKE --> FEATURE
+
+    style WEB fill:#4CAF50
+    style MOBILE fill:#4CAF50
+    style POSTGRES fill:#336791
+    style KAFKA fill:#231F20
+    style SPARK_BATCH fill:#E25A1C
+    style SPARK_STREAM fill:#E25A1C
+    style FLINK fill:#E6526F
+    style MINIO_RAW fill:#C72E49
+    style MINIO_CLEAN fill:#20A7C9
+    style MINIO_CURATED fill:#FFD700
+    style AIRFLOW_BATCH fill:#017CEE
+    style AIRFLOW_STREAM fill:#017CEE
+    style CLICKHOUSE fill:#FFCC00
+    style SNOWFLAKE fill:#29B5E8
+    style REDSHIFT fill:#8C4FFF
+    style SUPERSET fill:#20A7C9
+                    </div>
+                </div>
+
+                <div class="info-box">
+                    <h3>🎯 Lambda Architecture Layers</h3>
+                    <ul>
+                        <li><strong>Batch Layer:</strong> OLTP → Airflow → Spark → Data Lake → dbt → DWH (Daily/Hourly)</li>
+                        <li><strong>Speed Layer:</strong> Kafka → Airflow/Flink → ClickHouse (Real-time, Seconds)</li>
+                        <li><strong>Direct Load:</strong> Airflow can directly load to DWH for simple transformations</li>
+                    </ul>
+                </div>
+
+                <div class="info-box">
+                    <h3>💡 OLAP Engine Options</h3>
+                    <ul>
+                        <li><strong>ClickHouse:</strong> Real-time analytics, columnar storage, fast queries</li>
+                        <li><strong>Snowflake:</strong> Cloud-native, auto-scaling, separation of compute/storage</li>
+                        <li><strong>Redshift:</strong> AWS ecosystem, mature, cost-effective for large data</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Data Flow -->
+            <div class="section">
+                <h2 class="section-title">
+                    <span class="icon">🔄</span>
+                    Data Flow - Step by Step
+                </h2>
+                <div class="diagram-container">
+                    <div class="mermaid">
+sequenceDiagram
+    participant User as 👤 User
+    participant Web as 🌐 Web/Mobile
+    participant API as 🔌 API
+    participant OLTP as 🗄️ OLTP DB
+    participant Kafka as 📨 Kafka
+    participant Airflow as ⏰ Airflow
+    participant Spark as ⚡ Spark
+    participant Lake as ☁️ Data Lake
+    participant DWH as 🏭 Data Warehouse
+    participant BI as 📊 BI Tools
+
+    User->>Web: İlan Yayınla
+    Web->>API: POST /ads/create
+    API->>OLTP: INSERT INTO ads
+    API->>Kafka: Event: ad_created
+    API-->>Web: Success ✓
+
+    Note over Airflow: Daily Schedule (02:00)
+    Airflow->>Spark: Trigger ETL Job
+    Spark->>OLTP: Extract Data
+    Spark->>Spark: Transform (Star Schema)
+    Spark->>Lake: Save Raw (Parquet)
+    Spark->>DWH: Load Dimensions & Facts
+
+    Note over DWH: Data Ready for Analysis
+
+    BI->>DWH: Query Analytics
+    DWH-->>BI: Results
+    BI->>User: 📊 Dashboard
+                    </div>
+                </div>
+            </div>
+
+            <!-- OLTP Schema -->
+            <div class="section">
+                <h2 class="section-title">
+                    <span class="icon">🗄️</span>
+                    OLTP Database Schema (Normalized)
+                </h2>
+                <div class="diagram-container">
+                    <div class="mermaid">
+erDiagram
+    USERS ||--o{ ADS : creates
+    USERS ||--o{ MESSAGES : sends
+    USERS ||--o{ FAVORITES : saves
+    USERS {
+        int user_id PK
+        string email
+        string phone
+        string name
+        timestamp registered_at
+        string user_type
+    }
+
+    ADS ||--o{ AD_IMAGES : has
+    ADS ||--o{ AD_VIEWS : receives
+    ADS ||--o{ FAVORITES : has
+    ADS {
+        int ad_id PK
+        int user_id FK
+        int category_id FK
+        string title
+        text description
+        decimal price
+        string status
+        timestamp created_at
+        json attributes
+    }
+
+    CATEGORIES ||--o{ ADS : contains
+    CATEGORIES {
+        int category_id PK
+        string name
+        int parent_id FK
+        string type
+    }
+
+    AD_VIEWS {
+        int view_id PK
+        int ad_id FK
+        int user_id FK
+        timestamp viewed_at
+        string source
+        string device
+    }
+
+    MESSAGES {
+        int message_id PK
+        int ad_id FK
+        int sender_id FK
+        int receiver_id FK
+        text content
+        timestamp sent_at
+    }
+                    </div>
+                </div>
+            </div>
+
+            <!-- OLAP Schema -->
+            <div class="section">
+                <h2 class="section-title">
+                    <span class="icon">🏭</span>
+                    OLAP Data Warehouse Schema (Star Schema)
+                </h2>
+                <div class="diagram-container">
+                    <div class="mermaid">
+erDiagram
+    FACT_AD_ACTIVITY ||--o{ DIM_DATE : date_key
+    FACT_AD_ACTIVITY ||--o{ DIM_USER : user_key
+    FACT_AD_ACTIVITY ||--o{ DIM_AD : ad_key
+    FACT_AD_ACTIVITY ||--o{ DIM_CATEGORY : category_key
+    FACT_AD_ACTIVITY ||--o{ DIM_LOCATION : location_key
+
+    FACT_AD_ACTIVITY {
+        int activity_id PK
+        int date_key FK
+        int user_key FK
+        int ad_key FK
+        int category_key FK
+        int location_key FK
+        int view_count
+        int message_count
+        int favorite_count
+        decimal price
+        string status
+    }
+
+    DIM_DATE {
+        int date_key PK
+        date date
+        int year
+        int month
+        int quarter
+        int day_of_week
+        string month_name
+        boolean is_weekend
+    }
+
+    DIM_USER {
+        int user_key PK
+        int user_id
+        string user_type
+        string segment
+        date registration_date
+        int days_since_registration
+    }
+
+    DIM_AD {
+        int ad_key PK
+        int ad_id
+        string title
+        string ad_type
+        decimal original_price
+        string condition
+    }
+
+    DIM_CATEGORY {
+        int category_key PK
+        int category_id
+        string category_name
+        string parent_category
+        int category_level
+    }
+
+    DIM_LOCATION {
+        int location_key PK
+        string city
+        string district
+        string region
+        string country
+    }
+                    </div>
+                </div>
+            </div>
+
+            <!-- ETL Pipeline Details -->
+            <div class="section">
+                <h2 class="section-title">
+                    <span class="icon">⚙️</span>
+                    ETL Pipeline Details
+                </h2>
+                <div class="diagram-container">
+                    <div class="mermaid">
+graph LR
+    subgraph "1. EXTRACT"
+        E1[📥 PostgreSQL<br/>ads, users, views]
+        E2[📥 MongoDB<br/>logs, events]
+        E3[📥 Redis<br/>sessions, cache]
+    end
+
+    subgraph "2. TRANSFORM"
+        T1[🔄 Data Cleansing<br/>null handling, duplicates]
+        T2[🔄 Dimension Building<br/>SCD Type 2]
+        T3[🔄 Fact Aggregation<br/>daily, hourly metrics]
+        T4[🔄 Business Logic<br/>KPIs, calculations]
+    end
+
+    subgraph "3. LOAD"
+        L1[💾 Data Lake<br/>Parquet partitioned]
+        L2[💾 DWH Staging<br/>temporary tables]
+        L3[💾 DWH Production<br/>dimensions + facts]
+    end
+
+    E1 --> T1
+    E2 --> T1
+    E3 --> T1
+
+    T1 --> T2
+    T2 --> T3
+    T3 --> T4
+
+    T4 --> L1
+    T4 --> L2
+    L2 --> L3
+                    </div>
+                </div>
+
+                <div class="info-box">
+                    <h3>🕐 ETL Schedule Strategy</h3>
+                    <ul>
+                        <li><strong>Real-time:</strong> Kafka streaming for critical events (yeni ilan, mesaj)</li>
+                        <li><strong>Hourly:</strong> View counts, session analytics</li>
+                        <li><strong>Daily:</strong> Dimension updates, fact aggregations (02:00)</li>
+                        <li><strong>Weekly:</strong> Data quality checks, optimization (Pazar 03:00)</li>
+                        <li><strong>Monthly:</strong> Historical archiving, partitioning (Ayın 1'i)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Tech Stack -->
+            <div class="section">
+                <h2 class="section-title">
+                    <span class="icon">🛠️</span>
+                    Technology Stack
+                </h2>
+                <div class="tech-stack">
+                    <div class="tech-card">
+                        <h4>💾 Data Storage</h4>
+                        <ul>
+                            <li>PostgreSQL (OLTP + OLAP)</li>
+                            <li>MongoDB (Logs)</li>
+                            <li>Redis (Cache)</li>
+                            <li>MinIO (Data Lake)</li>
+                        </ul>
+                    </div>
+
+                    <div class="tech-card">
+                        <h4>⚡ Processing</h4>
+                        <ul>
+                            <li>Apache Spark</li>
+                            <li>Apache Kafka</li>
+                            <li>dbt (Transformations)</li>
+                            <li>Pandas/Polars</li>
+                        </ul>
+                    </div>
+
+                    <div class="tech-card">
+                        <h4>⏰ Orchestration</h4>
+                        <ul>
+                            <li>Apache Airflow</li>
+                            <li>Prefect (Alternative)</li>
+                            <li>Cron Jobs</li>
+                        </ul>
+                    </div>
+
+                    <div class="tech-card">
+                        <h4>📊 BI & Visualization</h4>
+                        <ul>
+                            <li>Apache Superset</li>
+                            <li>Metabase</li>
+                            <li>Jupyter Notebooks</li>
+                            <li>Grafana (Metrics)</li>
+                        </ul>
+                    </div>
+
+                    <div class="tech-card">
+                        <h4>🤖 ML & Advanced</h4>
+                        <ul>
+                            <li>MLflow</li>
+                            <li>Feast (Feature Store)</li>
+                            <li>TensorFlow/PyTorch</li>
+                        </ul>
+                    </div>
+
+                    <div class="tech-card">
+                        <h4>🔍 Monitoring</h4>
+                        <ul>
+                            <li>Prometheus</li>
+                            <li>Grafana</li>
+                            <li>ELK Stack</li>
+                            <li>Data Quality (Great Expectations)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Use Cases -->
+            <div class="section">
+                <h2 class="section-title">
+                    <span class="icon">💡</span>
+                    Business Use Cases & Analytics
+                </h2>
+
+                <div class="info-box">
+                    <h3>📈 Executive Dashboard</h3>
+                    <ul>
+                        <li>Günlük aktif kullanıcılar (DAU)</li>
+                        <li>Yeni ilan sayısı (kategori, şehir bazında)</li>
+                        <li>Conversion rates (görüntüleme → mesaj → anlaşma)</li>
+                        <li>Revenue metrics (premium ilanlar, öne çıkarma)</li>
+                    </ul>
+                </div>
+
+                <div class="info-box">
+                    <h3>🎯 Category Analytics</h3>
+                    <ul>
+                        <li>En popüler kategoriler (görüntüleme, ilan sayısı)</li>
+                        <li>Fiyat trendleri (araç, emlak, elektronik)</li>
+                        <li>Satış süreleri (ortalama ilan kalma süresi)</li>
+                        <li>Sezonsal analiz (tatil dönemi, okul öncesi vb.)</li>
+                    </ul>
+                </div>
+
+                <div class="info-box">
+                    <h3>👥 User Behavior</h3>
+                    <ul>
+                        <li>User segmentation (alıcı/satıcı, aktiflik)</li>
+                        <li>Churn prediction (son aktivite tarihi)</li>
+                        <li>Favori patterns (hangi kategorileri takip ediyor)</li>
+                        <li>Message response rates</li>
+                    </ul>
+                </div>
+
+                <div class="info-box">
+                    <h3>🤖 ML Use Cases</h3>
+                    <ul>
+                        <li>Fiyat tahmini (makine öğrenmesi modeli)</li>
+                        <li>Fraud detection (sahte ilan tespiti)</li>
+                        <li>Recommendation engine (benzer ilanlar)</li>
+                        <li>Image classification (ilan fotoğrafları)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Sample Queries -->
+            <div class="section">
+                <h2 class="section-title">
+                    <span class="icon">💻</span>
+                    Sample Analytics Queries
+                </h2>
+
+                <div class="code-block">
+-- Top 10 kategoriler (son 30 gün)<br/>
+SELECT <br/>
+&nbsp;&nbsp;c.category_name,<br/>
+&nbsp;&nbsp;COUNT(DISTINCT f.ad_key) as total_ads,<br/>
+&nbsp;&nbsp;SUM(f.view_count) as total_views,<br/>
+&nbsp;&nbsp;ROUND(AVG(f.price), 2) as avg_price<br/>
+FROM fact_ad_activity f<br/>
+JOIN dim_category c ON f.category_key = c.category_key<br/>
+JOIN dim_date d ON f.date_key = d.date_key<br/>
+WHERE d.date >= CURRENT_DATE - INTERVAL '30 days'<br/>
+GROUP BY c.category_name<br/>
+ORDER BY total_views DESC<br/>
+LIMIT 10;
+                </div>
+
+                <div class="code-block">
+-- Şehir bazında ilan performansı<br/>
+WITH city_metrics AS (<br/>
+&nbsp;&nbsp;SELECT <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;l.city,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;COUNT(*) as ad_count,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;SUM(f.view_count) as total_views,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;SUM(f.message_count) as total_messages,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;ROUND(AVG(f.price), 2) as avg_price<br/>
+&nbsp;&nbsp;FROM fact_ad_activity f<br/>
+&nbsp;&nbsp;JOIN dim_location l ON f.location_key = l.location_key<br/>
+&nbsp;&nbsp;GROUP BY l.city<br/>
+)<br/>
+SELECT <br/>
+&nbsp;&nbsp;city,<br/>
+&nbsp;&nbsp;ad_count,<br/>
+&nbsp;&nbsp;total_views,<br/>
+&nbsp;&nbsp;ROUND(total_messages::NUMERIC / NULLIF(total_views, 0) * 100, 2) as message_rate,<br/>
+&nbsp;&nbsp;avg_price<br/>
+FROM city_metrics<br/>
+ORDER BY ad_count DESC;
+                </div>
+            </div>
+
+            <!-- Implementation Steps -->
+            <div class="section">
+                <h2 class="section-title">
+                    <span class="icon">🚀</span>
+                    Implementation Roadmap
+                </h2>
+
+                <div class="info-box">
+                    <h3>📅 Phase 1: Foundation (4 weeks)</h3>
+                    <ul>
+                        <li><strong>Week 1-2:</strong> OLTP Database Setup (PostgreSQL, MongoDB, Redis)</li>
+                        <li><strong>Week 2-3:</strong> Data Lake Infrastructure (MinIO/S3)</li>
+                        <li><strong>Week 3-4:</strong> OLAP Schema Design (Star Schema modeling)</li>
+                    </ul>
+                </div>
+
+                <div class="info-box">
+                    <h3>⚙️ Phase 2: ETL Pipeline (6 weeks)</h3>
+                    <ul>
+                        <li><strong>Week 5-7:</strong> Basic ETL Development (Extract-Transform-Load)</li>
+                        <li><strong>Week 8-9:</strong> Airflow Integration & Scheduling</li>
+                        <li><strong>Week 10:</strong> Data Quality & Validation Framework</li>
+                    </ul>
+                </div>
+
+                <div class="info-box">
+                    <h3>📊 Phase 3: Analytics & BI (5 weeks)</h3>
+                    <ul>
+                        <li><strong>Week 11-12:</strong> Superset Dashboard Development</li>
+                        <li><strong>Week 13-15:</strong> ML Feature Store & Model Integration</li>
+                    </ul>
+                </div>
+
+                <div class="info-box">
+                    <h3>🚀 Phase 4: Production Ready (4 weeks)</h3>
+                    <ul>
+                        <li><strong>Week 16-17:</strong> Performance Optimization & Indexing</li>
+                        <li><strong>Week 18:</strong> Monitoring, Alerts & SLA Setup</li>
+                        <li><strong>Week 19:</strong> Documentation & Knowledge Transfer</li>
+                    </ul>
+                </div>
+
+                <div class="diagram-container">
+                    <div class="mermaid">
+timeline
+    title Implementation Timeline Overview
+    section Foundation
+        Week 1-2 : OLTP Setup
+        Week 3   : Data Lake
+        Week 4   : Schema Design
+    section ETL
+        Week 5-7  : ETL Pipeline
+        Week 8-9  : Airflow
+        Week 10   : Quality Checks
+    section Analytics
+        Week 11-12 : Dashboards
+        Week 13-15 : ML Integration
+    section Production
+        Week 16-17 : Optimization
+        Week 18    : Monitoring
+        Week 19    : Go Live 🚀
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'default',
+            themeVariables: {
+                primaryColor: '#FFE800',
+                primaryTextColor: '#333',
+                primaryBorderColor: '#FF6B00',
+                lineColor: '#667eea',
+                secondaryColor: '#764ba2',
+                tertiaryColor: '#fff'
+            }
+        });
+    </script>
+</body>
+</html>
