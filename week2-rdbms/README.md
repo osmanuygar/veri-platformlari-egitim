@@ -1106,6 +1106,13 @@ docker-compose up --build -d
 docker-compose logs -f
 ```
 
+### Web Arayüzlerine Erişin
+
+| Servis | URL | Kullanıcı Adı | Şifre |
+|--------|-----|---------------|-------|
+| Adminer (DB GUI) | http://localhost:8080 | - | - |
+| pgAdmin | http://localhost:5050 | admin@admin.com | admin |
+
 ### Adım 3: pgadmin4
 
 Tarayıcınızda açın: **http://localhost:5050/**
