@@ -891,6 +891,13 @@ docker-compose logs jupyter
 docker-compose restart
 ```
 
+### Web Arayüzlerine Erişin
+
+| Servis | URL | Kullanıcı Adı | Şifre |
+|--------|-----|---------------|----|
+| Jupyter Lab | http://localhost:8888 | - | -  |
+
+
 ## 📊 Oluşturulan Veri Dosyaları
 
 - `data-samples/structured/customers.csv` - 1,000 müşteri
