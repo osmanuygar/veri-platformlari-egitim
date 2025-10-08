@@ -1,201 +1,201 @@
 product_id,product_name,category,price,cost,stock_quantity,supplier,is_available,profit_margin
-1,Fully-configurable tangible standardization,Toys,697.32,687.64,328,Sarkuysan,False,1.39
-2,Compatible demand-driven circuit,Home & Garden,859.39,1084.66,56,Kısakürek Tic.,True,-26.21
-3,Fundamental intermediate hardware,Electronics,736.31,125.37,319,Tiryaki Agro Gıda,False,82.97
-4,Right-sized stable product,Toys,823.13,966.98,207,Ergül Öcalan San.,False,-17.48
-5,Profit-focused homogeneous implementation,Electronics,525.79,1382.67,432,Öcalan Ertaş San.,False,-162.97
+1,Fully-configurable tangible standardization,Toys,697.32,687.64,328,Sarkuysan,True,1.39
+2,Compatible demand-driven circuit,Electronics,859.39,1084.66,56,Kısakürek Tic.,True,-26.21
+3,Fundamental intermediate hardware,Home & Garden,736.31,125.37,319,Tiryaki Agro Gıda,True,82.97
+4,Right-sized stable product,Clothing,823.13,966.98,207,Ergül Öcalan San.,False,-17.48
+5,Profit-focused homogeneous implementation,Sports,525.79,1382.67,432,Öcalan Ertaş San.,True,-162.97
 6,Seamless demand-driven capacity,Books,1400.22,453.45,307,Türk Tevetoğlu Şti.,False,67.62
-7,Polarized web-enabled monitoring,Books,1518.78,870.82,62,Tepe İnşaat,True,42.66
-8,Universal empowering benchmark,Toys,1647.99,1410.63,247,Fırat Akdeniz Ltd.,False,14.4
-9,Pre-emptive stable neural-net,Home & Garden,689.17,1080.39,465,Arslan Tic.,True,-56.77
-10,Exclusive systemic methodology,Home & Garden,1531.61,98.18,140,Yıldırım Şti.,False,93.59
-11,Open-source global open system,Home & Garden,1278.97,571.21,92,Aselsan,False,55.34
-12,Compatible global database,Electronics,1916.25,133.23,106,Aksu Tic.,False,93.05
-13,Progressive client-driven analyzer,Electronics,855.32,1292.67,364,Tarhan San.,True,-51.13
-14,Cross-platform bandwidth-monitored time-frame,Home & Garden,1984.7,934.39,87,Aksa Akrilik,False,52.92
-15,Grass-roots static algorithm,Clothing,1483.38,1434.79,300,Akar Öcalan San.,False,3.28
+7,Polarized web-enabled monitoring,Toys,1518.78,870.82,62,Tepe İnşaat,True,42.66
+8,Universal empowering benchmark,Sports,1647.99,1410.63,247,Fırat Akdeniz Ltd.,False,14.4
+9,Pre-emptive stable neural-net,Sports,689.17,1080.39,465,Arslan Tic.,False,-56.77
+10,Exclusive systemic methodology,Electronics,1531.61,98.18,140,Yıldırım Şti.,False,93.59
+11,Open-source global open system,Sports,1278.97,571.21,92,Aselsan,False,55.34
+12,Compatible global database,Home & Garden,1916.25,133.23,106,Aksu Tic.,True,93.05
+13,Progressive client-driven analyzer,Toys,855.32,1292.67,364,Tarhan San.,False,-51.13
+14,Cross-platform bandwidth-monitored time-frame,Home & Garden,1984.7,934.39,87,Aksa Akrilik,True,52.92
+15,Grass-roots static algorithm,Sports,1483.38,1434.79,300,Akar Öcalan San.,True,3.28
 16,Networked heuristic complexity,Electronics,1554.79,34.54,107,JTI Tütün Ürünleri Pazarlama,False,97.78
 17,Total interactive infrastructure,Clothing,61.15,637.52,45,Şişecam,True,-942.55
-18,Implemented contextually-based Internet solution,Home & Garden,999.82,161.02,76,Karadeniz A.Ş.,False,83.9
-19,Organic directional hub,Toys,1061.39,528.98,216,Türk Telekom,True,50.16
-20,Cloned client-server matrix,Home & Garden,90.79,247.02,168,Yüksel Mansız A.Ş.,True,-172.08
-21,Enterprise-wide even-keeled functionalities,Sports,631.14,496.55,301,Yıldırım Arsoy Tic.,False,21.32
-22,Monitored directional workforce,Sports,1911.73,1229.8,128,Ülker Yüksel San.,True,35.67
-23,Fully-configurable mobile hierarchy,Books,857.96,245.25,200,İnönü A.Ş.,False,71.41
-24,Synergistic hybrid functionalities,Sports,381.54,713.13,195,Soylu Çetin Şti.,False,-86.91
-25,Versatile human-resource pricing structure,Toys,1031.54,1382.77,347,Çorlu Tic.,False,-34.05
-26,Phased incremental firmware,Books,77.19,1498.18,267,Korutürk A.Ş.,True,-1840.9
-27,Progressive leadingedge migration,Sports,1036.82,379.71,87,Erdoğan San.,True,63.38
+18,Implemented contextually-based Internet solution,Sports,999.82,161.02,76,Karadeniz A.Ş.,True,83.9
+19,Organic directional hub,Home & Garden,1061.39,528.98,216,Türk Telekom,False,50.16
+20,Cloned client-server matrix,Electronics,90.79,247.02,168,Yüksel Mansız A.Ş.,True,-172.08
+21,Enterprise-wide even-keeled functionalities,Toys,631.14,496.55,301,Yıldırım Arsoy Tic.,True,21.32
+22,Monitored directional workforce,Electronics,1911.73,1229.8,128,Ülker Yüksel San.,False,35.67
+23,Fully-configurable mobile hierarchy,Toys,857.96,245.25,200,İnönü A.Ş.,False,71.41
+24,Synergistic hybrid functionalities,Clothing,381.54,713.13,195,Soylu Çetin Şti.,False,-86.91
+25,Versatile human-resource pricing structure,Electronics,1031.54,1382.77,347,Çorlu Tic.,False,-34.05
+26,Phased incremental firmware,Toys,77.19,1498.18,267,Korutürk A.Ş.,False,-1840.9
+27,Progressive leadingedge migration,Toys,1036.82,379.71,87,Erdoğan San.,True,63.38
 28,Implemented optimizing interface,Electronics,1192.59,1403.67,252,Enerjisa Enerji,True,-17.7
-29,Diverse composite focus group,Electronics,721.81,395.78,237,Yılmaz Yıldırım Şti.,True,45.17
-30,Re-engineered executive strategy,Books,1527.53,623.23,72,Yaman San.,True,59.2
-31,Multi-layered bottom-line adapter,Toys,280.07,1317.5,418,Durmuş Durdu Ltd.,False,-370.42
-32,Integrated incremental product,Electronics,1757.58,1180.33,357,Coca-Cola İçecek,False,32.84
-33,Devolved foreground ability,Sports,1911.34,1286.94,354,Çamurcuoğlu Şama Şti.,False,32.67
-34,Open-source optimal capacity,Books,12.46,1201.38,160,Bilge Durmuş Ltd.,True,-9541.89
-35,Re-contextualized intangible Graphic Interface,Home & Garden,1687.02,356.42,57,Hayrioğlu Tic.,True,78.87
-36,Networked national groupware,Electronics,1017.15,840.4,383,Kardemir,False,17.38
+29,Diverse composite focus group,Home & Garden,721.81,395.78,237,Yılmaz Yıldırım Şti.,False,45.17
+30,Re-engineered executive strategy,Clothing,1527.53,623.23,72,Yaman San.,False,59.2
+31,Multi-layered bottom-line adapter,Sports,280.07,1317.5,418,Durmuş Durdu Ltd.,True,-370.42
+32,Integrated incremental product,Electronics,1757.58,1180.33,357,Coca-Cola İçecek,True,32.84
+33,Devolved foreground ability,Books,1911.34,1286.94,354,Çamurcuoğlu Şama Şti.,False,32.67
+34,Open-source optimal capacity,Sports,12.46,1201.38,160,Bilge Durmuş Ltd.,True,-9541.89
+35,Re-contextualized intangible Graphic Interface,Toys,1687.02,356.42,57,Hayrioğlu Tic.,True,78.87
+36,Networked national groupware,Clothing,1017.15,840.4,383,Kardemir,False,17.38
 37,Customizable client-server service-desk,Home & Garden,928.2,580.95,372,Selçuk Ecza,False,37.41
-38,Business-focused intangible throughput,Home & Garden,484.97,692.27,290,Soylu Akçay A.Ş.,True,-42.74
-39,De-engineered web-enabled knowledge user,Clothing,900.18,235.16,429,Şişecam,False,73.88
-40,Operative transitional methodology,Books,1901.35,477.07,339,Arslan Şti.,True,74.91
-41,Enhanced radical emulation,Home & Garden,429.47,1287.18,65,Güçlü Durdu A.Ş.,True,-199.71
-42,User-centric foreground standardization,Sports,366.29,1346.85,427,Kısakürek Yüksel Şti.,False,-267.7
-43,Ameliorated reciprocal intranet,Electronics,491.37,917.18,25,Şener Kısakürek Tic.,False,-86.66
-44,Reduced zero-defect data-warehouse,Sports,1108.15,749.91,297,Hyundai Assan Otomotiv,False,32.33
-45,Function-based systemic flexibility,Electronics,1861.3,1070.7,76,Yıldırım Ltd.,False,42.48
-46,Devolved asynchronous capacity,Electronics,1152.02,915.24,285,Akça San.,False,20.55
-47,Re-engineered bifurcated framework,Electronics,494.53,1475.59,371,Anadolu Efes Biracılık,False,-198.38
-48,Optional zero tolerance protocol,Home & Garden,886.5,289.18,415,Tekfen İnşaat,True,67.38
-49,Multi-layered 24hour contingency,Clothing,786.9,676.32,35,Arsoy Manço Şti.,True,14.05
-50,Digitized zero tolerance customer loyalty,Clothing,102.67,1377.77,18,Hançer San.,False,-1241.94
-51,Implemented modular Local Area Network,Electronics,1026.18,1372.53,277,Hayat Kimya,False,-33.75
-52,Reactive system-worthy standardization,Home & Garden,260.75,745.54,320,Akdeniz Akgündüz Şti.,True,-185.92
-53,Synchronized upward-trending standardization,Toys,1686.07,206.54,312,Gül San.,True,87.75
-54,Adaptive executive hardware,Electronics,1102.44,1223.36,266,Doğuş Otomotiv,True,-10.97
-55,Proactive uniform open system,Books,1690.77,879.82,281,Yılmaz Türk A.Ş.,False,47.96
-56,Persistent client-driven hub,Books,1912.53,1160.88,431,Kastamonu Entegre,False,39.3
-57,Customizable multi-state frame,Home & Garden,1886.94,696.47,18,Netlog Lojistik Hizmetleri,True,63.09
-58,Total solution-oriented application,Electronics,209.85,309.81,338,Yıldırım Şti.,True,-47.63
-59,Persevering 4thgeneration database,Books,1890.19,40.86,139,Ülker Yorulmaz A.Ş.,False,97.84
-60,Focused solution-oriented pricing structure,Clothing,1593.54,840.91,66,Ülker Korutürk San.,True,47.23
-61,Progressive client-driven array,Sports,1557.54,245.76,311,Hayrioğlu A.Ş.,True,84.22
-62,Implemented local open architecture,Toys,189.36,284.77,17,Opet Petrolcülük,False,-50.39
-63,Synergized client-server time-frame,Toys,367.23,657.28,368,Limak Yatırım,True,-78.98
-64,Fully-configurable content-based intranet,Sports,1950.58,665.91,260,Bilir Alemdar Ltd.,False,65.86
-65,Stand-alone upward-trending collaboration,Sports,434.61,415.21,111,Akgündüz Demir San.,True,4.46
+38,Business-focused intangible throughput,Clothing,484.97,692.27,290,Soylu Akçay A.Ş.,False,-42.74
+39,De-engineered web-enabled knowledge user,Electronics,900.18,235.16,429,Şişecam,True,73.88
+40,Operative transitional methodology,Sports,1901.35,477.07,339,Arslan Şti.,False,74.91
+41,Enhanced radical emulation,Toys,429.47,1287.18,65,Güçlü Durdu A.Ş.,False,-199.71
+42,User-centric foreground standardization,Electronics,366.29,1346.85,427,Kısakürek Yüksel Şti.,False,-267.7
+43,Ameliorated reciprocal intranet,Sports,491.37,917.18,25,Şener Kısakürek Tic.,False,-86.66
+44,Reduced zero-defect data-warehouse,Home & Garden,1108.15,749.91,297,Hyundai Assan Otomotiv,True,32.33
+45,Function-based systemic flexibility,Sports,1861.3,1070.7,76,Yıldırım Ltd.,True,42.48
+46,Devolved asynchronous capacity,Electronics,1152.02,915.24,285,Akça San.,True,20.55
+47,Re-engineered bifurcated framework,Electronics,494.53,1475.59,371,Anadolu Efes Biracılık,True,-198.38
+48,Optional zero tolerance protocol,Toys,886.5,289.18,415,Tekfen İnşaat,False,67.38
+49,Multi-layered 24hour contingency,Home & Garden,786.9,676.32,35,Arsoy Manço Şti.,False,14.05
+50,Digitized zero tolerance customer loyalty,Clothing,102.67,1377.77,18,Hançer San.,True,-1241.94
+51,Implemented modular Local Area Network,Sports,1026.18,1372.53,277,Hayat Kimya,True,-33.75
+52,Reactive system-worthy standardization,Clothing,260.75,745.54,320,Akdeniz Akgündüz Şti.,True,-185.92
+53,Synchronized upward-trending standardization,Sports,1686.07,206.54,312,Gül San.,True,87.75
+54,Adaptive executive hardware,Electronics,1102.44,1223.36,266,Doğuş Otomotiv,False,-10.97
+55,Proactive uniform open system,Home & Garden,1690.77,879.82,281,Yılmaz Türk A.Ş.,True,47.96
+56,Persistent client-driven hub,Electronics,1912.53,1160.88,431,Kastamonu Entegre,False,39.3
+57,Customizable multi-state frame,Home & Garden,1886.94,696.47,18,Netlog Lojistik Hizmetleri,False,63.09
+58,Total solution-oriented application,Home & Garden,209.85,309.81,338,Yıldırım Şti.,False,-47.63
+59,Persevering 4thgeneration database,Clothing,1890.19,40.86,139,Ülker Yorulmaz A.Ş.,True,97.84
+60,Focused solution-oriented pricing structure,Books,1593.54,840.91,66,Ülker Korutürk San.,False,47.23
+61,Progressive client-driven array,Books,1557.54,245.76,311,Hayrioğlu A.Ş.,True,84.22
+62,Implemented local open architecture,Toys,189.36,284.77,17,Opet Petrolcülük,True,-50.39
+63,Synergized client-server time-frame,Electronics,367.23,657.28,368,Limak Yatırım,False,-78.98
+64,Fully-configurable content-based intranet,Toys,1950.58,665.91,260,Bilir Alemdar Ltd.,True,65.86
+65,Stand-alone upward-trending collaboration,Electronics,434.61,415.21,111,Akgündüz Demir San.,False,4.46
 66,Team-oriented analyzing open system,Toys,346.42,202.22,407,JTI Tütün Ürünleri Pazarlama,False,41.63
-67,Total tertiary flexibility,Books,731.08,1417.7,461,Shell&Turcas Petrol,False,-93.92
-68,Intuitive asymmetric structure,Toys,1827.58,201.8,114,Koton,True,88.96
-69,Object-based mobile initiative,Electronics,957.62,529.41,165,JTI Tütün Ürünleri Pazarlama,True,44.72
+67,Total tertiary flexibility,Toys,731.08,1417.7,461,Shell&Turcas Petrol,False,-93.92
+68,Intuitive asymmetric structure,Home & Garden,1827.58,201.8,114,Koton,False,88.96
+69,Object-based mobile initiative,Sports,957.62,529.41,165,JTI Tütün Ürünleri Pazarlama,False,44.72
 70,Visionary upward-trending intranet,Electronics,1841.96,460.78,66,Hayrioğlu San.,False,74.98
-71,Advanced hybrid customer loyalty,Clothing,675.33,1300.18,254,İskenderun Demir Çelik,False,-92.53
-72,Open-source responsive definition,Clothing,460.79,618.04,69,Tevetoğlu Demirel Ltd.,True,-34.13
-73,Synchronized client-driven toolset,Electronics,995.45,190.45,459,Çorlu A.Ş.,False,80.87
-74,Programmable interactive customer loyalty,Clothing,1234.8,20.34,307,Gül A.Ş.,True,98.35
-75,Adaptive bifurcated architecture,Clothing,789.08,1084.31,202,Arçelik,True,-37.41
-76,Devolved coherent algorithm,Books,698.6,1073.18,126,Kroman Çelik,True,-53.62
-77,Business-focused uniform service-desk,Sports,443.94,629.59,422,Hyundai Assan Otomotiv,True,-41.82
-78,Programmable explicit middleware,Electronics,557.26,193.83,442,Durmuş San.,True,65.22
-79,Future-proofed clear-thinking info-mediaries,Toys,1349.5,560.59,409,Migros,False,58.46
+71,Advanced hybrid customer loyalty,Books,675.33,1300.18,254,İskenderun Demir Çelik,False,-92.53
+72,Open-source responsive definition,Electronics,460.79,618.04,69,Tevetoğlu Demirel Ltd.,True,-34.13
+73,Synchronized client-driven toolset,Sports,995.45,190.45,459,Çorlu A.Ş.,False,80.87
+74,Programmable interactive customer loyalty,Clothing,1234.8,20.34,307,Gül A.Ş.,False,98.35
+75,Adaptive bifurcated architecture,Sports,789.08,1084.31,202,Arçelik,False,-37.41
+76,Devolved coherent algorithm,Sports,698.6,1073.18,126,Kroman Çelik,True,-53.62
+77,Business-focused uniform service-desk,Home & Garden,443.94,629.59,422,Hyundai Assan Otomotiv,True,-41.82
+78,Programmable explicit middleware,Clothing,557.26,193.83,442,Durmuş San.,False,65.22
+79,Future-proofed clear-thinking info-mediaries,Books,1349.5,560.59,409,Migros,False,58.46
 80,Function-based zero administration moratorium,Home & Garden,746.05,886.87,320,Tüpraş,True,-18.88
-81,Expanded demand-driven system engine,Books,168.72,1057.39,79,Akdeniz Alemdar Şti.,True,-526.71
+81,Expanded demand-driven system engine,Home & Garden,168.72,1057.39,79,Akdeniz Alemdar Şti.,True,-526.71
 82,Extended interactive knowledge user,Home & Garden,284.93,121.97,175,Akçay Şti.,True,57.19
-83,Synergistic object-oriented implementation,Clothing,751.03,836.68,112,Kibar Dış Ticaret,True,-11.4
-84,Ameliorated multimedia concept,Clothing,1849.76,417.81,110,Sezer Akça Tic.,False,77.41
-85,Team-oriented needs-based portal,Books,764.27,927.81,308,Şama Şti.,False,-21.4
-86,Open-architected modular success,Books,130.68,973.97,136,TAV Tepe Akfen,False,-645.31
-87,User-centric scalable artificial intelligence,Sports,841.81,1366.35,132,Mansız A.Ş.,False,-62.31
-88,Total demand-driven implementation,Books,1340.95,618.52,371,Kastamonu Entegre,True,53.87
-89,Advanced full-range productivity,Home & Garden,1191.26,808.7,327,Yorulmaz Tic.,False,32.11
-90,Synergistic eco-centric portal,Home & Garden,564.82,405.98,188,Enka İnşaat,True,28.12
-91,Horizontal intermediate policy,Sports,1379.3,433.4,276,Güneş Ekspres Havacılık,True,68.58
+83,Synergistic object-oriented implementation,Sports,751.03,836.68,112,Kibar Dış Ticaret,False,-11.4
+84,Ameliorated multimedia concept,Books,1849.76,417.81,110,Sezer Akça Tic.,False,77.41
+85,Team-oriented needs-based portal,Clothing,764.27,927.81,308,Şama Şti.,True,-21.4
+86,Open-architected modular success,Sports,130.68,973.97,136,TAV Tepe Akfen,False,-645.31
+87,User-centric scalable artificial intelligence,Books,841.81,1366.35,132,Mansız A.Ş.,True,-62.31
+88,Total demand-driven implementation,Home & Garden,1340.95,618.52,371,Kastamonu Entegre,True,53.87
+89,Advanced full-range productivity,Toys,1191.26,808.7,327,Yorulmaz Tic.,False,32.11
+90,Synergistic eco-centric portal,Toys,564.82,405.98,188,Enka İnşaat,True,28.12
+91,Horizontal intermediate policy,Clothing,1379.3,433.4,276,Güneş Ekspres Havacılık,True,68.58
 92,Devolved 4thgeneration open architecture,Electronics,1264.94,73.82,224,Şafak Çorlu Ltd.,True,94.16
-93,Multi-layered intangible focus group,Clothing,352.62,432.67,102,Gülen Aksu Şti.,False,-22.7
-94,Re-contextualized transitional application,Clothing,332.67,100.42,106,Opet Petrolcülük,False,69.81
-95,Customizable content-based circuit,Home & Garden,1098.89,1446.05,62,Toyota Otomotiv,False,-31.59
-96,Fundamental regional hub,Books,1322.28,938.27,403,Yaman San.,False,29.04
-97,Virtual background open system,Sports,1924.2,263.86,441,Ereğli Demir Çelik,False,86.29
-98,Extended holistic application,Clothing,849.64,179.57,244,Akdeniz Bilge Şti.,False,78.87
-99,Streamlined 24hour archive,Books,1532.23,558.33,172,Öcalan Ertaş Tic.,True,63.56
+93,Multi-layered intangible focus group,Toys,352.62,432.67,102,Gülen Aksu Şti.,True,-22.7
+94,Re-contextualized transitional application,Home & Garden,332.67,100.42,106,Opet Petrolcülük,True,69.81
+95,Customizable content-based circuit,Home & Garden,1098.89,1446.05,62,Toyota Otomotiv,True,-31.59
+96,Fundamental regional hub,Electronics,1322.28,938.27,403,Yaman San.,True,29.04
+97,Virtual background open system,Sports,1924.2,263.86,441,Ereğli Demir Çelik,True,86.29
+98,Extended holistic application,Sports,849.64,179.57,244,Akdeniz Bilge Şti.,False,78.87
+99,Streamlined 24hour archive,Sports,1532.23,558.33,172,Öcalan Ertaş Tic.,True,63.56
 100,Customer-focused full-range frame,Electronics,241.88,464.93,405,Akdeniz Yılmaz Tic.,False,-92.22
-101,Object-based bifurcated leverage,Toys,1780.32,422.49,332,Enka İnşaat,True,76.27
-102,Monitored zero tolerance moderator,Home & Garden,1269.88,704.95,486,Karadeniz A.Ş.,False,44.49
+101,Object-based bifurcated leverage,Home & Garden,1780.32,422.49,332,Enka İnşaat,True,76.27
+102,Monitored zero tolerance moderator,Clothing,1269.88,704.95,486,Karadeniz A.Ş.,False,44.49
 103,Universal system-worthy strategy,Books,1261.77,1369.75,330,Ergül Şti.,True,-8.56
-104,Stand-alone analyzing moratorium,Books,293.46,854.24,209,Tarhan Ltd.,False,-191.09
-105,Business-focused didactic moderator,Clothing,88.77,784.24,190,Bilge Şti.,True,-783.45
-106,Upgradable multimedia orchestration,Clothing,1405.88,1210.79,157,Soylu İhsanoğlu Ltd.,True,13.88
-107,Sharable web-enabled superstructure,Electronics,242.94,11.02,318,TAV Havalimanları,True,95.46
-108,User-centric 5thgeneration forecast,Clothing,262.67,300.09,224,Kardemir,False,-14.25
-109,Function-based scalable architecture,Clothing,383.13,746.8,171,Yaman Sakarya Şti.,False,-94.92
-110,Centralized executive approach,Sports,204.52,1059.44,322,RC Rönesans İnşaat,False,-418.01
-111,Future-proofed disintermediate architecture,Toys,1254.53,730.12,441,THY Opet,False,41.8
+104,Stand-alone analyzing moratorium,Clothing,293.46,854.24,209,Tarhan Ltd.,True,-191.09
+105,Business-focused didactic moderator,Home & Garden,88.77,784.24,190,Bilge Şti.,True,-783.45
+106,Upgradable multimedia orchestration,Sports,1405.88,1210.79,157,Soylu İhsanoğlu Ltd.,True,13.88
+107,Sharable web-enabled superstructure,Toys,242.94,11.02,318,TAV Havalimanları,False,95.46
+108,User-centric 5thgeneration forecast,Sports,262.67,300.09,224,Kardemir,True,-14.25
+109,Function-based scalable architecture,Home & Garden,383.13,746.8,171,Yaman Sakarya Şti.,False,-94.92
+110,Centralized executive approach,Home & Garden,204.52,1059.44,322,RC Rönesans İnşaat,True,-418.01
+111,Future-proofed disintermediate architecture,Electronics,1254.53,730.12,441,THY Opet,False,41.8
 112,Monitored impactful info-mediaries,Home & Garden,849.79,249.76,448,Ülker San.,True,70.61
-113,Profound global archive,Electronics,539.53,1395.32,35,Kibar Dış Ticaret,False,-158.62
-114,Synergized didactic groupware,Electronics,887.09,496.35,133,Seven Gül Tic.,True,44.05
+113,Profound global archive,Toys,539.53,1395.32,35,Kibar Dış Ticaret,False,-158.62
+114,Synergized didactic groupware,Sports,887.09,496.35,133,Seven Gül Tic.,False,44.05
 115,Ergonomic multi-state productivity,Home & Garden,1689.84,1183.38,36,Opet Petrolcülük,False,29.97
-116,Streamlined bi-directional focus group,Toys,1854.89,1337.66,92,Oyak Renault,True,27.88
-117,Profound secondary data-warehouse,Home & Garden,980.08,522.94,74,Sezgin Soylu San.,True,46.64
-118,Polarized fault-tolerant knowledgebase,Books,1137.84,1268.74,243,Sezer Bilge A.Ş.,False,-11.5
-119,Intuitive heuristic middleware,Books,521.83,1067.61,182,Mey İçki,True,-104.59
-120,Business-focused dedicated analyzer,Books,1032.06,1356.9,204,Gülen Bilge Ltd.,False,-31.47
-121,Secured scalable access,Sports,1498.76,380.71,458,Vestel Beyaz Eşya,False,74.6
-122,Customer-focused impactful model,Electronics,989.35,1397.26,186,İskenderun Demir Çelik,True,-41.23
-123,Intuitive homogeneous forecast,Sports,611.13,102.63,165,İhsanoğlu Yüksel San.,False,83.21
-124,Organized bifurcated matrix,Clothing,1168.25,1191.54,114,Vestel Beyaz Eşya,True,-1.99
-125,Organized neutral firmware,Clothing,1893.85,656.32,408,İzmir Demir Çelik,False,65.34
-126,Automated background portal,Books,1777.09,270.95,206,Yıldırım Çorlu San.,False,84.75
-127,Automated coherent Local Area Network,Home & Garden,1540.79,123.71,244,Vodafone,True,91.97
-128,Switchable bi-directional initiative,Sports,559.66,587.37,332,İhsanoğlu Gülen Ltd.,True,-4.95
-129,Robust multi-tasking solution,Electronics,490.7,587.04,489,Vodafone,True,-19.63
-130,Realigned secondary strategy,Home & Garden,1678.69,348.79,160,Şafak San.,True,79.22
-131,Expanded mission-critical standardization,Electronics,370.82,327.2,12,Dumanlı Zorlu Şti.,False,11.76
-132,Customer-focused intermediate array,Home & Garden,1215.17,602.27,293,Durdu Ltd.,False,50.44
-133,Customer-focused high-level model,Books,883.47,618.12,441,Şensoy Gülen A.Ş.,False,30.03
-134,Networked interactive website,Sports,941.29,666.34,471,Alemdar Hayrioğlu Ltd.,False,29.21
+116,Streamlined bi-directional focus group,Sports,1854.89,1337.66,92,Oyak Renault,True,27.88
+117,Profound secondary data-warehouse,Clothing,980.08,522.94,74,Sezgin Soylu San.,True,46.64
+118,Polarized fault-tolerant knowledgebase,Clothing,1137.84,1268.74,243,Sezer Bilge A.Ş.,False,-11.5
+119,Intuitive heuristic middleware,Clothing,521.83,1067.61,182,Mey İçki,False,-104.59
+120,Business-focused dedicated analyzer,Home & Garden,1032.06,1356.9,204,Gülen Bilge Ltd.,True,-31.47
+121,Secured scalable access,Clothing,1498.76,380.71,458,Vestel Beyaz Eşya,True,74.6
+122,Customer-focused impactful model,Books,989.35,1397.26,186,İskenderun Demir Çelik,False,-41.23
+123,Intuitive homogeneous forecast,Electronics,611.13,102.63,165,İhsanoğlu Yüksel San.,True,83.21
+124,Organized bifurcated matrix,Home & Garden,1168.25,1191.54,114,Vestel Beyaz Eşya,True,-1.99
+125,Organized neutral firmware,Home & Garden,1893.85,656.32,408,İzmir Demir Çelik,True,65.34
+126,Automated background portal,Electronics,1777.09,270.95,206,Yıldırım Çorlu San.,False,84.75
+127,Automated coherent Local Area Network,Toys,1540.79,123.71,244,Vodafone,True,91.97
+128,Switchable bi-directional initiative,Books,559.66,587.37,332,İhsanoğlu Gülen Ltd.,False,-4.95
+129,Robust multi-tasking solution,Home & Garden,490.7,587.04,489,Vodafone,False,-19.63
+130,Realigned secondary strategy,Sports,1678.69,348.79,160,Şafak San.,True,79.22
+131,Expanded mission-critical standardization,Sports,370.82,327.2,12,Dumanlı Zorlu Şti.,True,11.76
+132,Customer-focused intermediate array,Home & Garden,1215.17,602.27,293,Durdu Ltd.,True,50.44
+133,Customer-focused high-level model,Electronics,883.47,618.12,441,Şensoy Gülen A.Ş.,False,30.03
+134,Networked interactive website,Clothing,941.29,666.34,471,Alemdar Hayrioğlu Ltd.,True,29.21
 135,Programmable interactive budgetary management,Sports,914.54,1303.8,403,Durmuş Şti.,True,-42.56
-136,Configurable non-volatile orchestration,Electronics,1800.9,918.83,235,Aksa Akrilik,True,48.98
-137,Phased human-resource intranet,Books,183.32,35.55,272,Eren Enerji,True,80.61
-138,Multi-channeled optimal support,Toys,1567.97,781.05,378,Ertaş Tic.,True,50.19
-139,Universal multi-state customer loyalty,Sports,1671.68,1144.86,113,Er-Bakır Elektrolitik Bakır,False,31.51
-140,Switchable dedicated complexity,Electronics,1886.33,89.34,151,Sezgin Tic.,True,95.26
-141,Open-source asymmetric leverage,Clothing,910.67,636.8,25,Aksa Enerji Üretim,False,30.07
-142,Balanced uniform Graphic Interface,Home & Garden,1005.13,679.56,167,Yaman Tic.,False,32.39
-143,Assimilated full-range monitoring,Toys,1922.98,1431.26,31,Mansız Güçlü San.,True,25.57
-144,Expanded holistic core,Sports,922.32,716.15,220,Manço Şafak Tic.,False,22.35
-145,Function-based heuristic project,Sports,1012.06,1126.1,205,Mey İçki,True,-11.27
-146,Quality-focused asymmetric parallelism,Home & Garden,671.19,457.84,420,Arslan Yıldırım Şti.,True,31.79
-147,Monitored interactive Graphic Interface,Clothing,72.94,1170.06,341,Çamurcuoğlu Şti.,False,-1504.14
-148,Organic tertiary collaboration,Home & Garden,871.78,487.38,97,Korutürk Duran A.Ş.,True,44.09
-149,Quality-focused holistic encryption,Sports,1313.63,647.89,90,Yıldırım İhsanoğlu A.Ş.,False,50.68
+136,Configurable non-volatile orchestration,Sports,1800.9,918.83,235,Aksa Akrilik,False,48.98
+137,Phased human-resource intranet,Toys,183.32,35.55,272,Eren Enerji,True,80.61
+138,Multi-channeled optimal support,Home & Garden,1567.97,781.05,378,Ertaş Tic.,True,50.19
+139,Universal multi-state customer loyalty,Toys,1671.68,1144.86,113,Er-Bakır Elektrolitik Bakır,False,31.51
+140,Switchable dedicated complexity,Electronics,1886.33,89.34,151,Sezgin Tic.,False,95.26
+141,Open-source asymmetric leverage,Sports,910.67,636.8,25,Aksa Enerji Üretim,True,30.07
+142,Balanced uniform Graphic Interface,Sports,1005.13,679.56,167,Yaman Tic.,False,32.39
+143,Assimilated full-range monitoring,Home & Garden,1922.98,1431.26,31,Mansız Güçlü San.,False,25.57
+144,Expanded holistic core,Sports,922.32,716.15,220,Manço Şafak Tic.,True,22.35
+145,Function-based heuristic project,Electronics,1012.06,1126.1,205,Mey İçki,True,-11.27
+146,Quality-focused asymmetric parallelism,Toys,671.19,457.84,420,Arslan Yıldırım Şti.,False,31.79
+147,Monitored interactive Graphic Interface,Home & Garden,72.94,1170.06,341,Çamurcuoğlu Şti.,False,-1504.14
+148,Organic tertiary collaboration,Clothing,871.78,487.38,97,Korutürk Duran A.Ş.,True,44.09
+149,Quality-focused holistic encryption,Books,1313.63,647.89,90,Yıldırım İhsanoğlu A.Ş.,True,50.68
 150,Multi-lateral disintermediate encryption,Home & Garden,1382.99,721.83,475,Petkim,False,47.81
-151,Reduced solution-oriented parallelism,Sports,22.95,1389.91,376,Öcalan San.,False,-5956.25
-152,Visionary well-modulated migration,Books,1604.1,84.91,213,Akçay San.,True,94.71
-153,Diverse executive complexity,Toys,989.91,299.32,187,Güçlü Durmuş Şti.,True,69.76
-154,Networked impactful protocol,Clothing,1046.28,1060.09,56,Durdu A.Ş.,True,-1.32
-155,Digitized bandwidth-monitored Local Area Network,Sports,1923.87,868.48,106,Zengin Tic.,True,54.86
-156,Vision-oriented tangible matrices,Toys,576.08,381.04,441,Ergül Sezgin A.Ş.,False,33.86
+151,Reduced solution-oriented parallelism,Books,22.95,1389.91,376,Öcalan San.,True,-5956.25
+152,Visionary well-modulated migration,Home & Garden,1604.1,84.91,213,Akçay San.,True,94.71
+153,Diverse executive complexity,Sports,989.91,299.32,187,Güçlü Durmuş Şti.,False,69.76
+154,Networked impactful protocol,Sports,1046.28,1060.09,56,Durdu A.Ş.,True,-1.32
+155,Digitized bandwidth-monitored Local Area Network,Toys,1923.87,868.48,106,Zengin Tic.,True,54.86
+156,Vision-oriented tangible matrices,Toys,576.08,381.04,441,Ergül Sezgin A.Ş.,True,33.86
 157,Managed next generation analyzer,Clothing,1525.69,437.36,194,Aksa Enerji Üretim,True,71.33
-158,Cloned systemic groupware,Electronics,1153.8,554.13,21,Çorlu Şensoy A.Ş.,False,51.97
+158,Cloned systemic groupware,Home & Garden,1153.8,554.13,21,Çorlu Şensoy A.Ş.,False,51.97
 159,Quality-focused encompassing interface,Books,1404.59,678.27,185,Fırat Şafak A.Ş.,True,51.71
-160,Optimized neutral matrix,Toys,841.46,1227.95,367,Bilge Tic.,False,-45.93
-161,Robust demand-driven ability,Books,565.62,25.65,84,Yılmaz Şti.,True,95.47
+160,Optimized neutral matrix,Books,841.46,1227.95,367,Bilge Tic.,True,-45.93
+161,Robust demand-driven ability,Toys,565.62,25.65,84,Yılmaz Şti.,True,95.47
 162,Vision-oriented dedicated ability,Toys,1096.79,1347.54,79,Eraslan Tic.,True,-22.86
-163,Distributed zero tolerance migration,Clothing,756.13,622.48,328,Bizim Toptan Satış Mağazaları,False,17.68
-164,Mandatory demand-driven complexity,Home & Garden,453.59,349.59,76,Şişecam,False,22.93
-165,Persistent context-sensitive matrices,Toys,1680.08,765.08,329,TAV Havalimanları,False,54.46
-166,Versatile human-resource Internet solution,Home & Garden,956.9,991.21,382,Türk Traktör,False,-3.59
-167,Reverse-engineered next generation workforce,Home & Garden,1696.16,71.9,432,Şener Ertaş A.Ş.,True,95.76
-168,Stand-alone directional extranet,Electronics,953.32,1075.09,376,Kibar Dış Ticaret,False,-12.77
+163,Distributed zero tolerance migration,Toys,756.13,622.48,328,Bizim Toptan Satış Mağazaları,False,17.68
+164,Mandatory demand-driven complexity,Toys,453.59,349.59,76,Şişecam,True,22.93
+165,Persistent context-sensitive matrices,Home & Garden,1680.08,765.08,329,TAV Havalimanları,False,54.46
+166,Versatile human-resource Internet solution,Electronics,956.9,991.21,382,Türk Traktör,True,-3.59
+167,Reverse-engineered next generation workforce,Home & Garden,1696.16,71.9,432,Şener Ertaş A.Ş.,False,95.76
+168,Stand-alone directional extranet,Toys,953.32,1075.09,376,Kibar Dış Ticaret,False,-12.77
 169,Intuitive asymmetric productivity,Home & Garden,1118.03,1142.34,340,Petrol Ofisi,False,-2.17
-170,Multi-layered user-facing strategy,Clothing,1990.61,253.44,176,Zengin Ltd.,False,87.27
-171,Centralized composite functionalities,Clothing,1903.49,255.98,425,Demir A.Ş.,True,86.55
-172,De-engineered multi-state hub,Home & Garden,550.66,309.66,423,Enerjisa Enerji,True,43.77
-173,Innovative interactive benchmark,Electronics,1738.62,1195.96,454,Şener Yılmaz A.Ş.,False,31.21
-174,Front-line 24hour website,Electronics,786.9,411.64,173,Kardemir,False,47.69
-175,Quality-focused maximized core,Clothing,151.78,1194.92,405,Karadeniz Şener A.Ş.,False,-687.27
-176,Adaptive national open system,Toys,1155.8,813.08,81,Aslan Aksu Şti.,True,29.65
-177,Phased clear-thinking success,Clothing,1954.33,1151.92,20,Gülen Şti.,True,41.06
-178,Advanced scalable knowledgebase,Sports,1948.88,832.74,178,Manço Akçay Ltd.,True,57.27
-179,Virtual directional open architecture,Electronics,261.67,506.97,497,Akdeniz Ltd.,False,-93.74
-180,Universal composite matrices,Toys,1544.76,1366.52,397,Tevetoğlu Bilir A.Ş.,False,11.54
-181,Phased methodical knowledgebase,Home & Garden,1607.64,1074.37,329,Gübre Fabrikaları,True,33.17
-182,User-friendly web-enabled budgetary management,Toys,743.8,728.66,224,Kısakürek Ltd.,False,2.04
-183,Decentralized well-modulated middleware,Toys,1320.6,957.96,264,Yılmaz San.,False,27.46
-184,Implemented client-driven functionalities,Electronics,981.44,925.69,401,JTI Tütün Ürünleri Pazarlama,True,5.68
-185,De-engineered system-worthy superstructure,Books,463.51,540.38,268,Akça Ltd.,False,-16.58
-186,Polarized solution-oriented middleware,Sports,1524.92,638.54,250,Çetin Akçay San.,True,58.13
-187,Networked dedicated ability,Home & Garden,532.88,480.79,272,Bizim Toptan Satış Mağazaları,True,9.78
-188,Vision-oriented real-time approach,Sports,687.49,1499.28,381,Yaman Eraslan Şti.,False,-118.08
-189,Advanced leadingedge artificial intelligence,Electronics,388.14,872.2,342,Arsoy Yüksel San.,True,-124.71
-190,Digitized asynchronous application,Home & Garden,1441.35,142.62,408,Baştuğ Metalurji,True,90.11
-191,Digitized transitional focus group,Clothing,922.86,781.07,437,Yıldırım Sezer Tic.,False,15.36
-192,Digitized content-based frame,Sports,892.31,79.69,271,Akgündüz Çetin A.Ş.,False,91.07
-193,Synergistic explicit matrix,Toys,1213.08,436.53,279,Konya Şeker Fabrikası,True,64.01
-194,Extended systematic application,Books,322.95,671.71,222,Hançer Gülen Şti.,True,-107.99
+170,Multi-layered user-facing strategy,Electronics,1990.61,253.44,176,Zengin Ltd.,False,87.27
+171,Centralized composite functionalities,Home & Garden,1903.49,255.98,425,Demir A.Ş.,False,86.55
+172,De-engineered multi-state hub,Electronics,550.66,309.66,423,Enerjisa Enerji,False,43.77
+173,Innovative interactive benchmark,Sports,1738.62,1195.96,454,Şener Yılmaz A.Ş.,True,31.21
+174,Front-line 24hour website,Sports,786.9,411.64,173,Kardemir,False,47.69
+175,Quality-focused maximized core,Home & Garden,151.78,1194.92,405,Karadeniz Şener A.Ş.,True,-687.27
+176,Adaptive national open system,Books,1155.8,813.08,81,Aslan Aksu Şti.,True,29.65
+177,Phased clear-thinking success,Home & Garden,1954.33,1151.92,20,Gülen Şti.,True,41.06
+178,Advanced scalable knowledgebase,Toys,1948.88,832.74,178,Manço Akçay Ltd.,False,57.27
+179,Virtual directional open architecture,Clothing,261.67,506.97,497,Akdeniz Ltd.,True,-93.74
+180,Universal composite matrices,Clothing,1544.76,1366.52,397,Tevetoğlu Bilir A.Ş.,False,11.54
+181,Phased methodical knowledgebase,Electronics,1607.64,1074.37,329,Gübre Fabrikaları,False,33.17
+182,User-friendly web-enabled budgetary management,Clothing,743.8,728.66,224,Kısakürek Ltd.,True,2.04
+183,Decentralized well-modulated middleware,Home & Garden,1320.6,957.96,264,Yılmaz San.,True,27.46
+184,Implemented client-driven functionalities,Toys,981.44,925.69,401,JTI Tütün Ürünleri Pazarlama,False,5.68
+185,De-engineered system-worthy superstructure,Sports,463.51,540.38,268,Akça Ltd.,True,-16.58
+186,Polarized solution-oriented middleware,Electronics,1524.92,638.54,250,Çetin Akçay San.,True,58.13
+187,Networked dedicated ability,Electronics,532.88,480.79,272,Bizim Toptan Satış Mağazaları,True,9.78
+188,Vision-oriented real-time approach,Sports,687.49,1499.28,381,Yaman Eraslan Şti.,True,-118.08
+189,Advanced leadingedge artificial intelligence,Books,388.14,872.2,342,Arsoy Yüksel San.,False,-124.71
+190,Digitized asynchronous application,Sports,1441.35,142.62,408,Baştuğ Metalurji,True,90.11
+191,Digitized transitional focus group,Books,922.86,781.07,437,Yıldırım Sezer Tic.,False,15.36
+192,Digitized content-based frame,Toys,892.31,79.69,271,Akgündüz Çetin A.Ş.,False,91.07
+193,Synergistic explicit matrix,Home & Garden,1213.08,436.53,279,Konya Şeker Fabrikası,True,64.01
+194,Extended systematic application,Home & Garden,322.95,671.71,222,Hançer Gülen Şti.,True,-107.99
 195,Monitored user-facing protocol,Sports,1797.33,803.73,74,Akçay Seven San.,True,55.28
-196,Polarized system-worthy protocol,Toys,935.57,1464.39,150,Yorulmaz Gül San.,False,-56.52
-197,Organized methodical attitude,Clothing,739.39,1473.42,424,Mey İçki,True,-99.28
-198,Versatile regional toolset,Clothing,262.11,151.61,358,Arsoy Tic.,True,42.16
-199,Universal interactive capability,Electronics,344.23,809.51,341,Akça Arsoy Ltd.,False,-135.17
-200,Synergistic optimal paradigm,Sports,1841.52,1226.58,416,Şama Gül A.Ş.,True,33.39
+196,Polarized system-worthy protocol,Home & Garden,935.57,1464.39,150,Yorulmaz Gül San.,False,-56.52
+197,Organized methodical attitude,Books,739.39,1473.42,424,Mey İçki,False,-99.28
+198,Versatile regional toolset,Sports,262.11,151.61,358,Arsoy Tic.,False,42.16
+199,Universal interactive capability,Books,344.23,809.51,341,Akça Arsoy Ltd.,True,-135.17
+200,Synergistic optimal paradigm,Books,1841.52,1226.58,416,Şama Gül A.Ş.,True,33.39

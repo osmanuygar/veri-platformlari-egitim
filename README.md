@@ -1,4 +1,5 @@
-#  Veri Platformları Eğitim Projesi
+#  Veri Platformları Eğitim Projesi 
+# ============================---
 
 Modern veri platformlarını öğrenmek için kapsamlı, pratik odaklı Docker tabanlı eğitim ortamı.
 
