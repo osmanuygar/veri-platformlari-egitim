@@ -5,7 +5,7 @@ def connect_postgres():
     """PostgreSQL'e bağlan"""
     try:
         conn = psycopg2.connect(
-            host="localhost",
+            host="192.168.107.0",
             port=5432,
             database="veri_db",
             user="veri_user",
