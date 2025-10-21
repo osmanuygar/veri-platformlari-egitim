@@ -302,6 +302,13 @@ MATCH (u:User {name: 'Alice'})-[:FOLLOWS]->()-[:FOLLOWS]->(recommendation)
 WHERE NOT (u)-[:FOLLOWS]->(recommendation)
 RETURN DISTINCT recommendation.name
 ```
+## federated query engines (Trino)
+
+* Federated Queries: Tüm NoSQL veritabanlarınızı tek bir SQL arayüzünden sorgulayabilirsiniz
+* Cross-Database Joins: MongoDB'deki verilerle Cassandra'daki verileri birleştirebilirsiniz
+* Standart SQL: SQL bilgisiyle tüm veri kaynaklarına erişim
+
+
 
 **Ne zaman kullanılır?**
 - Sosyal ağlar
@@ -310,6 +317,8 @@ RETURN DISTINCT recommendation.name
 - Network analizi
 - Knowledge graphs
 ---
+
+
 
 ## 4. Dağıtık Sistemler ve Ölçeklenebilirlik
 

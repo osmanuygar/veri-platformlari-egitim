@@ -145,6 +145,37 @@ services:
       retries: 5
       start_period: 30s
 
+# Trino Service - Federated Query Engine
+  trino:
+    build:
+      context: ./trino
+      dockerfile: Dockerfile
+    container_name: week-trino
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./trino/catalog:/etc/trino/catalog:ro
+      - ./trino/config/config.properties:/etc/trino/config.properties:ro
+      - ./trino/config/node.properties:/etc/trino/node.properties:ro
+      - ./trino/config/jvm.config:/etc/trino/jvm.config:ro
+      - ./trino/scripts:/scripts:ro
+      - trino_data:/data/trino
+    networks:
+      - week-network
+    depends_on:
+      mongodb:
+        condition: service_healthy
+      cassandra:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/v1/info"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 60s
+
 # ============================================
 # Networks
 # ============================================
