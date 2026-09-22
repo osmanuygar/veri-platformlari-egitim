@@ -1,0 +1,28 @@
+# Hafta 9 — Temel İstatistik ile Veri Okuryazarlığı
+name: week09-ds
+
+services:
+  jupyter:
+    image: jupyter/scipy-notebook:latest
+    container_name: week09_jupyter
+    ports:
+      - "8890:8888"
+    volumes:
+      - ./notebooks:/home/jovyan/work/notebooks
+      - ./data-samples:/home/jovyan/work/data-samples
+      - ./scripts:/home/jovyan/work/scripts
+    environment:
+      JUPYTER_ENABLE_LAB: "yes"
+      JUPYTER_TOKEN: "week09"
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS http://localhost:8888/api >/dev/null || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 15
+      start_period: 15s
+    networks: [week09_network]
+
+networks:
+  week09_network:
+    name: week09_network
+    driver: bridge

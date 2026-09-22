@@ -1,0 +1,107 @@
+# Hafta 12 — Veri Yaşam Döngüsü ve Veri Yönetişimi
+name: week12-dg
+
+services:
+
+  postgres:
+    image: postgres:15
+    container_name: week12_postgres
+    ports: ["5440:5432"]
+    environment:
+      POSTGRES_USER: dg_user
+      POSTGRES_PASSWORD: dg_pass
+      POSTGRES_DB: dg_db
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U dg_user -d dg_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+    networks: [week12_network]
+
+  marquez-db:
+    image: postgres:15
+    container_name: week12_marquez_db
+    environment:
+      POSTGRES_USER: marquez
+      POSTGRES_PASSWORD: marquez_pass
+      POSTGRES_DB: marquez
+    volumes:
+      - marquez_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U marquez -d marquez"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+    networks: [week12_network]
+
+  marquez-api:
+    image: marquezproject/marquez:latest
+    container_name: week12_marquez_api
+    depends_on:
+      marquez-db:
+        condition: service_healthy
+    ports:
+      - "5002:5000"    # API
+      - "5003:5001"    # Admin
+    environment:
+      MARQUEZ_PORT: 5000
+      MARQUEZ_ADMIN_PORT: 5001
+      POSTGRES_HOST: marquez-db
+      POSTGRES_PORT: 5432
+      POSTGRES_DB: marquez
+      POSTGRES_USER: marquez
+      POSTGRES_PASSWORD: marquez_pass
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS http://localhost:5001/healthcheck >/dev/null || exit 1"]
+      interval: 15s
+      timeout: 10s
+      retries: 20
+      start_period: 30s
+    networks: [week12_network]
+
+  marquez-web:
+    image: marquezproject/marquez-web:latest
+    container_name: week12_marquez_web
+    depends_on:
+      marquez-api:
+        condition: service_healthy
+    ports:
+      - "3002:3000"
+    environment:
+      MARQUEZ_HOST: marquez-api
+      MARQUEZ_PORT: 5000
+      WEB_PORT: 3000
+    networks: [week12_network]
+
+  # Great Expectations Data Docs — statik HTML, `scripts/ge_validate.py`
+  # host'ta çalıştırıldıktan sonra ./great_expectations/gx/uncommitted/data_docs/
+  # altında oluşur; bu servis onu tarayıcıda görüntülenebilir hale getirir.
+  ge-docs:
+    image: python:3.11-slim
+    container_name: week12_ge_docs
+    working_dir: /docs
+    volumes:
+      - ./great_expectations:/docs
+    ports:
+      - "8099:8099"
+    command: >
+      sh -c "mkdir -p /docs/gx/uncommitted/data_docs/local_site &&
+             [ -f /docs/gx/uncommitted/data_docs/local_site/index.html ] ||
+             printf '<h1>Henuz rapor yok</h1><p>Host makinenizde calistirin: python scripts/ge_validate.py</p>' > /docs/gx/uncommitted/data_docs/local_site/index.html &&
+             cd /docs/gx/uncommitted/data_docs/local_site &&
+             python -m http.server 8099"
+    networks: [week12_network]
+
+volumes:
+  postgres_data: { name: week12_postgres_data }
+  marquez_data:  { name: week12_marquez_data }
+
+networks:
+  week12_network:
+    name: week12_network
+    driver: bridge

@@ -1,0 +1,28 @@
+# Hafta 8 — Veri Bilimine Giriş
+name: week08-ds
+
+services:
+  jupyter:
+    image: jupyter/scipy-notebook:latest
+    container_name: week08_jupyter
+    ports:
+      - "8889:8888"
+    volumes:
+      - ./notebooks:/home/jovyan/work/notebooks
+      - ./data-samples:/home/jovyan/work/data-samples
+      - ./scripts:/home/jovyan/work/scripts
+    environment:
+      JUPYTER_ENABLE_LAB: "yes"
+      JUPYTER_TOKEN: "week08"
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS http://localhost:8888/api >/dev/null || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 15
+      start_period: 15s
+    networks: [week08_network]
+
+networks:
+  week08_network:
+    name: week08_network
+    driver: bridge

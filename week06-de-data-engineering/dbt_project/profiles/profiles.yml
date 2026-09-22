@@ -1,0 +1,18 @@
+# Hafta 6 — dbt bağlantı profili
+# Kullanım: dbt run --profiles-dir ./profiles   (ya da DBT_PROFILES_DIR ile)
+#
+# NOT: profiles.yml normalde ~/.dbt/ altında, repo DIŞINDA tutulur (şifre
+# içerebilir). Eğitim ortamında okunabilirlik için repo içine koyduk.
+
+week06:
+  target: dev
+  outputs:
+    dev:
+      type: postgres
+      host: "{{ env_var('DE_PGHOST', 'localhost') }}"
+      port: "{{ env_var('DE_PGPORT', '5436') | as_number }}"
+      user: "{{ env_var('DE_PGUSER', 'de_user') }}"
+      password: "{{ env_var('DE_PGPASSWORD', 'de_pass') }}"
+      dbname: "{{ env_var('DE_PGDATABASE', 'de_db') }}"
+      schema: analytics
+      threads: 4

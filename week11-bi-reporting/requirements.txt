@@ -1,0 +1,4 @@
+# Hafta 11 — İş Zekası & Raporlama (yardımcı scriptler için)
+psycopg2-binary==2.9.9
+requests==2.32.3
+python-dotenv==1.0.1

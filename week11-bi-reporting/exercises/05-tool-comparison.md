@@ -1,0 +1,39 @@
+# Alıştırma 5: Metabase vs Superset — Karşılaştırma Raporu
+
+**Süre:** ~15 dakika · **Format:** Kısa yazılı rapor
+
+---
+
+## 5.1 Deneyiminizi özetleyin
+
+Alıştırma 2 (Metabase) ve Alıştırma 3'ü (Superset) tamamladıktan sonra,
+**yarım sayfalık** bir karşılaştırma raporu yazın. En az şu soruları cevaplayın:
+
+1. Hangi araçta ilk dashboard'u kurmak daha hızlıydı?
+2. SQL bilmeyen bir iş analisti hangisini daha kolay kullanır?
+3. Satır düzeyi güvenlik (RLS) hangisinde daha güçlüydü?
+4. Hangi araç, karmaşık çok-tablolu bir soruyu daha rahat ifade etmenizi sağladı?
+
+---
+
+## 5.2 Senaryo bazlı öneri
+
+Üç farklı senaryo için hangi aracı önerirsiniz, neden?
+
+| Senaryo | Önerilen araç | Gerekçe |
+|---|---|---|
+| 15 kişilik bir startup, teknik olmayan ekip, hızlı self-service istiyor | | |
+| 200 kişilik bir kurum, farklı departmanlar farklı veri görmeli (RLS şart) | | |
+| Veri ekibi karmaşık SQL yazmayı seviyor, chart çeşitliliği önemli | | |
+
+---
+
+## ✅ Ne öğrendik
+
+- Araç seçimi "hangisi daha iyi" değil, "**hangi ekip, hangi ihtiyaç**"
+  sorusuna bağlıdır.
+- Basitlik (Metabase) ile güç/esneklik (Superset) arasında gerçek bir ödünleşme var.
+- Bir BI aracını sadece özellik listesine bakarak değil, **gerçekten
+  kullanarak** karşılaştırmak çok daha güvenilir bir karar verdirir.
+
+📎 [Çözüm](./solutions/05-tool-comparison.md)

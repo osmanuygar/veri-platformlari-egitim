@@ -19,7 +19,7 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - ./week2-rdbms/postgres/init-scripts:/docker-entrypoint-initdb.d
+      - ./week02-di-rdbms/postgres/init-scripts:/docker-entrypoint-initdb.d
       - postgres_data:/var/lib/postgresql/data
     networks:
       - veri_network
@@ -41,7 +41,7 @@ services:
     ports:
       - "3306:3306"
     volumes:
-      - ./week2-rdbms/mysql/init-scripts:/docker-entrypoint-initdb.d
+      - ./week02-di-rdbms/mysql/init-scripts:/docker-entrypoint-initdb.d
       - mysql_data:/var/lib/mysql
     networks:
       - veri_network
@@ -101,7 +101,7 @@ services:
     ports:
       - "27017:27017"
     volumes:
-      - ./week3-nosql/mongodb/init-scripts:/docker-entrypoint-initdb.d
+      - ./week03-di-nosql/mongodb/init-scripts:/docker-entrypoint-initdb.d
       - mongodb_data:/data/db
       - mongodb_config:/data/configdb
     networks:
@@ -139,7 +139,7 @@ services:
       - "6379:6379"
     volumes:
       - redis_data:/data
-      - ./week3-nosql/redis/redis.conf:/usr/local/etc/redis/redis.conf
+      - ./week03-di-nosql/redis/redis.conf:/usr/local/etc/redis/redis.conf
     networks:
       - veri_network
     healthcheck:
@@ -177,7 +177,7 @@ services:
       - "9160:9160"  # Thrift
     volumes:
       - cassandra_data:/var/lib/cassandra
-      - ./week3-nosql/cassandra/init-scripts:/docker-entrypoint-initdb.d
+      - ./week03-di-nosql/cassandra/init-scripts:/docker-entrypoint-initdb.d
     networks:
       - veri_network
     healthcheck:
@@ -202,7 +202,7 @@ services:
       - neo4j_data:/data
       - neo4j_logs:/logs
       - neo4j_plugins:/plugins
-      - ./week3-nosql/neo4j/init-scripts:/import
+      - ./week03-di-nosql/neo4j/init-scripts:/import
     networks:
       - veri_network
     healthcheck:
@@ -272,8 +272,8 @@ services:
       - "8083:8080"  # Spark Master Web UI
       - "7077:7077"  # Spark Master
     volumes:
-      - ./week4-datawarehouse/spark/jobs:/opt/spark-jobs
-      - ./week4-datawarehouse/spark/data:/opt/spark-data
+      - ./week04-de-datawarehouse/spark/jobs:/opt/spark-jobs
+      - ./week04-de-datawarehouse/spark/data:/opt/spark-data
     networks:
       - veri_network
     restart: unless-stopped
@@ -293,8 +293,8 @@ services:
     depends_on:
       - spark-master
     volumes:
-      - ./week4-datawarehouse/spark/jobs:/opt/spark-jobs
-      - ./week4-datawarehouse/spark/data:/opt/spark-data
+      - ./week04-de-datawarehouse/spark/jobs:/opt/spark-jobs
+      - ./week04-de-datawarehouse/spark/data:/opt/spark-data
     networks:
       - veri_network
     restart: unless-stopped
@@ -310,11 +310,20 @@ services:
       - "8888:8888"
     volumes:
       - ./notebooks:/home/jovyan/work
-      - ./week1-intro:/home/jovyan/work/week1-intro
-      - ./week2-rdbms:/home/jovyan/work/week2-rdbms
-      - ./week3-nosql:/home/jovyan/work/week3-nosql
-      - ./week4-datawarehouse:/home/jovyan/work/week4-datawarehouse
-      - ./week5-advanced-sql:/home/jovyan/work/week5-advanced-sql
+      - ./week01-di-intro:/home/jovyan/work/week01-di-intro
+      - ./week02-di-rdbms:/home/jovyan/work/week02-di-rdbms
+      - ./week03-di-nosql:/home/jovyan/work/week03-di-nosql
+      - ./week04-de-datawarehouse:/home/jovyan/work/week04-de-datawarehouse
+      - ./week05-de-advanced-sql:/home/jovyan/work/week05-de-advanced-sql
+      - ./week06-de-data-engineering:/home/jovyan/work/week06-de-data-engineering
+      - ./week07-de-kafka:/home/jovyan/work/week07-de-kafka
+      - ./week08-ds-intro:/home/jovyan/work/week08-ds-intro
+      - ./week09-ds-statistics:/home/jovyan/work/week09-ds-statistics
+      - ./week10-ds-machine-learning:/home/jovyan/work/week10-ds-machine-learning
+      - ./week11-bi-reporting:/home/jovyan/work/week11-bi-reporting
+      - ./week12-dg-governance:/home/jovyan/work/week12-dg-governance
+      - ./week13-dg-ai-llm:/home/jovyan/work/week13-dg-ai-llm
+      - ./week14-case-studies:/home/jovyan/work/week14-case-studies
     environment:
       JUPYTER_ENABLE_LAB: "yes"
       GRANT_SUDO: "yes"

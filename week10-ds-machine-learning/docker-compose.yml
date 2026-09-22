@@ -1,0 +1,113 @@
+# Hafta 10 — Makine Öğrenmesine Giriş
+# MLflow tracking server + Postgres (backend store) + MinIO (artifact store) + Jupyter
+name: week10-ds
+
+services:
+
+  postgres:
+    image: postgres:15
+    container_name: week10_postgres
+    ports: ["5438:5432"]
+    environment:
+      POSTGRES_USER: mlflow_user
+      POSTGRES_PASSWORD: mlflow_pass
+      POSTGRES_DB: mlflow_db
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U mlflow_user -d mlflow_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+    networks: [week10_network]
+
+  minio:
+    image: minio/minio:latest
+    container_name: week10_minio
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    environment:
+      MINIO_ROOT_USER: minio_admin
+      MINIO_ROOT_PASSWORD: minio_password
+    command: server /data --console-address ":9001"
+    volumes:
+      - minio_data:/data
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+    networks: [week10_network]
+
+  minio-init:
+    image: minio/mc:latest
+    container_name: week10_minio_init
+    depends_on:
+      minio:
+        condition: service_healthy
+    entrypoint: >
+      /bin/sh -c "
+      mc alias set local http://minio:9000 minio_admin minio_password &&
+      mc mb -p local/mlflow-artifacts &&
+      echo 'bucket hazır' "
+    networks: [week10_network]
+
+  mlflow:
+    build: ./mlflow
+    container_name: week10_mlflow
+    depends_on:
+      postgres:
+        condition: service_healthy
+      minio-init:
+        condition: service_completed_successfully
+    ports:
+      - "5500:5000"
+    environment:
+      MLFLOW_S3_ENDPOINT_URL: http://minio:9000
+      AWS_ACCESS_KEY_ID: minio_admin
+      AWS_SECRET_ACCESS_KEY: minio_password
+    command: >
+      mlflow server
+      --backend-store-uri postgresql://mlflow_user:mlflow_pass@postgres/mlflow_db
+      --default-artifact-root s3://mlflow-artifacts/
+      --host 0.0.0.0
+      --port 5000
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS http://localhost:5000/health >/dev/null || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 20
+      start_period: 20s
+    networks: [week10_network]
+
+  jupyter:
+    image: jupyter/scipy-notebook:latest
+    container_name: week10_jupyter
+    depends_on:
+      mlflow:
+        condition: service_healthy
+    ports: ["8891:8888"]
+    volumes:
+      - ./notebooks:/home/jovyan/work/notebooks
+      - ./data-samples:/home/jovyan/work/data-samples
+      - ./scripts:/home/jovyan/work/scripts
+    environment:
+      JUPYTER_ENABLE_LAB: "yes"
+      JUPYTER_TOKEN: "week10"
+      MLFLOW_TRACKING_URI: "http://mlflow:5000"
+      MLFLOW_S3_ENDPOINT_URL: "http://minio:9000"
+      AWS_ACCESS_KEY_ID: "minio_admin"
+      AWS_SECRET_ACCESS_KEY: "minio_password"
+    networks: [week10_network]
+
+volumes:
+  postgres_data: { name: week10_postgres_data }
+  minio_data: { name: week10_minio_data }
+
+networks:
+  week10_network:
+    name: week10_network
+    driver: bridge
