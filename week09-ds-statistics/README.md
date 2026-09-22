@@ -1,3 +1,4 @@
+
 # Hafta 9: Temel İstatistik ile Veri Okuryazarlığı
 
 > 🟨 **İzlek:** Veri Bilimi (DS) &nbsp;·&nbsp; **Durum:** ✅ Hazır &nbsp;·&nbsp; **Süre:** 3 saat ders + 2 saat pratik

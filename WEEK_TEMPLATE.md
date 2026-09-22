@@ -27,7 +27,7 @@ yürütmeye gerek kalmıyor.
 ## Klasör yapısı
 
 ```
-weekNN-izlek-konu/
+weekNN-kategori-konu/
 ├── README.md                 # Ders notu (aşağıdaki bölüm sırası zorunlu)
 ├── docker-compose.yml        # Haftanın servisleri, PORTS.md'deki portlarla
 ├── setup-weekNN.sh           # Tek komutluk kurulum + sağlık kontrolü + özet çıktı
@@ -45,7 +45,7 @@ weekNN-izlek-konu/
 
 ### Adlandırma kuralları
 
-- Klasör: `weekNN-izlek-konu` — `NN` sıfır dolgulu, `izlek` ∈ `di | de | ds | bi | dg`
+- Klasör: `weekNN-kategori-konu` — `NN` sıfır dolgulu, `kategori` ∈ `di | de | ds | bi | dg`
 - Container adı: `weekNN_<servis>` (örn. `week07_kafka`) — haftalar arası çakışmayı önler
 - Volume adı: `weekNN_<servis>_data`
 - Docker network: `weekNN_network`
@@ -56,7 +56,7 @@ weekNN-izlek-konu/
 
 ```markdown
 # Hafta N: Başlık
-> İzlek rozeti · Durum
+> Kategori rozeti · Durum
 
 ## 📚 İçindekiler
 ## 🎯 Öğrenme Hedefleri      ← ölçülebilir fiillerle, checkbox olarak
@@ -89,7 +89,7 @@ weekNN-izlek-konu/
 #!/usr/bin/env bash
 set -euo pipefail
 
-WEEK="weekNN-izlek-konu"
+WEEK="weekNN-kategori-konu"
 cd "$(dirname "$0")"
 
 echo "🚀 $WEEK kurulumu başlıyor…"

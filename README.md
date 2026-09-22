@@ -31,9 +31,6 @@ Bu repo, 14 haftalık Veri Platformları dersini desteklemek için hazırlanmı�
 - ✅ Kopyala-yapıştır cheatsheet'ler
 - ✅ Her haftada akılda kalan bir **"wow" demosu**
 
-Program 5 izlekten oluşur: **DI** Veri Temelleri (1–3) → **DE** Veri Mühendisliği (4–7) →
-**DS** Veri Bilimi (8–10) → **BI** İş Zekası (11) → **DG** Veri Yönetişimi (12–13) →
-**Örnek Vakalar** (14).
 
 Her hafta **kendi klasöründe bağımsız çalışır** — tüm repoyu ayağa kaldırmanız gerekmez,
 istediğiniz haftaya girip `docker compose up -d` demeniz yeterli.
@@ -84,54 +81,39 @@ docker compose down -v   # durdur, veriyi de sil
 > 💡 **Aynı anda birden fazla hafta çalıştırabilirsiniz** — portlar çakışmayacak şekilde
 > dağıtıldı. Tam liste: [🔌 PORTS.md](./PORTS.md)
 
-### ⚠️ 2025 Sezonu: Klasör Adları Değişti
-
-14 haftalık programa geçerken klasörler sıfır dolgulu ve izlek kodlu hale getirildi.
-Eski bookmark'larınız için eşleme:
-
-| Eski | Yeni |
-|---|---|
-| `week1-intro` | [`week01-di-intro`](./week01-di-intro/) |
-| `week2-rdbms` | [`week02-di-rdbms`](./week02-di-rdbms/) |
-| `week3-nosql` | [`week03-di-nosql`](./week03-di-nosql/) |
-| `week4-datawarehouse` | [`week04-de-datawarehouse`](./week04-de-datawarehouse/) |
-| `week5-advanced-sql` | [`week05-de-advanced-sql`](./week05-de-advanced-sql/) |
-
-`git pull` sonrası yerel değişiklikleriniz varsa `git status` ile kontrol edin.
-
 ## 📖 Haftalık Müfredat
 
-Program **5 izlek** ve **14 hafta** üzerine kurulu. Her hafta kendi klasöründe bağımsız çalışır — istediğiniz haftadan başlayabilirsiniz.
+ **14 hafta** üzerine kurulu. Her hafta kendi klasöründe bağımsız çalışır — istediğiniz haftadan başlayabilirsiniz.
 
-| # | İzlek | Konu | Ana Araçlar | Klasör | Durum |
-|---|---|---|---|---|---|
-| 01 | 🟦 DI | **Veri Dünyasına Giriş** | Jupyter, pandas | [`week01-di-intro`](./week01-di-intro/) | ✅ Hazır |
-| 02 | 🟦 DI | **Temel Veri Tabanı Kavramları** | PostgreSQL, MySQL, pgAdmin | [`week02-di-rdbms`](./week02-di-rdbms/) | ✅ Hazır |
-| 03 | 🟦 DI | **NoSQL ve NewSQL Yaklaşımı** | MongoDB, Redis, Cassandra, Neo4j, Trino | [`week03-di-nosql`](./week03-di-nosql/) | ✅ Hazır |
-| 04 | 🟩 DE | **Veri Ambarları, Veri Gölleri ve Mimariler** | PostgreSQL, MinIO, Spark, Airflow, Superset | [`week04-de-datawarehouse`](./week04-de-datawarehouse/) | ✅ Hazır |
-| 05 | 🟩 DE | **SQL ve İleri SQL ile Veri İşleme** | PostgreSQL | [`week05-de-advanced-sql`](./week05-de-advanced-sql/) | ✅ Hazır |
-| 06 | 🟩 DE | **Veri Mühendisliğine Giriş ve Modern Veri Ekosistemi** | Airflow, dbt, DuckDB | [`week06-de-data-engineering`](./week06-de-data-engineering/) | ✅ Hazır |
-| 07 | 🟩 DE | **Apache Kafka ile Gerçek Zamanlı Veri Akışı** | Kafka, Schema Registry, Debezium | [`week07-de-kafka`](./week07-de-kafka/) | ✅ Hazır |
-| 08 | 🟨 DS | **Veri Bilimine Giriş** | Jupyter, pandas, seaborn | [`week08-ds-intro`](./week08-ds-intro/) | ✅ Hazır |
-| 09 | 🟨 DS | **Temel İstatistik ile Veri Okuryazarlığı** | Jupyter, scipy, statsmodels | [`week09-ds-statistics`](./week09-ds-statistics/) | ✅ Hazır |
-| 10 | 🟨 DS | **Makine Öğrenmesine Giriş** | scikit-learn, Optuna, MLflow | [`week10-ds-machine-learning`](./week10-ds-machine-learning/) | ✅ Hazır |
-| 11 | 🟧 BI | **İş Zekası & Raporlama Sistemleri** | Metabase, Superset | [`week11-bi-reporting`](./week11-bi-reporting/) | ✅ Hazır |
-| 12 | 🟥 DG | **Veri Yaşam Döngüsü ve Veri Yönetişimi** | Great Expectations, Marquez/OpenLineage | [`week12-dg-governance`](./week12-dg-governance/) | ✅ Hazır |
-| 13 | 🟥 DG | **AI ve LLM Çağında Veri Platformları** | Ollama, pgvector, Qdrant | [`week13-dg-ai-llm`](./week13-dg-ai-llm/) | ✅ Hazır |
-| 14 | ⬛ — | **Örnek Vakalar** | Önceki haftaların tümü | [`week14-case-studies`](./week14-case-studies/) | ✅ Hazır |
+| # | Content | Konu | Ana Araçlar | Klasör | Durum |
+|---|---------|---|---|---|---|
+| 01 | 🟦 DI   | **Veri Dünyasına Giriş** | Jupyter, pandas | [`week01-di-intro`](./week01-di-intro/) | ✅ Hazır |
+| 02 | 🟦 DI   | **Temel Veri Tabanı Kavramları** | PostgreSQL, MySQL, pgAdmin | [`week02-di-rdbms`](./week02-di-rdbms/) | ✅ Hazır |
+| 03 | 🟦 DI   | **NoSQL ve NewSQL Yaklaşımı** | MongoDB, Redis, Cassandra, Neo4j, Trino | [`week03-di-nosql`](./week03-di-nosql/) | ✅ Hazır |
+| 04 | 🟩 DE   | **Veri Ambarları, Veri Gölleri ve Mimariler** | PostgreSQL, MinIO, Spark, Airflow, Superset | [`week04-de-datawarehouse`](./week04-de-datawarehouse/) | ✅ Hazır |
+| 05 | 🟩 DE   | **SQL ve İleri SQL ile Veri İşleme** | PostgreSQL | [`week05-de-advanced-sql`](./week05-de-advanced-sql/) | ✅ Hazır |
+| 06 | 🟩 DE   | **Veri Mühendisliğine Giriş ve Modern Veri Ekosistemi** | Airflow, dbt, DuckDB | [`week06-de-data-engineering`](./week06-de-data-engineering/) | ✅ Hazır |
+| 07 | 🟩 DE   | **Apache Kafka ile Gerçek Zamanlı Veri Akışı** | Kafka, Schema Registry, Debezium | [`week07-de-kafka`](./week07-de-kafka/) | ✅ Hazır |
+| 08 | 🟨 DS   | **Veri Bilimine Giriş** | Jupyter, pandas, seaborn | [`week08-ds-intro`](./week08-ds-intro/) | ✅ Hazır |
+| 09 | 🟨 DS   | **Temel İstatistik ile Veri Okuryazarlığı** | Jupyter, scipy, statsmodels | [`week09-ds-statistics`](./week09-ds-statistics/) | ✅ Hazır |
+| 10 | 🟨 DS   | **Makine Öğrenmesine Giriş** | scikit-learn, Optuna, MLflow | [`week10-ds-machine-learning`](./week10-ds-machine-learning/) | ✅ Hazır |
+| 11 | 🟧 BI   | **İş Zekası & Raporlama Sistemleri** | Metabase, Superset | [`week11-bi-reporting`](./week11-bi-reporting/) | ✅ Hazır |
+| 12 | 🟥 DG   | **Veri Yaşam Döngüsü ve Veri Yönetişimi** | Great Expectations, Marquez/OpenLineage | [`week12-dg-governance`](./week12-dg-governance/) | ✅ Hazır |
+| 13 | 🟥 DG   | **AI ve LLM Çağında Veri Platformları** | Ollama, pgvector, Qdrant | [`week13-dg-ai-llm`](./week13-dg-ai-llm/) | ✅ Hazır |
+| 14 | ⬛ —     | **Örnek Vakalar** | Önceki haftaların tümü | [`week14-case-studies`](./week14-case-studies/) | ✅ Hazır |
 
 > **Durum açıklaması:** ✅ Hazır = ders notu + pratik + alıştırma tamam · 🚧 İskelet = başlıklar, öğrenme hedefleri ve servis planı hazır, ders notu yazımda.
 
-### İzlekler
+### İçerikler
 
-| İzlek | Haftalar | Odak |
-|---|---|---|
-| 🟦 **DI** — Veri Temelleri | 1–3 | Veri kavramı, ilişkisel model, NoSQL. Herkesin ortak temeli. |
+| Content                       | Haftalar | Odak |
+|-------------------------------|---|---|
+| 🟦 **DI** — Veri Temelleri    | 1–3 | Veri kavramı, ilişkisel model, NoSQL. Herkesin ortak temeli. |
 | 🟩 **DE** — Veri Mühendisliği | 4–7 | Depolama mimarileri, SQL derinliği, orkestrasyon, gerçek zamanlı akış. |
-| 🟨 **DS** — Veri Bilimi | 8–10 | Keşifçi analiz, istatistik, makine öğrenmesi. |
-| 🟧 **BI** — İş Zekası | 11 | Metrik tasarımı, dashboard, raporlama operasyonu. |
-| 🟥 **DG** — Veri Yönetişimi | 12–13 | Kalite, lineage, uyumluluk, AI çağının yeni riskleri. |
-| ⬛ **Bütünleşik** | 14 | Uçtan uca vakalar. |
+| 🟨 **DS** — Veri Bilimi       | 8–10 | Keşifçi analiz, istatistik, makine öğrenmesi. |
+| 🟧 **BI** — İş Zekası         | 11 | Metrik tasarımı, dashboard, raporlama operasyonu. |
+| 🟥 **DG** — Veri Yönetişimi   | 12–13 | Kalite, lineage, uyumluluk, AI çağının yeni riskleri. |
+| ⬛ **Bütünleşik**              | 14 | Uçtan uca vakalar. |
 
 ---
 
@@ -671,7 +653,7 @@ Katkılarınızı bekliyoruz! Bu projeye nasıl katkıda bulunabileceğiniz:
 - ✅ Hafta 1–5 ders notları ve alıştırmalar
 
 ### v2.0 — 14 haftalık program (tamamlandı)
-- ✅ 5 izlekli müfredat yapısı (DI / DE / DS / BI / DG)
+
 - ✅ Klasör adlandırma standardı ve port haritası
 - ✅ [Hafta şablonu](./WEEK_TEMPLATE.md) — her hafta aynı iskelet
 - ✅ **14 haftanın tamamı tam içerikli:** ders notu, docker ortamı, alıştırma + çözüm, cheatsheet
