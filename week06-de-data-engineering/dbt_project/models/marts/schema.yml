@@ -1,0 +1,23 @@
+version: 2
+
+models:
+  - name: customer_segment
+    description: >
+      Her müşterinin toplam harcaması, sipariş sayısı ve segmenti (gold/silver/bronze).
+      Hafta 11'deki BI dashboard'larının doğrudan üzerine oturacağı tablo.
+    columns:
+      - name: customer_id
+        tests: [unique, not_null]
+      - name: segment
+        tests:
+          - accepted_values:
+              values: ['gold', 'silver', 'bronze']
+
+  - name: daily_sales_summary
+    description: "Gün bazında sipariş sayısı ve ciro — incremental model."
+    columns:
+      - name: order_date
+        tests: [unique, not_null]
+
+  - name: order_status_funnel
+    description: "Sipariş durumlarının dağılımı — iptal/iade oranını izlemek için."

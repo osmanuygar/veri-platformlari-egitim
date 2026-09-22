@@ -1,0 +1,8 @@
+# Hafta 9 — Temel İstatistik
+pandas==2.2.3
+numpy==1.26.4
+scipy==1.14.1
+statsmodels==0.14.4
+matplotlib==3.9.2
+seaborn==0.13.2
+python-dotenv==1.0.1

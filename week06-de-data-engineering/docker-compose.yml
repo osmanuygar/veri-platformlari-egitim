@@ -1,0 +1,90 @@
+# Hafta 6 — Veri Mühendisliğine Giriş ve Modern Veri Ekosistemi
+#
+# Tek komut:  ./setup-week06.sh
+# Manuel:     docker compose up -d
+#
+# dbt ve DuckDB birer CLI/kütüphanedir, container olarak koşmazlar —
+# gerçek dünyada da böyle kullanılırlar. `pip install -r requirements.txt`
+# ile host makinenizden çalıştırırsınız.
+
+name: week06-de
+
+services:
+
+  # ─────────────────────────────────────────────────────────────
+  # PostgreSQL — hem "kaynak" (raw) hem dbt'nin yazdığı "analytics" şeması
+  # jaffle_shop deseni: customers, orders, payments (dbt'nin kendi
+  # eğitim materyaliyle aynı — dbt dokümantasyonuna geçiş kolay olsun diye)
+  # ─────────────────────────────────────────────────────────────
+  postgres:
+    image: postgres:15
+    container_name: week06_postgres
+    ports:
+      - "5436:5432"
+    environment:
+      POSTGRES_USER: de_user
+      POSTGRES_PASSWORD: de_pass
+      POSTGRES_DB: de_db
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U de_user -d de_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+    networks: [week06_network]
+
+  # ─────────────────────────────────────────────────────────────
+  # Airflow — standalone mod (webserver + scheduler tek süreçte)
+  # Eğitim ortamı için: SQLite + SequentialExecutor yerine LocalExecutor.
+  # Production'da bu şekilde ÇALIŞTIRMAYIN — hafta 4'teki çok container'lı
+  # kurulum (CeleryExecutor + Postgres + Redis) gerçek dağıtımdır.
+  # ─────────────────────────────────────────────────────────────
+  airflow:
+    build: ./airflow
+    container_name: week06_airflow
+    depends_on:
+      postgres:
+        condition: service_healthy
+    ports:
+      - "8090:8080"
+    environment:
+      AIRFLOW__CORE__EXECUTOR: LocalExecutor
+      AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://de_user:de_pass@postgres/airflow_meta
+      AIRFLOW__CORE__LOAD_EXAMPLES: "false"
+      AIRFLOW__WEBSERVER__EXPOSE_CONFIG: "true"
+      AIRFLOW__CORE__DAGS_ARE_PAUSED_AT_CREATION: "false"
+      _AIRFLOW_WWW_USER_USERNAME: admin
+      _AIRFLOW_WWW_USER_PASSWORD: admin
+      # DAG'ların dbt'ye erişmesi için (BashOperator ile host'taki dbt'yi
+      # değil, container İÇİNDEKİ dbt'yi çağırıyoruz — bkz. airflow/Dockerfile)
+      DE_PGHOST: postgres
+      DE_PGPORT: "5432"
+      DE_PGUSER: de_user
+      DE_PGPASSWORD: de_pass
+      DE_PGDATABASE: de_db
+    volumes:
+      - ./airflow/dags:/opt/airflow/dags
+      - ./dbt_project:/opt/dbt_project
+      - airflow_logs:/opt/airflow/logs
+    command: standalone
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS http://localhost:8080/health >/dev/null || exit 1"]
+      interval: 15s
+      timeout: 10s
+      retries: 20
+      start_period: 40s
+    networks: [week06_network]
+
+volumes:
+  postgres_data:
+    name: week06_postgres_data
+  airflow_logs:
+    name: week06_airflow_logs
+
+networks:
+  week06_network:
+    name: week06_network
+    driver: bridge

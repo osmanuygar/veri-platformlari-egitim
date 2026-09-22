@@ -1,0 +1,22 @@
+# Hafta 6 — dbt proje yapılandırması
+name: 'week06_analytics'
+version: '1.0.0'
+config-version: 2
+
+profile: 'week06'   # profiles.yml içindeki bağlantı adı
+
+model-paths:   ["models"]
+seed-paths:    ["seeds"]
+test-paths:    ["tests"]
+macro-paths:   ["macros"]
+
+clean-targets:
+  - "target"
+  - "dbt_packages"
+
+models:
+  week06_analytics:
+    staging:
+      +materialized: view      # staging modelleri hafif — hep taze, disk harcamaz
+    marts:
+      +materialized: table     # marts modelleri sorgulanacak — tabloya yazılır

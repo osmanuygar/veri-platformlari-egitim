@@ -1,0 +1,12 @@
+# Hafta 8 — Veri Bilimine Giriş
+# Jupyter container'ında zaten kurulu (scipy-notebook image'i); host'tan
+# çalıştırmak isterseniz: pip install -r requirements.txt
+
+pandas==2.2.3
+numpy==1.26.4
+matplotlib==3.9.2
+seaborn==0.13.2
+scipy==1.14.1
+ydata-profiling==4.10.0
+python-dotenv==1.0.1
+Faker==30.3.0

@@ -1,0 +1,118 @@
+# Hafta 11 — İş Zekası & Raporlama Sistemleri
+name: week11-bi
+
+services:
+
+  postgres:
+    image: postgres:15
+    container_name: week11_postgres
+    ports: ["5439:5432"]
+    environment:
+      POSTGRES_USER: bi_user
+      POSTGRES_PASSWORD: bi_pass
+      POSTGRES_DB: bi_db
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U bi_user -d bi_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+    networks: [week11_network]
+
+  metabase-db:
+    image: postgres:15
+    container_name: week11_metabase_db
+    environment:
+      POSTGRES_USER: metabase
+      POSTGRES_PASSWORD: metabase_pass
+      POSTGRES_DB: metabase_meta
+    volumes:
+      - metabase_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U metabase -d metabase_meta"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    networks: [week11_network]
+
+  metabase:
+    image: metabase/metabase:latest
+    container_name: week11_metabase
+    depends_on:
+      metabase-db:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
+    ports: ["3001:3000"]
+    environment:
+      MB_DB_TYPE: postgres
+      MB_DB_DBNAME: metabase_meta
+      MB_DB_PORT: 5432
+      MB_DB_USER: metabase
+      MB_DB_PASS: metabase_pass
+      MB_DB_HOST: metabase-db
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS http://localhost:3000/api/health >/dev/null || exit 1"]
+      interval: 15s
+      timeout: 10s
+      retries: 20
+      start_period: 40s
+    networks: [week11_network]
+
+  superset-db:
+    image: postgres:15
+    container_name: week11_superset_db
+    environment:
+      POSTGRES_USER: superset
+      POSTGRES_PASSWORD: superset_pass
+      POSTGRES_DB: superset_meta
+    volumes:
+      - superset_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U superset -d superset_meta"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    networks: [week11_network]
+
+  superset:
+    build: ./superset
+    container_name: week11_superset
+    depends_on:
+      superset-db:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
+    ports: ["8098:8088"]
+    environment:
+      SUPERSET_SECRET_KEY: "week11_egitim_amacli_anahtar_degistirin"
+      DATABASE_DIALECT: postgresql
+      DATABASE_HOST: superset-db
+      DATABASE_PORT: 5432
+      DATABASE_DB: superset_meta
+      DATABASE_USER: superset
+      DATABASE_PASSWORD: superset_pass
+    volumes:
+      - ./superset/superset_config.py:/app/pythonpath/superset_config.py
+      - superset_home:/app/superset_home
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS http://localhost:8088/health >/dev/null || exit 1"]
+      interval: 15s
+      timeout: 10s
+      retries: 20
+      start_period: 40s
+    networks: [week11_network]
+
+volumes:
+  postgres_data:  { name: week11_postgres_data }
+  metabase_data:  { name: week11_metabase_data }
+  superset_data:  { name: week11_superset_data }
+  superset_home:  { name: week11_superset_home }
+
+networks:
+  week11_network:
+    name: week11_network
+    driver: bridge

@@ -1,0 +1,77 @@
+# Hafta 13 — AI ve LLM Çağında Veri Platformları
+name: week13-ai
+
+services:
+
+  # ─────────────────────────────────────────────────────────────
+  # Ollama — yerel LLM çalıştırma motoru
+  # Chat modeli (llama3.2:1b) ve embedding modeli (nomic-embed-text)
+  # setup-week13.sh tarafından ilk kurulumda otomatik indirilir.
+  # ─────────────────────────────────────────────────────────────
+  ollama:
+    image: ollama/ollama:latest
+    container_name: week13_ollama
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS http://localhost:11434/api/tags >/dev/null || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 15
+      start_period: 15s
+    networks: [week13_network]
+    # Not: GPU'nuz varsa docker-compose.override.yml ile
+    # `deploy.resources.reservations.devices` ekleyerek hızlandırabilirsiniz.
+
+  # ─────────────────────────────────────────────────────────────
+  # PostgreSQL + pgvector — "Postgres'i vektör veritabanına çevirmek"
+  # ─────────────────────────────────────────────────────────────
+  postgres:
+    image: pgvector/pgvector:pg16
+    container_name: week13_postgres
+    ports: ["5441:5432"]
+    environment:
+      POSTGRES_USER: ai_user
+      POSTGRES_PASSWORD: ai_pass
+      POSTGRES_DB: ai_db
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ai_user -d ai_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+    networks: [week13_network]
+
+  # ─────────────────────────────────────────────────────────────
+  # Qdrant — özel amaçlı vektör veritabanı (pgvector ile karşılaştırma için)
+  # ─────────────────────────────────────────────────────────────
+  qdrant:
+    image: qdrant/qdrant:latest
+    container_name: week13_qdrant
+    ports:
+      - "6333:6333"    # REST API + Dashboard
+      - "6334:6334"    # gRPC
+    volumes:
+      - qdrant_data:/qdrant/storage
+    healthcheck:
+      test: ["CMD-SHELL", "bash -c '</dev/tcp/localhost/6333' || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+    networks: [week13_network]
+
+volumes:
+  ollama_data:  { name: week13_ollama_data }
+  postgres_data: { name: week13_postgres_data }
+  qdrant_data:  { name: week13_qdrant_data }
+
+networks:
+  week13_network:
+    name: week13_network
+    driver: bridge

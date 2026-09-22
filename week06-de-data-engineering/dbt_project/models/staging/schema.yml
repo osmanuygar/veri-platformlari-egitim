@@ -1,0 +1,36 @@
+version: 2
+
+sources:
+  - name: raw
+    schema: raw
+    tables:
+      - name: raw_customers
+      - name: raw_orders
+      - name: raw_payments
+
+models:
+  - name: stg_customers
+    description: "Ham müşteri verisinin temizlenmiş görünümü — bire bir kaynağa karşılık gelir."
+    columns:
+      - name: customer_id
+        tests: [unique, not_null]
+
+  - name: stg_orders
+    description: "Ham sipariş verisinin temizlenmiş görünümü."
+    columns:
+      - name: order_id
+        tests: [unique, not_null]
+      - name: status
+        tests:
+          - accepted_values:
+              values: ['placed', 'shipped', 'completed', 'returned', 'cancelled']
+
+  - name: stg_payments
+    description: "Ham ödeme verisinin temizlenmiş görünümü. amount TL'ye çevrilir."
+    columns:
+      - name: payment_id
+        tests: [unique, not_null]
+      - name: amount
+        tests:
+          - dbt_utils.accepted_range:
+              min_value: 0

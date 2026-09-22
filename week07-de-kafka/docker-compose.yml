@@ -1,0 +1,175 @@
+# Hafta 7 — Apache Kafka ile Gerçek Zamanlı Veri Akışı
+#
+# Tek komut:  ./setup-week07.sh
+# Manuel:     docker compose up -d
+#
+# Portlar PORTS.md ile uyumludur. Çakışma olursa sol taraftaki değeri değiştirin.
+
+name: week07-kafka
+
+services:
+
+  # ─────────────────────────────────────────────────────────────
+  # Kafka broker — KRaft modu (ZooKeeper YOK)
+  # ─────────────────────────────────────────────────────────────
+  kafka:
+    image: apache/kafka:3.7.1
+    container_name: week07_kafka
+    ports:
+      - "9092:9092"          # host'tan erişim (localhost:9092)
+    environment:
+      # --- KRaft: broker ve controller aynı süreçte ---
+      KAFKA_NODE_ID: 1
+      KAFKA_PROCESS_ROLES: broker,controller
+      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@kafka:9093
+      KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
+      CLUSTER_ID: 4L6g3nShT-eMCtK--X86sw
+
+      # --- Listener'lar ---
+      # INTERNAL : container'lar arası (kafka:19092)
+      # EXTERNAL : host'tan (localhost:9092)
+      KAFKA_LISTENERS: INTERNAL://:19092,CONTROLLER://:9093,EXTERNAL://:9092
+      KAFKA_ADVERTISED_LISTENERS: INTERNAL://kafka:19092,EXTERNAL://localhost:9092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: CONTROLLER:PLAINTEXT,INTERNAL:PLAINTEXT,EXTERNAL:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
+
+      # --- Tek node olduğu için replikasyon 1 ---
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+      KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
+
+      # Eğitim ortamı: olmayan topic'i otomatik oluştur.
+      # DİKKAT: Production'da 'false' olmalı — yazım hatası sessizce yeni topic yaratır.
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
+      KAFKA_NUM_PARTITIONS: 3
+      KAFKA_LOG_RETENTION_HOURS: 168
+    volumes:
+      - kafka_data:/tmp/kraft-combined-logs
+    healthcheck:
+      test: ["CMD-SHELL", "/opt/kafka/bin/kafka-broker-api-versions.sh --bootstrap-server localhost:19092 >/dev/null 2>&1 || exit 1"]
+      interval: 10s
+      timeout: 10s
+      retries: 20
+      start_period: 20s
+    networks: [week07_network]
+
+  # ─────────────────────────────────────────────────────────────
+  # Schema Registry — Avro şemalarının merkezi kaydı
+  # ─────────────────────────────────────────────────────────────
+  schema-registry:
+    image: confluentinc/cp-schema-registry:7.6.1
+    container_name: week07_schema_registry
+    depends_on:
+      kafka:
+        condition: service_healthy
+    ports:
+      - "8095:8081"
+    environment:
+      SCHEMA_REGISTRY_HOST_NAME: schema-registry
+      SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: PLAINTEXT://kafka:19092
+      SCHEMA_REGISTRY_LISTENERS: http://0.0.0.0:8081
+      SCHEMA_REGISTRY_SCHEMA_COMPATIBILITY_LEVEL: backward
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS http://localhost:8081/subjects >/dev/null || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 20
+      start_period: 20s
+    networks: [week07_network]
+
+  # ─────────────────────────────────────────────────────────────
+  # PostgreSQL — CDC kaynağı (wal_level=logical şart!)
+  # ─────────────────────────────────────────────────────────────
+  postgres:
+    image: postgres:15
+    container_name: week07_postgres
+    command:
+      - "postgres"
+      - "-c"
+      - "wal_level=logical"          # Debezium'un okuduğu WAL seviyesi
+      - "-c"
+      - "max_replication_slots=4"
+      - "-c"
+      - "max_wal_senders=4"
+    ports:
+      - "5437:5432"
+    environment:
+      POSTGRES_USER: kafka_user
+      POSTGRES_PASSWORD: kafka_pass
+      POSTGRES_DB: shopdb
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U kafka_user -d shopdb"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+    networks: [week07_network]
+
+  # ─────────────────────────────────────────────────────────────
+  # Kafka Connect + Debezium — CDC motoru
+  # ─────────────────────────────────────────────────────────────
+  connect:
+    image: quay.io/debezium/connect:2.7
+    container_name: week07_connect
+    depends_on:
+      kafka:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
+    ports:
+      - "8096:8083"
+    environment:
+      BOOTSTRAP_SERVERS: kafka:19092
+      GROUP_ID: week07-connect-cluster
+      CONFIG_STORAGE_TOPIC: _connect_configs
+      OFFSET_STORAGE_TOPIC: _connect_offsets
+      STATUS_STORAGE_TOPIC: _connect_status
+      CONFIG_STORAGE_REPLICATION_FACTOR: 1
+      OFFSET_STORAGE_REPLICATION_FACTOR: 1
+      STATUS_STORAGE_REPLICATION_FACTOR: 1
+      KEY_CONVERTER: org.apache.kafka.connect.json.JsonConverter
+      VALUE_CONVERTER: org.apache.kafka.connect.json.JsonConverter
+      CONNECT_KEY_CONVERTER_SCHEMAS_ENABLE: "false"
+      CONNECT_VALUE_CONVERTER_SCHEMAS_ENABLE: "false"
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS http://localhost:8083/connectors >/dev/null || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 30
+      start_period: 30s
+    networks: [week07_network]
+
+  # ─────────────────────────────────────────────────────────────
+  # Kafka UI — topic, partition, lag, connector; hepsi tek ekranda
+  # ─────────────────────────────────────────────────────────────
+  kafka-ui:
+    image: provectuslabs/kafka-ui:latest
+    container_name: week07_kafka_ui
+    depends_on:
+      kafka:
+        condition: service_healthy
+    ports:
+      - "8092:8080"
+    environment:
+      KAFKA_CLUSTERS_0_NAME: week07
+      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka:19092
+      KAFKA_CLUSTERS_0_SCHEMAREGISTRY: http://schema-registry:8081
+      KAFKA_CLUSTERS_0_KAFKACONNECT_0_NAME: debezium
+      KAFKA_CLUSTERS_0_KAFKACONNECT_0_ADDRESS: http://connect:8083
+      DYNAMIC_CONFIG_ENABLED: "true"
+    networks: [week07_network]
+
+volumes:
+  kafka_data:
+    name: week07_kafka_data
+  postgres_data:
+    name: week07_postgres_data
+
+networks:
+  week07_network:
+    name: week07_network
+    driver: bridge

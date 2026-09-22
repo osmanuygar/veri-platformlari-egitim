@@ -1,0 +1,8 @@
+# Hafta 12 — Veri Yaşam Döngüsü ve Veri Yönetişimi
+great-expectations==0.18.19
+openlineage-python==1.19.0
+psycopg2-binary==2.9.9
+pandas==2.2.3
+sqlalchemy==2.0.35
+requests==2.32.3
+python-dotenv==1.0.1
