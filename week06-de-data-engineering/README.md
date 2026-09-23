@@ -14,11 +14,12 @@
 6. [Dönüşüm Katmanı: dbt](#5-dönüşüm-katmanı-dbt)
 7. [Tek Makinede Analitik: DuckDB](#6-tek-makinede-analitik-duckdb)
 8. [Batch vs Streaming](#7-batch-vs-streaming)
-9. [Hızlı Başlangıç](#-hızlı-başlangıç)
-10. [Pratik Uygulamalar](#-pratik-uygulamalar)
-11. [Alıştırmalar](#-alıştırmalar)
-12. [Cheatsheet](#-cheatsheet)
-13. [Kaynaklar](#-kaynaklar)
+9. [Alternatifler ve Ekosistem](#-alternatifler-ve-ekosistem)
+10. [Hızlı Başlangıç](#-hızlı-başlangıç)
+11. [Pratik Uygulamalar](#-pratik-uygulamalar)
+12. [Alıştırmalar](#-alıştırmalar)
+13. [Cheatsheet](#-cheatsheet)
+14. [Kaynaklar](#-kaynaklar)
 
 ---
 
@@ -435,6 +436,25 @@ Bu hafta kurduğumuz `daily_sales_summary` **batch**'tir — günde bir kez,
 dbt ile hesaplanır. Hafta 7'de aynı verinin **event olarak, anında**
 nasıl akıtılabileceğini (Kafka + Debezium ile) göreceğiz. İkisi rakip değil,
 **tamamlayıcı** yaklaşımlardır — gecikme bütçenize göre seçersiniz.
+
+---
+
+## 🔄 Alternatifler ve Ekosistem
+
+§3.2'de ingestion araçlarını, §2.3'te build-vs-buy kararını gördük. Bu tablo haftanın
+diğer araçlarını da aynı gözle ele alıyor:
+
+| Kullandığımız | Açık kaynak alternatif | Enterprise / Yönetilen | Ne zaman değerlendirilmeli |
+|---|---|---|---|
+| **Apache Airflow** | Dagster, Prefect, Kestra, Mage, Argo Workflows | Astronomer, Amazon MWAA, Google Cloud Composer, Dagster+, Prefect Cloud, Azure Data Factory, Control-M | Veri varlığı (asset) odaklı düşünme → Dagster; Python-yerli sadelik → Prefect; YAML tabanlı → Kestra; Airflow'u işletmek istemiyorsanız yönetilen |
+| **dbt Core** | SQLMesh | dbt Cloud, Google Dataform, Coalesce, Matillion | Sanal ortam ve plan/apply akışı (SQLMesh); BigQuery'e gömülü ücretsiz (Dataform); ekip arayüzü + zamanlama (dbt Cloud) |
+| **DuckDB** | Polars, chDB, DataFusion, ClickHouse Local | MotherDuck | Paylaşılan/bulut DuckDB; DataFrame API tercih ediliyorsa Polars |
+| **PostgreSQL (ambar)** | ClickHouse, StarRocks | Snowflake, BigQuery, Redshift, Databricks SQL | Bkz. Hafta 4 |
+| **Ingestion** (§3.2) | Airbyte, dlt, Meltano, Apache NiFi | Fivetran, Stitch, Informatica, AWS Glue | Bkz. §3.2 |
+
+**Değerlendirirken bakılacaklar:** ekibin dili (SQL/Python), zamanlayıcıyı kimin işleteceği, test ve CI desteği, lineage/dokümantasyon üretimi, konektör sayısı ve bakımı, maliyet modeli (satır başı vs. sabit).
+
+📎 Tüm katmanların haritası ve lisans rehberi: [ALTERNATIVES.md](../ALTERNATIVES.md#-orkestrasyon-dönüşüm-ve-veri-alma-hafta-6)
 
 ---
 

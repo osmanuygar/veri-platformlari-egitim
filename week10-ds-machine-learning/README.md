@@ -15,11 +15,12 @@
 7. [Bias-Variance Ödünleşmesi](#6-bias-variance-ödünleşmesi)
 8. [Hiperparametre Optimizasyonu](#7-hiperparametre-optimizasyonu)
 9. [Deney Takibi ve MLOps'a Giriş](#8-deney-takibi-ve-mlopsa-giriş)
-10. [Hızlı Başlangıç](#-hızlı-başlangıç)
-11. [Pratik Uygulamalar](#-pratik-uygulamalar)
-12. [Alıştırmalar](#-alıştırmalar)
-13. [Cheatsheet](#-cheatsheet)
-14. [Kaynaklar](#-kaynaklar)
+10. [Alternatifler ve Ekosistem](#-alternatifler-ve-ekosistem)
+11. [Hızlı Başlangıç](#-hızlı-başlangıç)
+12. [Pratik Uygulamalar](#-pratik-uygulamalar)
+13. [Alıştırmalar](#-alıştırmalar)
+14. [Cheatsheet](#-cheatsheet)
+15. [Kaynaklar](#-kaynaklar)
 
 ---
 
@@ -366,6 +367,25 @@ göreceğimiz LLM'ler **yapılandırılmamış metin** üzerinde çalışır ve
 "özellik mühendisliği" kavramı neredeyse tamamen "prompt mühendisliği"ne
 dönüşür — ama değerlendirme metriği seçimi, overfitting riski, ve deney
 takibi ihtiyacı (MLflow benzeri araçlarla) aynı kalır.
+
+---
+
+## 🔄 Alternatifler ve Ekosistem
+
+Bu hafta kullandığımız araçlar tek seçenek değil. Aynı işi yapan açık kaynak ve
+enterprise/yönetilen alternatifler:
+
+| Kullandığımız | Açık kaynak alternatif | Enterprise / Yönetilen | Ne zaman değerlendirilmeli |
+|---|---|---|---|
+| **scikit-learn** | XGBoost, LightGBM, CatBoost, PyTorch/TensorFlow (derin öğrenme) | H2O Driverless AI, DataRobot, SageMaker Autopilot, Vertex AI AutoML | Tablo verisinde en iyi performans (gradient boosting); AutoML ile hızlı temel çizgi |
+| **Optuna** | Hyperopt, Ray Tune, scikit-optimize | SageMaker/Vertex AI hiperparametre ayarı, W&B Sweeps | Dağıtık arama, çoklu GPU |
+| **MLflow** | ClearML, DVC, Aim, Kubeflow | Weights & Biases, Neptune, Comet, Databricks Managed MLflow, SageMaker, Vertex AI, Azure ML | Ekip işbirliği ve görselleştirme (W&B), uçtan uca yönetilen ML platformu |
+| **MinIO (artifact store)** | SeaweedFS | Amazon S3, Azure Blob, GCS | Bulutta çalışılıyorsa |
+| **Drift izleme** (§8.3) | Evidently, NannyML, whylogs | Arize, Fiddler, WhyLabs, SageMaker Model Monitor | Üretimdeki modelin performansını sürekli izleme |
+
+**Değerlendirirken bakılacaklar:** model türü (tablo vs. görüntü/metin), ekip büyüklüğü ve işbirliği, altyapı (kendi sunucu vs. bulut), model registry ve onay akışı ihtiyacı, açıklanabilirlik gereksinimi (bankacılık, sağlık).
+
+📎 Tüm katmanların haritası ve lisans rehberi: [ALTERNATIVES.md](../ALTERNATIVES.md#-analiz-i̇statistik-ve-ml-hafta-1-810)
 
 ---
 

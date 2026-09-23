@@ -18,6 +18,7 @@ yürütmeye gerek kalmıyor.
 | 3 | **Cheatsheet** (`cheatsheets/`) | Ders sırasında kopyala-yapıştır; sonradan da referans |
 | 4 | **Ayrı alıştırma + çözüm** (`exercises/`, `exercises/solutions/`) | Önce dene, sonra bak |
 | 5 | **Bir "wow" anı** | Haftayı akılda kalıcı yapan tek somut demo |
+| 6 | **Alternatifler ve ekosistem** | Öğrenci aracı değil kategoriyi öğrenir; iş hayatında karşısına çıkan açık kaynak ve enterprise araçları tanır |
 
 > 5. madde en kritiği. Hafta 3'ün Trino'su (tek SQL ile 4 farklı veritabanını sorgulamak)
 > bu yüzden akılda kaldı. Her hafta böyle **bir** ana ihtiyaç duyar.
@@ -61,6 +62,7 @@ weekNN-kategori-konu/
 ## 📚 İçindekiler
 ## 🎯 Öğrenme Hedefleri      ← ölçülebilir fiillerle, checkbox olarak
 ## 1..K  <Konu başlıkları>   ← ders notu
+## 🔄 Alternatifler ve Ekosistem  ← aşağıdaki formatta, zorunlu
 ## 🚀 Hızlı Başlangıç        ← setup script + servis tablosu + durdurma
 ## 🧪 Pratik Uygulamalar     ← "Bu Haftanın Wow Anı" alt başlığı dahil
 ## 📝 Alıştırmalar
@@ -68,6 +70,43 @@ weekNN-kategori-konu/
 ## 📖 Kaynaklar
 <navigasyon: ← önceki | 🏠 ana sayfa | sonraki →>
 ```
+
+---
+
+## 🔄 Alternatifler ve Ekosistem bölümü
+
+Derste tek bir araç kullanıyoruz ama öğrenci iş hayatında başka araçlarla karşılaşacak.
+Bu bölümün amacı öğrenciye **"bu aracın yerine ne kullanılabilirdi, neye bakarak seçilirdi?"**
+sorusunu sordurmak. Uzun bir katalog olması gerekmez; haftada kullanılan her ana
+araç için bir satır yeterli.
+
+Tablo formatı sabittir:
+
+```markdown
+## 🔄 Alternatifler ve Ekosistem
+
+Bu hafta kullandığımız araçlar tek seçenek değil. Aynı işi yapan açık kaynak ve
+enterprise/yönetilen alternatifler:
+
+| Kullandığımız | Açık kaynak alternatif | Enterprise / Yönetilen | Ne zaman değerlendirilmeli |
+|---|---|---|---|
+| **<Araç>** | A, B, C | X, Y, Z | Hangi ihtiyaçta alternatife bakılır |
+
+**Değerlendirirken bakılacaklar:** <bu kategoriye özgü 3–5 kriter>
+
+> ⚖️ **Lisans notu:** (varsa) lisans değişikliği, fork, "açık kaynak değil ama ücretsiz" durumları
+
+📎 Tüm katmanların haritası: [ALTERNATIVES.md](../ALTERNATIVES.md)
+```
+
+Kurallar:
+
+- **"Enterprise / Yönetilen"** sütununa hem ticari ürünler (Tableau, Collibra) hem de
+  açık kaynak bir aracın yönetilen sürümü (Confluent Cloud, MWAA) yazılabilir.
+- **"Ne zaman değerlendirilmeli"** sütunu boş bırakılmaz — isim listesi değil karar ölçütü istiyoruz.
+- Lisansı açık kaynak olmayan ama ücretsiz kullanılabilen araçları (BSL, SSPL, ELv2,
+  Confluent Community License) "açık kaynak" sütununa yazmayın; lisans notunda belirtin.
+- Yeni bir araç eklendiğinde [ALTERNATIVES.md](./ALTERNATIVES.md) de güncellenir.
 
 ---
 
@@ -127,6 +166,7 @@ echo "📝 Alıştırmalar: ./exercises/"
 - [ ] Container açılışında veri otomatik yükleniyor (`init/`)
 - [ ] En az 4 alıştırma + çözümleri var
 - [ ] En az 1 cheatsheet var
+- [ ] "🔄 Alternatifler ve Ekosistem" bölümü var; haftanın her ana aracı tabloda
 - [ ] "Wow anı" README'de yazılı ve gerçekten çalışıyor
 - [ ] Navigasyon linkleri önceki/sonraki haftaya doğru gidiyor
 - [ ] Kök `README.md` müfredat tablosunda durumu güncel
@@ -134,4 +174,4 @@ echo "📝 Alıştırmalar: ./exercises/"
 
 ---
 
-**[🏠 Ana Sayfa](./README.md)** · **[🔌 Port Haritası](./PORTS.md)**
+**[🏠 Ana Sayfa](./README.md)** · **[🔌 Port Haritası](./PORTS.md)** · **[🔄 Alternatifler](./ALTERNATIVES.md)**

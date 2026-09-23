@@ -15,11 +15,12 @@
 7. [Kafka Connect ve CDC](#6-kafka-connect-ve-cdc)
 8. [Teslimat Garantileri](#7-teslimat-garantileri)
 9. [Stream İşleme'ye Bakış](#8-stream-i̇şlemeye-bakış)
-10. [Hızlı Başlangıç](#-hızlı-başlangıç)
-11. [Pratik Uygulamalar](#-pratik-uygulamalar)
-12. [Alıştırmalar](#-alıştırmalar)
-13. [Cheatsheet](#-cheatsheet)
-14. [Kaynaklar](#-kaynaklar)
+10. [Alternatifler ve Ekosistem](#-alternatifler-ve-ekosistem)
+11. [Hızlı Başlangıç](#-hızlı-başlangıç)
+12. [Pratik Uygulamalar](#-pratik-uygulamalar)
+13. [Alıştırmalar](#-alıştırmalar)
+14. [Cheatsheet](#-cheatsheet)
+15. [Kaynaklar](#-kaynaklar)
 
 ---
 
@@ -775,6 +776,29 @@ Doğrusu **olay zamanı** kullanmak ve geç gelenleri **watermark** ile yönetme
 
 > Bu konular kendi başına bir haftayı hak eder. Hafta 14'teki
 > [IoT Sensör Platformu vakası](../week14-case-studies/) bunları pratikte kullanır.
+
+---
+
+## 🔄 Alternatifler ve Ekosistem
+
+Bu hafta kullandığımız araçlar tek seçenek değil. Aynı işi yapan açık kaynak ve
+enterprise/yönetilen alternatifler:
+
+| Kullandığımız | Açık kaynak alternatif | Enterprise / Yönetilen | Ne zaman değerlendirilmeli |
+|---|---|---|---|
+| **Apache Kafka** | Apache Pulsar, RabbitMQ Streams, NATS JetStream | Confluent Cloud/Platform, Amazon MSK, Azure Event Hubs (Kafka uyumlu), Google Pub/Sub, Aiven, WarpStream · Redpanda (BSL) | Küme işletmek istemiyorsanız yönetilen; çok kiracılı/katmanlı depolama (Pulsar); JVM'siz tek binary (Redpanda) |
+| **Confluent Schema Registry** | Apicurio Registry, Karapace | Confluent Cloud Schema Registry, AWS Glue Schema Registry, Azure Schema Registry | Lisans hassasiyeti, bulut sağlayıcı entegrasyonu |
+| **Debezium** | Maxwell (MySQL), Flink CDC, Airbyte CDC | Oracle GoldenGate, Qlik Replicate, Fivetran (HVR), AWS DMS, Striim | Oracle/Db2/mainframe kaynakları, kurumsal destek, hedef Kafka değilse |
+| **Kafka Connect** | Apache NiFi, Apache Camel | Confluent yönetilen konektörler, Fivetran | Hazır konektör yoksa veya kod yazmak istemiyorsanız |
+| **Stream işleme** (§8.1) | Apache Flink, Kafka Streams, Spark Structured Streaming, RisingWave | Confluent Cloud for Flink, Amazon Managed Flink, Google Dataflow, Azure Stream Analytics | Bkz. §8.1 |
+
+**Değerlendirirken bakılacaklar:** gecikme ve throughput, saklama süresi/maliyeti (katmanlı depolama), protokol uyumu (Kafka API'yi konuşuyor mu?), operasyon yükü (KRaft, partition dengeleme, yükseltme), kaynak veritabanı türü (CDC için).
+
+> ⚖️ **Lisans notu:** Kafka ve Debezium Apache 2.0'dır. Bu hafta kullandığımız `cp-schema-registry`
+> ise **Confluent Community License** ile gelir: ücretsiz kullanılabilir ama OSI tanımına göre açık
+> kaynak değildir ve rakip bir SaaS olarak sunulamaz. Redpanda da BSL lisanslıdır.
+
+📎 Tüm katmanların haritası ve lisans rehberi: [ALTERNATIVES.md](../ALTERNATIVES.md#-akış-ve-cdc-hafta-7)
 
 ---
 

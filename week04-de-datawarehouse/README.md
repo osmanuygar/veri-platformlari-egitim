@@ -10,8 +10,9 @@
 6. [Modern Veri Mimarileri](#6-modern-veri-mimarileri)
 7. [Veri Kalitesi ve Yönetişimi](#7-veri-kalitesi-ve-yönetişimi)
 8. [Veri Görselleştirme](#8-veri-görselleştirme)
-9. [Pratik Uygulamalar](#9-pratik-uygulamalar)
-10. [Alıştırmalar](#10-alıştırmalar)
+9. [Alternatifler ve Ekosistem](#-alternatifler-ve-ekosistem)
+10. [Pratik Uygulamalar](#9-pratik-uygulamalar)
+11. [Alıştırmalar](#10-alıştırmalar)
 
 ---
 
@@ -1610,6 +1611,31 @@ fig.update_layout(
 
 fig.show()
 ```
+
+---
+
+## 🔄 Alternatifler ve Ekosistem
+
+Bu hafta kullandığımız araçlar tek seçenek değil. Aynı işi yapan açık kaynak ve
+enterprise/yönetilen alternatifler:
+
+| Kullandığımız | Açık kaynak alternatif | Enterprise / Yönetilen | Ne zaman değerlendirilmeli |
+|---|---|---|---|
+| **PostgreSQL (OLAP / star schema)** | ClickHouse, StarRocks, Apache Doris, Apache Druid, Apache Pinot, DuckDB | Snowflake, Google BigQuery, Amazon Redshift, Databricks SQL, Microsoft Fabric/Synapse, Teradata | Veri hacmi Postgres'i aştığında; alt-saniye dashboard (ClickHouse/Pinot); yönetim yükü istenmiyorsa |
+| **MinIO** | SeaweedFS, Garage, Ceph (RGW) | Amazon S3, Azure Blob/ADLS Gen2, Google Cloud Storage, Cloudflare R2 | Bulutta çalışılıyorsa neredeyse her zaman sağlayıcının servisi |
+| **Iceberg** | Delta Lake, Apache Hudi, Apache Paimon | Databricks (Delta + Unity Catalog), Snowflake/AWS/Google yönetilen Iceberg | Hangi motorların aynı tabloyu okuyacağı; Databricks ağırlıklıysa Delta |
+| **Apache Spark** | Apache Flink, Ray, Dask, Polars/DuckDB (tek makine) | Databricks, Amazon EMR, Google Dataproc, Microsoft Fabric | Veri tek makineye sığıyorsa Spark'a hiç gerek olmayabilir |
+| **Apache Airflow** | Dagster, Prefect, Kestra | Astronomer, Amazon MWAA, Google Cloud Composer, Azure Data Factory | Ayrıntı Hafta 6 |
+| **Apache Superset** | Metabase, Lightdash, Redash | Power BI, Tableau, Looker, Qlik | Ayrıntı Hafta 11 |
+| **Python ETL** | Airbyte, dlt, Apache NiFi, Apache Hop | Informatica, Talend/Qlik, Fivetran, AWS Glue, Azure Data Factory | Çok sayıda kaynak sistem, hazır konektör ihtiyacı |
+
+**Değerlendirirken bakılacaklar:** sorgu gecikmesi beklentisi, eşzamanlı kullanıcı sayısı, depolama/işlem ayrımı (ayrı ölçeklenebiliyor mu?), açık tablo formatı desteği (lock-in), maliyet modeli (sorgu başı mı, kapasite mi?).
+
+> ⚖️ **Lisans notu:** MinIO AGPLv3 ile lisanslıdır ve 2025'te community sürümünden web
+> konsolunun yönetim özellikleri çıkarıldı. Eğitim için sorun değil, ancak üretimde lisans ve
+> dağıtım durumunu kontrol edin.
+
+📎 Tüm katmanların haritası ve lisans rehberi: [ALTERNATIVES.md](../ALTERNATIVES.md#-depolama-ambar-ve-i̇şleme-hafta-46)
 
 ---
 

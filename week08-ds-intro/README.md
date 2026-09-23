@@ -13,11 +13,12 @@
 5. [Keşifçi Veri Analizi (EDA)](#4-keşifçi-veri-analizi-eda)
 6. [Veri Temizleme](#5-veri-temizleme)
 7. [Görselleştirme ve Anlatım](#6-görselleştirme-ve-anlatım)
-8. [Hızlı Başlangıç](#-hızlı-başlangıç)
-9. [Pratik Uygulamalar](#-pratik-uygulamalar)
-10. [Alıştırmalar](#-alıştırmalar)
-11. [Cheatsheet](#-cheatsheet)
-12. [Kaynaklar](#-kaynaklar)
+8. [Alternatifler ve Ekosistem](#-alternatifler-ve-ekosistem)
+9. [Hızlı Başlangıç](#-hızlı-başlangıç)
+10. [Pratik Uygulamalar](#-pratik-uygulamalar)
+11. [Alıştırmalar](#-alıştırmalar)
+12. [Cheatsheet](#-cheatsheet)
+13. [Kaynaklar](#-kaynaklar)
 
 ---
 
@@ -308,6 +309,25 @@ En sık görülen üç hata:
   450.000 TL ek gelir demek"
 - **Önce sonuç, sonra yöntem:** Paydaş nasıl hesapladığınızı değil, ne
   bulduğunuzu ve ne yapması gerektiğini duymak ister
+
+---
+
+## 🔄 Alternatifler ve Ekosistem
+
+Bu hafta kullandığımız araçlar tek seçenek değil. Aynı işi yapan açık kaynak ve
+enterprise/yönetilen alternatifler:
+
+| Kullandığımız | Açık kaynak alternatif | Enterprise / Yönetilen | Ne zaman değerlendirilmeli |
+|---|---|---|---|
+| **Jupyter Lab** | VS Code Notebooks, marimo | Google Colab, Databricks Notebooks, Hex, Deepnote, SageMaker Studio | Ekip işbirliği, GPU, doğrudan ambardan veri çekme |
+| **pandas** | Polars, DuckDB, PySpark | Snowpark, Databricks | Büyük veri veya performans sorunu |
+| **matplotlib / seaborn** | plotly, Altair, Bokeh | (BI araçları — Hafta 11) | Etkileşimli grafik, web'e gömme |
+| **ydata-profiling** | Sweetviz, D-Tale | Dataiku, Alteryx | Otomatik EDA raporu biçimi, kodsuz arayüz |
+| **Python ile EDA** (genel) | KNIME, Orange (kodsuz) | Alteryx, SAS, IBM SPSS Modeler, Dataiku | Kod yazmayan analist ekipler, kurumsal yönetişim |
+
+**Değerlendirirken bakılacaklar:** ekibin kod yazma yetkinliği, veri boyutu, sonuçların kiminle nasıl paylaşılacağı (notebook, rapor, dashboard), tekrar üretilebilirlik.
+
+📎 Tüm katmanların haritası ve lisans rehberi: [ALTERNATIVES.md](../ALTERNATIVES.md#-analiz-i̇statistik-ve-ml-hafta-1-810)
 
 ---
 

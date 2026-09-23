@@ -8,9 +8,10 @@
 4. [Temel SQL Komutları](#4-temel-sql-komutları)
 5. [İleri SQL Özellikleri](#5-ileri-sql-özellikleri)
 6. [İlişkisel Veritabanlarının Sınırlamaları](#6-ilişkisel-veritabanlarının-sınırlamaları)
-7. [Pratik Uygulamalar](#7-pratik-uygulamalar)
-8. [Alıştırmalar](#8-alıştırmalar)
-9. [Kaynaklar](#9-kaynaklar)
+7. [Alternatifler ve Ekosistem](#-alternatifler-ve-ekosistem)
+8. [Pratik Uygulamalar](#7-pratik-uygulamalar)
+9. [Alıştırmalar](#8-alıştırmalar)
+10. [Kaynaklar](#9-kaynaklar)
 
 ---
 
@@ -1041,6 +1042,27 @@ DROP VIEW calisan_ozeti;
 - Lisans maliyetleri (Oracle, SQL Server)
 - Donanım maliyetleri
 - Yönetim maliyeti
+
+---
+
+## 🔄 Alternatifler ve Ekosistem
+
+Bu hafta kullandığımız araçlar tek seçenek değil. Aynı işi yapan açık kaynak ve
+enterprise/yönetilen alternatifler:
+
+| Kullandığımız | Açık kaynak alternatif | Enterprise / Yönetilen | Ne zaman değerlendirilmeli |
+|---|---|---|---|
+| **PostgreSQL** | MariaDB, SQLite (gömülü) | Oracle Database, Microsoft SQL Server, IBM Db2 · Amazon RDS/Aurora, Google Cloud SQL/AlloyDB, Azure Database for PostgreSQL | Kurumda zaten Oracle/Microsoft lisansı varsa; yedekleme, HA ve yamayı yönetilen servise bırakmak istiyorsanız |
+| **MySQL** | MariaDB, Percona Server | Oracle MySQL Enterprise, Amazon Aurora MySQL, PlanetScale | MySQL'in Oracle'a ait olması sorun ise MariaDB; yüksek ölçekte yönetilen |
+| **pgAdmin / Adminer** | DBeaver Community, Beekeeper Studio | DataGrip, DBeaver Pro, TablePlus, Toad, SQL Server Management Studio | Birçok farklı veritabanına tek arayüzden bağlanmak |
+
+**Değerlendirirken bakılacaklar:** lisans maliyeti (Oracle/SQL Server çekirdek başı lisanslanır), yönetilen HA/yedekleme, ekibin SQL lehçesi deneyimi, mevcut kurumsal sözleşmeler, uzantı ekosistemi (PostGIS, pgvector, TimescaleDB).
+
+> 💡 PostgreSQL'in **uzantıları** kendi başına bir alternatif hikâyesidir: TimescaleDB (zaman serisi),
+> PostGIS (coğrafi), pgvector (vektör, Hafta 13), Citus (dağıtık). Çoğu zaman ayrı bir veritabanı
+> kurmak yerine Postgres'e uzantı eklemek yeterlidir.
+
+📎 Tüm katmanların haritası ve lisans rehberi: [ALTERNATIVES.md](../ALTERNATIVES.md#-veritabanları-hafta-23)
 
 ---
 
