@@ -454,6 +454,9 @@ enterprise/yönetilen alternatifler:
 | **Neo4j (Community)** | Memgraph, ArangoDB, JanusGraph, Apache AGE (Postgres eklentisi) | Neo4j Enterprise/AuraDB, Amazon Neptune, TigerGraph | Kümeleme/HA gerekiyorsa (Community'de yok), çok büyük graf |
 | **Trino** | Presto, Apache Drill, DuckDB (küçük ölçek) | Starburst, Dremio, Amazon Athena | Kurumsal erişim kontrolü, önbellek/hızlandırma, sunucusuz sorgu (Athena) |
 | **NewSQL** (bölüm 5) | YugabyteDB, TiDB | Google Cloud Spanner, CockroachDB, Aurora DSQL | Hem yatay ölçek hem ACID gerekiyorsa |
+| **Zaman serisi** (bu hafta yok) | TimescaleDB (Postgres uzantısı), InfluxDB, QuestDB, VictoriaMetrics | Timescale Cloud, InfluxDB Cloud, kdb+ (KX), Amazon Timestream, Azure Data Explorer | Sensör/IoT ve metrik verisi, zaman aralığı sorguları (Hafta 14, Vaka 5) |
+| **Arama motoru** (bu hafta yok) | OpenSearch, Apache Solr, Meilisearch, Typesense · Elasticsearch (AGPL seçeneği) | Elastic Cloud, Amazon OpenSearch Service, Algolia | Tam metin arama, log analitiği, filtreli ürün arama |
+| **Bellek içi / HTAP** (bu hafta yok) | Apache Ignite | SAP HANA, SingleStore, Hazelcast | Aynı veri üzerinde hem işlem hem analitik |
 
 **Değerlendirirken bakılacaklar:** veri modeli uyumu (önce model, sonra ürün), tutarlılık ihtiyacı (CAP), operasyon yükü, lisans, bulut sağlayıcı bağımlılığı (Cosmos DB, DynamoDB gibi servisler taşınamaz).
 

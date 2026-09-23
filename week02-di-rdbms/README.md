@@ -1052,7 +1052,7 @@ enterprise/yönetilen alternatifler:
 
 | Kullandığımız | Açık kaynak alternatif | Enterprise / Yönetilen | Ne zaman değerlendirilmeli |
 |---|---|---|---|
-| **PostgreSQL** | MariaDB, SQLite (gömülü) | Oracle Database, Microsoft SQL Server, IBM Db2 · Amazon RDS/Aurora, Google Cloud SQL/AlloyDB, Azure Database for PostgreSQL | Kurumda zaten Oracle/Microsoft lisansı varsa; yedekleme, HA ve yamayı yönetilen servise bırakmak istiyorsanız |
+| **PostgreSQL** | MariaDB, SQLite (gömülü) | Oracle Database, Microsoft SQL Server, IBM Db2, SAP HANA, SAP ASE (Sybase), IBM Informix · Amazon RDS/Aurora, Google Cloud SQL/AlloyDB, Azure Database for PostgreSQL | Kurumda zaten Oracle/Microsoft lisansı varsa; yedekleme, HA ve yamayı yönetilen servise bırakmak istiyorsanız |
 | **MySQL** | MariaDB, Percona Server | Oracle MySQL Enterprise, Amazon Aurora MySQL, PlanetScale | MySQL'in Oracle'a ait olması sorun ise MariaDB; yüksek ölçekte yönetilen |
 | **pgAdmin / Adminer** | DBeaver Community, Beekeeper Studio | DataGrip, DBeaver Pro, TablePlus, Toad, SQL Server Management Studio | Birçok farklı veritabanına tek arayüzden bağlanmak |
 

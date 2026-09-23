@@ -75,6 +75,7 @@ topluluk da çoğu zaman **fork** ile cevap verdi.
 | **MinIO** (Hafta 4) | AGPL; 2025'te community sürümünden web konsolunun yönetim özellikleri çıkarıldı, hazır binary/imaj dağıtımı kısıtlandı | SeaweedFS, Garage, Ceph RGW |
 | **Confluent Schema Registry** (Hafta 7) | Baştan beri Confluent Community License | Apicurio Registry, Karapace (Apache 2.0) |
 | **Redpanda** (Hafta 7) | BSL | — (Kafka'nın kendisi Apache 2.0) |
+| **Greenplum** (Hafta 4) | PostgreSQL tabanlı açık kaynak MPP ambardı; 2024'te Broadcom kaynak kodu depolarını arşivledi, kapalı kaynağa döndü | **Apache Cloudberry** (Greenplum fork'u) |
 
 > ⚠️ Bir aracı üretime almadan önce lisansını **o günkü haliyle** kontrol edin; bu tablo
 > hazırlandığı tarihteki durumu yansıtır.
@@ -85,13 +86,16 @@ topluluk da çoğu zaman **fork** ile cevap verdi.
 
 | Kategori | Derste | Açık kaynak alternatif | Enterprise / Yönetilen | Ne zaman değerlendirilmeli |
 |---|---|---|---|---|
-| **İlişkisel (RDBMS)** | PostgreSQL, MySQL | MariaDB, SQLite | Oracle Database, Microsoft SQL Server, IBM Db2 · Amazon RDS/Aurora, Cloud SQL, Azure Database for PostgreSQL | Mevcut kurumsal lisans/ekosistem (Oracle, Microsoft), yönetilen yedek ve HA ihtiyacı |
+| **İlişkisel (RDBMS)** | PostgreSQL, MySQL | MariaDB, SQLite | Oracle Database, Microsoft SQL Server, IBM Db2, SAP HANA, SAP ASE (Sybase), IBM Informix · Amazon RDS/Aurora, Cloud SQL/AlloyDB, Azure Database for PostgreSQL | Mevcut kurumsal lisans/ekosistem (Oracle, Microsoft), yönetilen yedek ve HA ihtiyacı |
 | **DB yönetim arayüzü** | pgAdmin, Adminer | DBeaver Community, Beekeeper Studio | DataGrip, DBeaver Pro, TablePlus, Toad | Çok farklı veritabanına tek arayüzden bağlanma, ekip içi standart |
 | **Document** | MongoDB | FerretDB (Postgres üzerinde Mongo protokolü), CouchDB | MongoDB Atlas, Couchbase, Azure Cosmos DB, Amazon DocumentDB | Yönetilen servis, çoklu bölge, MongoDB lisansından (SSPL) kaçınma |
 | **Key-value / cache** | Redis | **Valkey**, Dragonfly, KeyDB, Memcached | Redis Cloud/Enterprise, Amazon ElastiCache/MemoryDB, Azure Cache for Redis | Lisans hassasiyeti, çok çekirdekli performans, yönetilen HA |
 | **Wide-column** | Cassandra | ScyllaDB (C++ ile yeniden yazılmış, Cassandra uyumlu), HBase | DataStax Astra DB, Amazon Keyspaces, Azure Managed Instance for Cassandra | Düşük gecikme + yüksek yazma hacmi, operasyon yükünü azaltma |
 | **Graph** | Neo4j (Community) | Memgraph, ArangoDB, JanusGraph, Apache AGE (Postgres eklentisi) | Neo4j Enterprise/AuraDB, Amazon Neptune, TigerGraph | Kümeleme/HA (Neo4j Community'de yok), büyük ölçek, bulut entegrasyonu |
 | **NewSQL** | — | YugabyteDB, TiDB | Google Cloud Spanner, CockroachDB, Aurora DSQL | Global dağıtık + ACID ihtiyacı |
+| **Bellek içi / HTAP** | — | Apache Ignite, TiDB (TiFlash) | SAP HANA, SingleStore, Oracle TimesTen, Hazelcast | Aynı veri üzerinde hem işlem hem analitik, milisaniye gecikme |
+| **Zaman serisi** | — (Hafta 14 IoT vakası) | TimescaleDB (Postgres uzantısı), InfluxDB, QuestDB, VictoriaMetrics, Prometheus (metrik) | Timescale Cloud, InfluxDB Cloud, kdb+ (KX), Amazon Timestream, Azure Data Explorer | Sensör/metrik verisi, zaman aralığı sorguları, otomatik downsampling ve saklama politikası |
+| **Arama motoru** | — (Hafta 13'te vektör arama) | OpenSearch, Apache Solr, Meilisearch, Typesense · Elasticsearch (AGPL seçeneği) | Elastic Cloud, Amazon OpenSearch Service, Algolia, Azure AI Search | Tam metin arama, log analitiği, yazım hatasına dayanıklı filtreli arama |
 | **Federe sorgu** | Trino | Presto, Apache Drill, DuckDB (küçük ölçek) | Starburst, Dremio, Amazon Athena, BigQuery Omni | Kurumsal güvenlik/erişim yönetimi, yönetilen servis, önbellek/hızlandırma |
 
 ---
@@ -102,9 +106,19 @@ topluluk da çoğu zaman **fork** ile cevap verdi.
 |---|---|---|---|---|
 | **Nesne depolama** | MinIO | SeaweedFS, Garage, Ceph (RGW) | Amazon S3, Azure Blob/ADLS Gen2, Google Cloud Storage, Cloudflare R2 | Bulutta çalışılıyorsa neredeyse her zaman bulut sağlayıcının servisi |
 | **Tablo formatı** | Iceberg (tanıtım) | Apache Iceberg, Delta Lake, Apache Hudi, Apache Paimon | Databricks (Delta/Unity), Snowflake/AWS/Google yönetilen Iceberg tabloları | Hangi motorların (Spark, Trino, Snowflake…) aynı tabloyu okuyacağı |
-| **Veri ambarı / OLAP** | PostgreSQL (star schema) | ClickHouse, StarRocks, Apache Doris, Apache Druid, Apache Pinot, DuckDB | Snowflake, Google BigQuery, Amazon Redshift, Databricks SQL, Azure Synapse/Microsoft Fabric, Teradata, Oracle Exadata | Veri hacmi Postgres'i aştığında; gerçek zamanlı dashboard (ClickHouse/Pinot); yönetim yükü istenmiyorsa (Snowflake/BigQuery) |
+| **Bulut veri ambarı** | PostgreSQL (star schema) | — (açık kaynak karşılıkları alttaki iki satırda) | Snowflake, Google BigQuery, Amazon Redshift, Databricks SQL, Microsoft Fabric/Synapse, Oracle Autonomous Data Warehouse, Firebolt | Yönetim yükü istenmiyorsa; depolama ve işlem ayrı ölçeklensin, kullandıkça öde |
+| **MPP / kurum içi (on-prem) ambar** | PostgreSQL (star schema) | Apache Cloudberry (Greenplum fork'u), Apache Doris, StarRocks, MonetDB | **Vertica**, Teradata, Oracle Exadata, IBM Netezza, Exasol, SAP HANA / SAP BW/4HANA, Yellowbrick, Greenplum (Broadcom) | Veri kurum dışına çıkamıyorsa (bankacılık, telekom, kamu), yüksek eşzamanlılık, mevcut donanım/lisans yatırımı |
+| **Gerçek zamanlı OLAP** | — | ClickHouse, Apache Druid, Apache Pinot, StarRocks | ClickHouse Cloud, Imply (Druid), StarTree (Pinot) | Alt-saniye dashboard, olay/log verisi, müşteriye dönük analitik |
 | **Dağıtık işleme** | Apache Spark | Apache Flink (batch), Ray, Dask, Polars/DuckDB (tek makine) | Databricks, Amazon EMR, Google Dataproc, Azure HDInsight/Fabric | Veri tek makineye sığıyorsa Spark'a hiç gerek olmayabilir |
 | **Tek makinede analitik** | DuckDB | Polars, chDB (gömülü ClickHouse), DataFusion | MotherDuck | Paylaşılan/bulut DuckDB ihtiyacı |
+
+> 🇹🇷 **Sahada sık karşılaşılan:** Türkiye'de bankacılık, telekom ve kamuda kurum içi MPP ambarlar
+> (Teradata, Oracle Exadata, Vertica, IBM Netezza, Greenplum, SAP HANA) hâlâ çok yaygın; son yıllarda
+> bunlardan bulut ambarlarına veya lakehouse'a geçiş projeleri de sık. İş ilanlarında bu isimleri görürsünüz.
+> Hepsi Hafta 4'te gördüğünüz kavramları paylaşır: **kolon tabanlı depolama, MPP (paylaşımsız paralel
+> işleme), dağıtım anahtarı, sıkıştırma**. Örneğin Vertica, Michael Stonebraker'ın C-Store araştırma
+> projesinden doğmuş kolon tabanlı bir MPP veritabanıdır; "projection" kavramı indeks + materialized
+> view karışımı gibi düşünülebilir.
 
 ---
 
