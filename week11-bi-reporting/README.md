@@ -13,11 +13,12 @@
 5. [Metabase](#4-metabase)
 6. [Apache Superset](#5-apache-superset)
 7. [Raporlama Operasyonu](#6-raporlama-operasyonu)
-8. [Hızlı Başlangıç](#-hızlı-başlangıç)
-9. [Pratik Uygulamalar](#-pratik-uygulamalar)
-10. [Alıştırmalar](#-alıştırmalar)
-11. [Cheatsheet](#-cheatsheet)
-12. [Kaynaklar](#-kaynaklar)
+8. [Alternatifler ve Ekosistem](#-alternatifler-ve-ekosistem)
+9. [Hızlı Başlangıç](#-hızlı-başlangıç)
+10. [Pratik Uygulamalar](#-pratik-uygulamalar)
+11. [Alıştırmalar](#-alıştırmalar)
+12. [Cheatsheet](#-cheatsheet)
+13. [Kaynaklar](#-kaynaklar)
 
 ---
 
@@ -238,6 +239,32 @@ Bu haftaki RLS alıştırması (Alıştırma 3), aslında hafta 12'nin ana
 konusu olan **veri yönetişiminin** BI katmanındaki uygulamasıdır — "kim
 hangi veriyi görebilir" sorusu, sadece BI araçlarıyla değil, organizasyon
 genelinde bir politikayla cevaplanmalıdır.
+
+---
+
+## 🔄 Alternatifler ve Ekosistem
+
+Metabase ve Superset'i kendi aralarında karşılaştırdık (§5.5). Ancak iş hayatında en sık
+karşılaşılan BI araçları **enterprise** tarafta. Aynı kavramlar (dataset, soru, dashboard, RLS)
+orada da farklı isimlerle karşınıza çıkar:
+
+| Kullandığımız | Açık kaynak alternatif | Enterprise / Yönetilen | Ne zaman değerlendirilmeli |
+|---|---|---|---|
+| **Metabase** | Redash, Lightdash (dbt-yerli), Evidence (kodla rapor) | Metabase Pro/Enterprise, Microsoft Power BI, Qlik Sense | Microsoft 365 kullanan kurum (Power BI), SSO/denetim/gömme ihtiyacı |
+| **Apache Superset** | Grafana (operasyonel metrikler), Apache ECharts | Preset (yönetilen Superset), Tableau, Looker, Qlik Sense, MicroStrategy | Gelişmiş görsel keşif (Tableau), güçlü semantik katman (Looker), büyük kurumsal dağıtım |
+| **SQL view ile metrik tanımı** (§2.4) | Cube, dbt Semantic Layer (MetricFlow) | LookML (Looker), AtScale, Power BI semantik modeli | Aynı KPI farklı dashboard'larda farklı çıkıyorsa |
+
+**Değerlendirirken bakılacaklar:** kullanıcı başı lisans maliyeti (yüzlerce görüntüleyicide belirleyici), self-service kolaylığı, RLS ve SSO, gömülü analitik (embedding), semantik katman, mevcut ekosistem (Microsoft, Google), mobil ve e-posta raporlama.
+
+**Kavram eşlemesi:**
+
+| Kavram | Metabase | Superset | Power BI | Tableau | Looker |
+|---|---|---|---|---|---|
+| Tekrar kullanılan veri tanımı | Model | Dataset | Semantik model | Veri kaynağı | Explore / View (LookML) |
+| Tek grafik | Question | Chart | Visual | Sheet | Look |
+| Satır düzeyi güvenlik | Data sandboxing (ücretli) | Row Level Security | RLS rolleri | User filter | access_filter |
+
+📎 Tüm katmanların haritası ve lisans rehberi: [ALTERNATIVES.md](../ALTERNATIVES.md#-i̇ş-zekası-hafta-11)
 
 ---
 

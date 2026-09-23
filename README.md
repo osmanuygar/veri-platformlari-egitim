@@ -18,7 +18,7 @@ Modern veri platformlarını öğrenmek için kapsamlı, pratik odaklı Docker t
 - [Sorun Giderme](#-sorun-giderme)
 - [Katkıda Bulunma](#-katkıda-bulunma)
 
-**Yan dosyalar:** [🔌 Port Haritası](./PORTS.md) · [🧩 Hafta Şablonu](./WEEK_TEMPLATE.md)
+**Yan dosyalar:** [🔌 Port Haritası](./PORTS.md) · [🧩 Hafta Şablonu](./WEEK_TEMPLATE.md) · [🔄 Alternatifler ve Ekosistem](./ALTERNATIVES.md)
 
 ## 🎯 Genel Bakış
 
@@ -30,6 +30,7 @@ Bu repo, 14 haftalık Veri Platformları dersini desteklemek için hazırlanmı�
 - ✅ Hands-on alıştırmalar + ayrı çözüm dosyaları
 - ✅ Kopyala-yapıştır cheatsheet'ler
 - ✅ Her haftada akılda kalan bir **"wow" demosu**
+- ✅ Kullanılan her aracın **açık kaynak ve enterprise alternatifleri** ([🔄 ALTERNATIVES.md](./ALTERNATIVES.md))
 
 
 Her hafta **kendi klasöründe bağımsız çalışır** — tüm repoyu ayağa kaldırmanız gerekmez,
@@ -101,6 +102,9 @@ docker compose down -v   # durdur, veriyi de sil
 | 12 | 🟥 DG   | **Veri Yaşam Döngüsü ve Veri Yönetişimi** | Great Expectations, Marquez/OpenLineage | [`week12-dg-governance`](./week12-dg-governance/) | ✅ Hazır |
 | 13 | 🟥 DG   | **AI ve LLM Çağında Veri Platformları** | Ollama, pgvector, Qdrant | [`week13-dg-ai-llm`](./week13-dg-ai-llm/) | ✅ Hazır |
 | 14 | ⬛ —     | **Örnek Vakalar** | Önceki haftaların tümü | [`week14-case-studies`](./week14-case-studies/) | ✅ Hazır |
+
+> 🔄 **Ana Araçlar** sütunundaki araçlar tek seçenek değil: her haftanın README'sinde
+> "Alternatifler ve Ekosistem" bölümü, tüm katmanlar için [ALTERNATIVES.md](./ALTERNATIVES.md) var.
 
 > **Durum açıklaması:** ✅ Hazır = ders notu + pratik + alıştırma tamam · 🚧 İskelet = başlıklar, öğrenme hedefleri ve servis planı hazır, ders notu yazımda.
 
@@ -631,6 +635,7 @@ Katkılarınızı bekliyoruz! Bu projeye nasıl katkıda bulunabileceğiniz:
 - ✨ Yeni özellik önerileri
 - 📝 Dokümantasyon iyileştirmeleri
 - 🎓 Yeni alıştırmalar ve örnekler
+- 🔄 [ALTERNATIVES.md](./ALTERNATIVES.md)'ye araç ekleme / güncelleme
 - 🔧 Kod optimizasyonları
 
 

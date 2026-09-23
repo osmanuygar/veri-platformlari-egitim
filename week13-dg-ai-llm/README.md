@@ -14,11 +14,12 @@
 6. [Text-to-SQL](#5-text-to-sql)
 7. [Yerel Model Çalıştırma](#6-yerel-model-çalıştırma)
 8. [AI Çağında Yönetişim](#7-ai-çağında-yönetişim)
-9. [Hızlı Başlangıç](#-hızlı-başlangıç)
-10. [Pratik Uygulamalar](#-pratik-uygulamalar)
-11. [Alıştırmalar](#-alıştırmalar)
-12. [Cheatsheet](#-cheatsheet)
-13. [Kaynaklar](#-kaynaklar)
+9. [Alternatifler ve Ekosistem](#-alternatifler-ve-ekosistem)
+10. [Hızlı Başlangıç](#-hızlı-başlangıç)
+11. [Pratik Uygulamalar](#-pratik-uygulamalar)
+12. [Alıştırmalar](#-alıştırmalar)
+13. [Cheatsheet](#-cheatsheet)
+14. [Kaynaklar](#-kaynaklar)
 
 ---
 
@@ -342,6 +343,29 @@ mantığı birleştirilirse: *"Bu RAG cevabı hangi kaynak dokümandan geldi?"*
 sorusu sadece teknik bir merak değil, bir **denetlenebilirlik** gereğidir
 — özellikle regüle edilmiş sektörlerde (finans, sağlık) AI çıktılarının
 kaynağını gösterebilmek yasal bir zorunluluk haline geliyor.
+
+---
+
+## 🔄 Alternatifler ve Ekosistem
+
+Vektör veritabanlarını §3.2'de karşılaştırdık. Bu tablo haftanın diğer katmanlarını da ekliyor:
+
+| Kullandığımız | Açık kaynak alternatif | Enterprise / Yönetilen | Ne zaman değerlendirilmeli |
+|---|---|---|---|
+| **Ollama** | llama.cpp, vLLM, Hugging Face TGI, LocalAI · LM Studio (ücretsiz, açık kaynak değil) | NVIDIA NIM, bulut GPU hizmetleri | Çok kullanıcılı yüksek throughput (vLLM), masaüstü arayüz (LM Studio) |
+| **Yerel açık ağırlıklı model** | Llama, Mistral, Qwen, Gemma | Anthropic Claude, OpenAI, Google Gemini · Amazon Bedrock, Azure OpenAI, Google Vertex AI | Kalite kritikse bulut API; veri kesinlikle dışarı çıkamıyorsa yerel |
+| **pgvector / Qdrant** | Weaviate, Milvus, Chroma, OpenSearch, LanceDB | Pinecone, Zilliz Cloud, Qdrant Cloud, MongoDB Atlas Vector Search, Azure AI Search | Bkz. §3.2–3.3 |
+| **Ollama embedding modeli** | sentence-transformers, BGE, E5 (çok dilli) | Voyage AI, Cohere, OpenAI, Google embedding API'leri | Türkçe/alan özelinde arama kalitesi |
+| **Python ile elle RAG** | LlamaIndex, LangChain, Haystack | Amazon Bedrock Knowledge Bases, Vertex AI Search, Azure AI Search | Hızlı prototip vs. tam kontrol; yönetilen RAG |
+| **Elle değerlendirme** (§4.4) | Ragas, DeepEval, promptfoo | LangSmith, Arize, W&B Weave | Üretimde kalite izleme, regresyon testleri |
+
+**Değerlendirirken bakılacaklar:** veri gizliliği ve KVKK (veri nerede işleniyor, sağlayıcı eğitimde kullanıyor mu?), model kalitesi (özellikle Türkçe), token başı maliyet vs. GPU maliyeti, gecikme, model lisansı (§6.4), sağlayıcı bağımlılığı (API'yi soyutlayan bir katman kullanmak geçişi kolaylaştırır).
+
+> ⚖️ **Lisans notu:** Açık ağırlıklı her model açık kaynak değildir. Bazı modellerin lisansları
+> kullanım kısıtları veya kullanıcı sayısı eşiği içerir (§6.4). Elasticsearch 2021'de SSPL'e geçtiği için
+> **OpenSearch** fork'u doğdu; vektör arama için ikisi de kullanılabilir.
+
+📎 Tüm katmanların haritası ve lisans rehberi: [ALTERNATIVES.md](../ALTERNATIVES.md#-ai--llm-hafta-13)
 
 ---
 

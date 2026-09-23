@@ -233,6 +233,11 @@ Bağlam → Değerlendirilen Seçenekler → Karar → Sonuçlar
 **Her vaka için en az 2 ADR yazmanız beklenir.** İyi bir ADR, tek bir
 seçeneği anlatmaz — **elediğiniz alternatifleri ve neden elediğinizi** gösterir.
 
+> 🔄 "Değerlendirilen Seçenekler" kısmı için başlangıç listesi: [ALTERNATIVES.md](../ALTERNATIVES.md).
+> En az bir ADR'de açık kaynak bir seçeneği **enterprise/yönetilen** bir seçenekle karşılaştırın
+> (örn. kendi Kafka kümeniz vs. Confluent Cloud/MSK) ve TCO, ekip yetkinliği, KVKK ve
+> vendor lock-in açısından gerekçelendirin.
+
 ---
 
 ## 🚀 Hızlı Başlangıç
@@ -297,6 +302,7 @@ beklenmiyor — kısmen çalışan, dürüstçe sınırları belirtilmiş bir si
 - 📎 [**Haftaları Birleştirme Cheatsheet**](./cheatsheets/combining-weeks-cheatsheet.md)
 - 📝 [**ADR Şablonu**](./templates/adr-template.md)
 - 📝 [**Vaka Özeti Şablonu**](./templates/case-study-brief-template.md)
+- 🔄 [**Alternatifler ve Ekosistem Haritası**](../ALTERNATIVES.md)
 
 ---
 

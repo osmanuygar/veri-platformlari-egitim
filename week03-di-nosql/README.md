@@ -8,9 +8,10 @@
 4. [Dağıtık Sistemler ve Ölçeklenebilirlik](#4-dağıtık-sistemler-ve-ölçeklenebilirlik)
 5. [NewSQL Sistemler](#5-newsql-sistemler)
 6. [Bulut Tabanlı Veri Platformları (DBaaS)](#6-bulut-tabanlı-veri-platformları-dbaas)
-7. [Pratik Uygulamalar](#7-pratik-uygulamalar)
-8. [Alıştırmalar](#8-alıştırmalar)
-9. [Kaynaklar](#9-kaynaklar)
+7. [Alternatifler ve Ekosistem](#-alternatifler-ve-ekosistem)
+8. [Pratik Uygulamalar](#7-pratik-uygulamalar)
+9. [Alıştırmalar](#8-alıştırmalar)
+10. [Kaynaklar](#9-kaynaklar)
 
 ---
 
@@ -437,6 +438,30 @@ CREATE TABLE orders (
 **AWS:** RDS, DynamoDB, DocumentDB, Neptune  
 **Azure:** SQL Database, Cosmos DB  
 **GCP:** Cloud SQL, Spanner, Firestore
+
+---
+
+## 🔄 Alternatifler ve Ekosistem
+
+Bu hafta kullandığımız araçlar tek seçenek değil. Aynı işi yapan açık kaynak ve
+enterprise/yönetilen alternatifler:
+
+| Kullandığımız | Açık kaynak alternatif | Enterprise / Yönetilen | Ne zaman değerlendirilmeli |
+|---|---|---|---|
+| **MongoDB** | FerretDB (Postgres üzerinde Mongo protokolü), CouchDB | MongoDB Atlas, Couchbase, Azure Cosmos DB, Amazon DocumentDB | Yönetilen servis, çoklu bölge, SSPL lisansından kaçınma |
+| **Redis** | **Valkey**, Dragonfly, KeyDB, Memcached | Redis Cloud/Enterprise, Amazon ElastiCache/MemoryDB, Azure Cache for Redis | Lisans hassasiyeti, çok çekirdekli performans, yönetilen HA |
+| **Cassandra** | ScyllaDB (Cassandra uyumlu, C++), HBase | DataStax Astra DB, Amazon Keyspaces, Azure Managed Instance for Cassandra | Daha düşük gecikme ve daha az düğüm (ScyllaDB), operasyon yükünü azaltma |
+| **Neo4j (Community)** | Memgraph, ArangoDB, JanusGraph, Apache AGE (Postgres eklentisi) | Neo4j Enterprise/AuraDB, Amazon Neptune, TigerGraph | Kümeleme/HA gerekiyorsa (Community'de yok), çok büyük graf |
+| **Trino** | Presto, Apache Drill, DuckDB (küçük ölçek) | Starburst, Dremio, Amazon Athena | Kurumsal erişim kontrolü, önbellek/hızlandırma, sunucusuz sorgu (Athena) |
+| **NewSQL** (bölüm 5) | YugabyteDB, TiDB | Google Cloud Spanner, CockroachDB, Aurora DSQL | Hem yatay ölçek hem ACID gerekiyorsa |
+
+**Değerlendirirken bakılacaklar:** veri modeli uyumu (önce model, sonra ürün), tutarlılık ihtiyacı (CAP), operasyon yükü, lisans, bulut sağlayıcı bağımlılığı (Cosmos DB, DynamoDB gibi servisler taşınamaz).
+
+> ⚖️ **Lisans notu:** Redis 2024'te BSD'den RSAL/SSPL'e geçti (Redis 8 ile AGPL seçeneği geldi);
+> topluluk Linux Foundation altında **Valkey** fork'unu başlattı. MongoDB SSPL, Neo4j Community GPLv3'tür.
+> CockroachDB 2024'te ücretsiz core sürümünü kaldırdı. Ayrıntı: [Lisans okuryazarlığı](../ALTERNATIVES.md#-lisans-okuryazarlığı)
+
+📎 Tüm katmanların haritası ve lisans rehberi: [ALTERNATIVES.md](../ALTERNATIVES.md#-veritabanları-hafta-23)
 
 ---
 

@@ -14,11 +14,12 @@
 6. [Soy Ağacı (Data Lineage)](#5-soy-ağacı-data-lineage)
 7. [Güvenlik ve Mahremiyet](#6-güvenlik-ve-mahremiyet)
 8. [Uyumluluk: KVKK ve GDPR](#7-uyumluluk-kvkk-ve-gdpr)
-9. [Hızlı Başlangıç](#-hızlı-başlangıç)
-10. [Pratik Uygulamalar](#-pratik-uygulamalar)
-11. [Alıştırmalar](#-alıştırmalar)
-12. [Cheatsheet](#-cheatsheet)
-13. [Kaynaklar](#-kaynaklar)
+9. [Alternatifler ve Ekosistem](#-alternatifler-ve-ekosistem)
+10. [Hızlı Başlangıç](#-hızlı-başlangıç)
+11. [Pratik Uygulamalar](#-pratik-uygulamalar)
+12. [Alıştırmalar](#-alıştırmalar)
+13. [Cheatsheet](#-cheatsheet)
+14. [Kaynaklar](#-kaynaklar)
 
 ---
 
@@ -332,6 +333,28 @@ kendisi kadar ciddi bir sorundur.
 | Güvenli imha | `marts.customers_masked` gibi geri döndürülemez maskeleme |
 | Hesap verebilirlik | Audit trail + lineage (Marquez) |
 | İhlal bildirimi | Lineage ile "ne etkilendi" sorusunun hızlı cevabı |
+
+---
+
+## 🔄 Alternatifler ve Ekosistem
+
+Bu hafta kullandığımız araçlar tek seçenek değil. Aynı işi yapan açık kaynak ve
+enterprise/yönetilen alternatifler:
+
+| Kullandığımız | Açık kaynak alternatif | Enterprise / Yönetilen | Ne zaman değerlendirilmeli |
+|---|---|---|---|
+| **Great Expectations** | Soda Core, dbt tests, Pandera, Deequ (Spark), Elementary | GX Cloud, Soda Cloud, Monte Carlo, Bigeye, Anomalo, Informatica Data Quality | Kural yazmak yerine otomatik anomali tespiti (data observability), iş kullanıcısı arayüzü |
+| **Marquez / OpenLineage** | OpenMetadata, DataHub, Apache Atlas, Amundsen | Collibra, Alation, Atlan, Microsoft Purview, Databricks Unity Catalog, Google Dataplex | Sütun seviyesi lineage, iş sözlüğü, veri sahipliği iş akışları, denetim raporları |
+| **PostgreSQL rol + view ile maskeleme** | Apache Ranger, Open Policy Agent, PostgreSQL Anonymizer | Immuta, Privacera, Snowflake/BigQuery yerleşik maskeleme politikaları, Unity Catalog | Çok sayıda motor üzerinde tek merkezden politika, KVKK denetim kanıtı |
+| **PII tespiti** (§6.3) | Microsoft Presidio | Google Sensitive Data Protection (DLP), Amazon Macie, BigID, Microsoft Purview | Yapılandırılmamış veride ve büyük ölçekte otomatik sınıflandırma |
+
+**Değerlendirirken bakılacaklar:** kaç kaynak sisteme bağlanacağı (konektör kapsamı), iş kullanıcılarının kullanıp kullanmayacağı, OpenLineage gibi açık standart desteği, denetim ve raporlama (KVKK/VERBİS kanıtı), yerinde kurulum imkânı (veri yurt dışına çıkmamalıysa).
+
+> 💡 Yönetişim araçlarında en sık hata, aracı süreçten önce almaktır. Pahalı bir katalog, sahibi
+> belirlenmemiş tablolarla dolu bir arama motoruna dönüşür. Önce §2'deki roller ve politikalar,
+> sonra araç.
+
+📎 Tüm katmanların haritası ve lisans rehberi: [ALTERNATIVES.md](../ALTERNATIVES.md#-yönetişim-kalite-ve-katalog-hafta-12)
 
 ---
 

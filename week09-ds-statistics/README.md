@@ -15,11 +15,12 @@
 6. [Güven Aralıkları](#5-güven-aralıkları)
 7. [A/B Testi](#6-ab-testi)
 8. [İstatistiksel Yanılgılar](#7-istatistiksel-yanılgılar)
-9. [Hızlı Başlangıç](#-hızlı-başlangıç)
-10. [Pratik Uygulamalar](#-pratik-uygulamalar)
-11. [Alıştırmalar](#-alıştırmalar)
-12. [Cheatsheet](#-cheatsheet)
-13. [Kaynaklar](#-kaynaklar)
+9. [Alternatifler ve Ekosistem](#-alternatifler-ve-ekosistem)
+10. [Hızlı Başlangıç](#-hızlı-başlangıç)
+11. [Pratik Uygulamalar](#-pratik-uygulamalar)
+12. [Alıştırmalar](#-alıştırmalar)
+13. [Cheatsheet](#-cheatsheet)
+14. [Kaynaklar](#-kaynaklar)
 
 ---
 
@@ -276,6 +277,28 @@ Aşırı bir gözlem (en iyi/en kötü performans gösteren birim), bir sonraki
 değil, istatistiksel bir olgudur. "Geçen ay en kötü performans gösteren
 mağazaya koçluk verdik, bu ay iyileşti!" iddiası genelde bu yanılgıyı
 içerir — koçluk olmasa da mağaza muhtemelen ortalamaya yaklaşırdı.
+
+---
+
+## 🔄 Alternatifler ve Ekosistem
+
+Bu hafta kullandığımız araçlar tek seçenek değil. Aynı işi yapan açık kaynak ve
+enterprise/yönetilen alternatifler:
+
+| Kullandığımız | Açık kaynak alternatif | Enterprise / Yönetilen | Ne zaman değerlendirilmeli |
+|---|---|---|---|
+| **scipy.stats** | pingouin (daha okunaklı çıktı), R | SAS/STAT, Stata | Akademi ve klinik araştırma gelenekleri, düzenleyici raporlama |
+| **statsmodels** | R (lm/glm), PyMC (Bayesçi) | Stata, SAS | Ekonometri ve Bayesçi modelleme |
+| **Jupyter + Python** | JASP, jamovi (menülü, kodsuz) | IBM SPSS Statistics, Minitab | Kod yazmayan araştırmacılar, sosyal bilimler, kalite mühendisliği |
+| **A/B testini elle hesaplamak** | GrowthBook | Optimizely, Statsig, Eppo, LaunchDarkly | Atama + feature flag + analiz tek yerde; peeking ve çoklu karşılaştırma korumaları hazır |
+
+**Değerlendirirken bakılacaklar:** çıktının kimin için olduğu (hakem, regülatör, ürün ekibi), tekrar üretilebilirlik (menülü araçlar zayıf), lisans maliyeti (SPSS/SAS pahalı), deney hacmi.
+
+> 💡 Hangi araç olursa olsun **yöntem aynı**: bu hafta öğrendiğiniz p-hacking, peeking ve
+> çoklu karşılaştırma tuzakları, ücretli A/B platformlarında da sizi bekler. Araç doğru hesaplar;
+> doğru soruyu sormak size kalır.
+
+📎 Tüm katmanların haritası ve lisans rehberi: [ALTERNATIVES.md](../ALTERNATIVES.md#-analiz-i̇statistik-ve-ml-hafta-1-810)
 
 ---
 

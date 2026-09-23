@@ -6,9 +6,10 @@
 2. [Veri Türleri ve Sınıflandırması](#2-veri-türleri-ve-sınıflandırması)
 3. [Veri Kaynakları](#3-veri-kaynakları)
 4. [Veri Platformlarının Tarihsel Evrimi](#4-veri-platformlarının-tarihsel-evrimi)
-5. [Pratik Uygulamalar](#5-pratik-uygulamalar)
-6. [Alıştırmalar](#6-alıştırmalar)
-7. [Kaynaklar](#7-kaynaklar)
+5. [Alternatifler ve Ekosistem](#-alternatifler-ve-ekosistem)
+6. [Pratik Uygulamalar](#5-pratik-uygulamalar)
+7. [Alıştırmalar](#6-alıştırmalar)
+8. [Kaynaklar](#7-kaynaklar)
 
 ---
 
@@ -552,6 +553,26 @@ Veri Hacmi: Gigabyte → Terabyte → Petabyte
 2020 ━━━━━━ Lakehouse & Data Mesh
 2025 ━━━━━━ AI-Native Platforms
 ```
+
+---
+
+## 🔄 Alternatifler ve Ekosistem
+
+Bu hafta kullandığımız araçlar tek seçenek değil. Aynı işi yapan açık kaynak ve
+enterprise/yönetilen alternatifler:
+
+| Kullandığımız | Açık kaynak alternatif | Enterprise / Yönetilen | Ne zaman değerlendirilmeli |
+|---|---|---|---|
+| **Jupyter Lab** | VS Code Notebooks, marimo, Apache Zeppelin | Google Colab, Databricks Notebooks, Hex, Deepnote | Ekip içinde paylaşım, GPU ihtiyacı, doğrudan veri ambarına bağlanma |
+| **pandas** | Polars, DuckDB, PySpark | Snowpark, Databricks | Veri RAM'e sığmıyorsa veya pandas yavaş kalıyorsa |
+| **CSV / JSON / XML dosyaları** | Parquet, Avro, ORC (açık formatlar) | — | Büyük hacim, sütun bazlı analiz, şema zorunluluğu |
+
+**Değerlendirirken bakılacaklar:** kurulum kolaylığı, işbirliği (aynı notebook'ta birden fazla kişi), veri boyutu, ücretsiz katman sınırları.
+
+> 💡 Bölüm 4'te geçen Oracle, SAP, Informatica, Snowflake, Tableau gibi isimler **enterprise**
+> dünyasının karşılığıdır; açık kaynak karşılıklarını haftalar boyunca kullanacağız.
+
+📎 Tüm katmanların haritası ve lisans rehberi: [ALTERNATIVES.md](../ALTERNATIVES.md#-analiz-i̇statistik-ve-ml-hafta-1-810)
 
 ---
 

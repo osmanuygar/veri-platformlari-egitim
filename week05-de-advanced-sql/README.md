@@ -10,8 +10,9 @@
 6. [Stored Procedures ve Functions](#6-stored-procedures-ve-functions)
 7. [Triggers](#7-triggers)
 8. [Partitioning](#8-partitioning)
-9. [Pratik Uygulamalar](#9-pratik-uygulamalar)
-10. [Alıştırmalar](#10-alıştırmalar)
+9. [Alternatifler ve Ekosistem](#-alternatifler-ve-ekosistem)
+10. [Pratik Uygulamalar](#9-pratik-uygulamalar)
+11. [Alıştırmalar](#10-alıştırmalar)
 
 ---
 
@@ -935,6 +936,33 @@ CREATE TABLE orders_2024_q1 PARTITION OF orders
 CREATE TABLE orders_2024_q2 PARTITION OF orders
     FOR VALUES FROM ('2024-04-01') TO ('2024-07-01');
 ```
+
+---
+
+## 🔄 Alternatifler ve Ekosistem
+
+Bu haftanın aracı SQL'in kendisi. Öğrendiğiniz kavramlar (window function, CTE, indeks,
+EXPLAIN, partitioning) neredeyse her veritabanında var, ama **sözdizimi ve araçlar** değişiyor:
+
+| Kullandığımız | Açık kaynak alternatif | Enterprise / Yönetilen | Ne zaman değerlendirilmeli |
+|---|---|---|---|
+| **PostgreSQL (PL/pgSQL)** | MySQL/MariaDB, DuckDB, ClickHouse | Oracle (PL/SQL), SQL Server (T-SQL), Snowflake, BigQuery | Kurumun mevcut veritabanı hangisiyse; aynı sorgu farklı lehçede yazılmalı |
+| **EXPLAIN ANALYZE** | pgBadger, pg_stat_statements, explain.dalibo.com | Oracle AWR/SQL Tuning Advisor, SQL Server Query Store, Datadog DBM, pganalyze | Sürekli performans izleme, çok sayıda sunucu |
+| **SQL formatlama / lint** | SQLFluff, sqlfmt | DataGrip, Redgate SQL Prompt | Ekipte ortak SQL stili, CI'da kontrol |
+
+**Değerlendirirken bakılacaklar:** lehçe taşınabilirliği (ANSI SQL'e ne kadar yakın?), stored procedure bağımlılığı (taşımayı en çok zorlaştıran şey), izleme araçlarının ücretsiz/ücretli olması.
+
+**Sık karşılaşılan lehçe farkları:**
+
+| Ne | PostgreSQL | SQL Server (T-SQL) | Oracle | BigQuery |
+|---|---|---|---|---|
+| İlk N satır | `LIMIT 10` | `TOP 10` / `OFFSET … FETCH` | `FETCH FIRST 10 ROWS ONLY` | `LIMIT 10` |
+| Metin birleştirme | `a \|\| b` | `a + b` / `CONCAT` | `a \|\| b` | `CONCAT(a, b)` |
+| Bugün | `CURRENT_DATE` | `CAST(GETDATE() AS date)` | `TRUNC(SYSDATE)` | `CURRENT_DATE()` |
+| Prosedür dili | PL/pgSQL | T-SQL | PL/SQL | SQL scripting |
+| Window filtre | alt sorgu / CTE | alt sorgu / CTE | alt sorgu / CTE | `QUALIFY` |
+
+📎 Tüm katmanların haritası ve lisans rehberi: [ALTERNATIVES.md](../ALTERNATIVES.md#-veritabanları-hafta-23)
 
 ---
 

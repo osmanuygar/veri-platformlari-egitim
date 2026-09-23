@@ -28,6 +28,21 @@ Alıştırma 2 (Metabase) ve Alıştırma 3'ü (Superset) tamamladıktan sonra,
 
 ---
 
+## 5.3 Enterprise karşılığı
+
+Kurumların çoğu açık kaynak değil **Power BI, Tableau veya Looker** kullanıyor.
+Bu araçları kurmanız gerekmiyor; README'deki [Alternatifler ve Ekosistem](../README.md#-alternatifler-ve-ekosistem)
+bölümünü ve üreticilerin dokümantasyonunu okuyarak cevaplayın:
+
+1. 5.2'deki **200 kişilik kurum** senaryosunda kurum zaten Microsoft 365 kullanıyorsa,
+   Superset yerine Power BI seçmek için hangi gerekçeler öne çıkar? Hangi maliyet kalemi
+   kararı değiştirebilir?
+2. Alıştırma 3'te Superset'te kurduğunuz RLS kuralının Power BI veya Looker'daki karşılığı nedir?
+3. Açık kaynak bir BI aracından enterprise bir araca (ya da tersine) geçişte
+   **en çok neyi yeniden yapmanız gerekir?** (dashboard'lar, metrik tanımları, yetkiler…)
+
+---
+
 ## ✅ Ne öğrendik
 
 - Araç seçimi "hangisi daha iyi" değil, "**hangi ekip, hangi ihtiyaç**"
@@ -35,5 +50,7 @@ Alıştırma 2 (Metabase) ve Alıştırma 3'ü (Superset) tamamladıktan sonra,
 - Basitlik (Metabase) ile güç/esneklik (Superset) arasında gerçek bir ödünleşme var.
 - Bir BI aracını sadece özellik listesine bakarak değil, **gerçekten
   kullanarak** karşılaştırmak çok daha güvenilir bir karar verdirir.
+- Açık kaynak ile enterprise arasındaki seçim çoğu zaman özellikten değil, **mevcut
+  ekosistem, lisans modeli ve geçiş maliyetinden** belirlenir.
 
 📎 [Çözüm](./solutions/05-tool-comparison.md)
