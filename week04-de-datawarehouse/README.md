@@ -1621,7 +1621,10 @@ enterprise/yönetilen alternatifler:
 
 | Kullandığımız | Açık kaynak alternatif | Enterprise / Yönetilen | Ne zaman değerlendirilmeli |
 |---|---|---|---|
-| **PostgreSQL (OLAP / star schema)** | ClickHouse, StarRocks, Apache Doris, Apache Druid, Apache Pinot, DuckDB | Snowflake, Google BigQuery, Amazon Redshift, Databricks SQL, Microsoft Fabric/Synapse, Teradata | Veri hacmi Postgres'i aştığında; alt-saniye dashboard (ClickHouse/Pinot); yönetim yükü istenmiyorsa |
+| **PostgreSQL (OLAP) → bulut ambarı** | — | Snowflake, Google BigQuery, Amazon Redshift, Databricks SQL, Microsoft Fabric/Synapse, Oracle Autonomous Data Warehouse, Firebolt | Yönetim yükü istenmiyorsa; depolama ve işlem ayrı ölçeklensin |
+| **PostgreSQL (OLAP) → MPP / kurum içi ambar** | Apache Cloudberry (Greenplum fork'u), Apache Doris, StarRocks, MonetDB | **Vertica**, Teradata, Oracle Exadata, IBM Netezza, Exasol, SAP HANA / SAP BW/4HANA, Yellowbrick, Greenplum (Broadcom) | Veri kurum dışına çıkamıyorsa (bankacılık, telekom, kamu), yüksek eşzamanlılık, mevcut donanım/lisans yatırımı |
+| **PostgreSQL (OLAP) → gerçek zamanlı OLAP** | ClickHouse, Apache Druid, Apache Pinot, StarRocks | ClickHouse Cloud, Imply (Druid), StarTree (Pinot) | Alt-saniye dashboard, olay/log verisi, müşteriye dönük analitik |
+| **PostgreSQL (OLAP) → tek makine** | DuckDB, Polars | MotherDuck | Veri tek makineye sığıyorsa (çoğu zaman sığar) |
 | **MinIO** | SeaweedFS, Garage, Ceph (RGW) | Amazon S3, Azure Blob/ADLS Gen2, Google Cloud Storage, Cloudflare R2 | Bulutta çalışılıyorsa neredeyse her zaman sağlayıcının servisi |
 | **Iceberg** | Delta Lake, Apache Hudi, Apache Paimon | Databricks (Delta + Unity Catalog), Snowflake/AWS/Google yönetilen Iceberg | Hangi motorların aynı tabloyu okuyacağı; Databricks ağırlıklıysa Delta |
 | **Apache Spark** | Apache Flink, Ray, Dask, Polars/DuckDB (tek makine) | Databricks, Amazon EMR, Google Dataproc, Microsoft Fabric | Veri tek makineye sığıyorsa Spark'a hiç gerek olmayabilir |
@@ -1633,7 +1636,13 @@ enterprise/yönetilen alternatifler:
 
 > ⚖️ **Lisans notu:** MinIO AGPLv3 ile lisanslıdır ve 2025'te community sürümünden web
 > konsolunun yönetim özellikleri çıkarıldı. Eğitim için sorun değil, ancak üretimde lisans ve
-> dağıtım durumunu kontrol edin.
+> dağıtım durumunu kontrol edin. Greenplum ise 2024'te Broadcom tarafından kapalı kaynağa
+> döndürüldü; topluluk **Apache Cloudberry** fork'u ile devam ediyor.
+
+> 🇹🇷 **Sahada sık karşılaşılan:** Bankacılık, telekom ve kamuda Teradata, Exadata, Vertica, Netezza,
+> Greenplum ve SAP HANA gibi kurum içi MPP ambarlar hâlâ çok yaygın. İsimleri farklı olsa da bu haftanın
+> kavramlarını paylaşırlar: **kolon tabanlı depolama, MPP, dağıtım anahtarı, sıkıştırma**. Örneğin
+> Vertica, Michael Stonebraker'ın C-Store araştırma projesinden doğmuş kolon tabanlı bir MPP veritabanıdır.
 
 📎 Tüm katmanların haritası ve lisans rehberi: [ALTERNATIVES.md](../ALTERNATIVES.md#-depolama-ambar-ve-i̇şleme-hafta-46)
 
