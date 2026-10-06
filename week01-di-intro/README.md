@@ -886,12 +886,22 @@ Jupyter terminal'de:
 python /app/scripts/generate_sample_data.py
 ```
 
+Normal terminal'den:
+
+```bash
+docker exec week1_jupyter python scripts/generate_sample_data.py
+```
+
 ### Adım 5: Veri Kalitesi Kontrolü
 
 ```bash
 python /app/scripts/data_quality_checker.py
 ```
+Normal terminal'den:
 
+```bash
+  docker exec week1_jupyter python scripts/data_quality_checker.py
+```
 
 ## 🛠️ Yararlı Komutlar
 
