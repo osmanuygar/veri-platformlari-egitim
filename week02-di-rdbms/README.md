@@ -1070,7 +1070,11 @@ enterprise/yönetilen alternatifler:
 
 ### Docker ile PostgreSQL Başlatma
 ```bash
-# PostgreSQL container'ı başlat
+# Not: Bu komutlar repo kök dizinindeki docker-compose.yml içindir (container: veri_postgres).
+# Bu haftanın kendi docker-compose.yml'ını kullanıyorsanız container adı week2_postgres'tir:
+#   docker exec -it week2_postgres psql -U veri_user -d veri_db
+
+# PostgreSQL container'ı başlat (repo kök dizininden)
 docker-compose up -d postgres
 
 # PostgreSQL'e bağlan
