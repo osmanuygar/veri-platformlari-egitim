@@ -91,14 +91,14 @@ INSERT INTO siparisler (musteri_id, siparis_tarihi, durum, toplam_tutar, kargo_a
 INSERT INTO siparis_detaylari (siparis_id, urun_id, adet, birim_fiyat, indirim_orani, ara_toplam) VALUES
 -- Sipariş 1
 (1, 1, 1, 25000.00, 0, 25000.00),
-(1, 11, 1, 450.00, 0, 450.00),
+(1, 7, 1, 450.00, 0, 450.00),
 
 -- Sipariş 2
 (2, 4, 1, 45000.00, 0, 45000.00),
 
 -- Sipariş 3
 (3, 7, 2, 450.00, 10, 810.00),
-(3, 15, 1, 1200.00, 5, 1140.00),
+(3, 14, 1, 1200.00, 5, 1140.00),
 
 -- Sipariş 4
 (4, 9, 1, 650.00, 0, 650.00),
@@ -115,10 +115,10 @@ INSERT INTO siparis_detaylari (siparis_id, urun_id, adet, birim_fiyat, indirim_o
 (7, 2, 1, 35000.00, 0, 35000.00),
 
 -- Sipariş 8
-(8, 16, 1, 800.00, 0, 800.00),
+(8, 15, 1, 800.00, 0, 800.00),
 
 -- Sipariş 9
-(9, 15, 1, 1200.00, 0, 1200.00),
+(9, 14, 1, 1200.00, 0, 1200.00),
 
 -- Sipariş 10
 (10, 7, 1, 450.00, 0, 450.00);
@@ -132,7 +132,7 @@ INSERT INTO urun_yorumlari (urun_id, musteri_id, puan, yorum_baslik, yorum_metni
 (4, 2, 5, 'Mükemmel telefon', 'Kamera kalitesi harika, bataryası uzun gidiyor', TRUE),
 (7, 4, 5, 'Çok rahat', 'Kumaşı çok kaliteli ve rahat', TRUE),
 (11, 5, 4, 'Güzel kitap', 'Çok etkileyici bir roman', TRUE),
-(15, 8, 5, 'Süper kahve', 'Her sabah harika kahve içiyorum', TRUE);
+(14, 8, 5, 'Süper kahve', 'Her sabah harika kahve içiyorum', TRUE);
 
 -- ============================================
 -- 8. STOK HAREKETLERİ
